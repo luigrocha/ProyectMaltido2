@@ -1,0 +1,120 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.espe.distribuidas.model;
+
+import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author Andres Vr
+ */
+@Entity
+@Table(name = "PROVEEDOR")
+public class Proveedor implements Serializable {
+
+    @Id
+    @Column(name = "ID_PROVEEDOR", nullable = false)
+    private String idProveedor;
+
+    @Column(name = "NOMBRE_EMPRESA", nullable = false)
+    private String nombreEmpresa;
+
+    @Column(name = "DIRECCION", nullable = false)
+    private String direccion;
+
+    @Column(name = "TELEFONO", nullable = false)
+    private String telefono;
+
+    @Column(name = "CORREO_ELECTRONICO", nullable = false)
+    private String correoElectronico;
+
+    @Column(name = "ESTADO", nullable = false)
+    private String estado;
+
+    public Proveedor() {
+    }
+
+    public String getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(String idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombre_empresa) {
+        this.nombreEmpresa = nombre_empresa;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.idProveedor);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Proveedor other = (Proveedor) obj;
+        return Objects.equals(this.idProveedor, other.idProveedor);
+    }
+
+    @Override
+    public String toString() {
+        return "Proveedor{" + "idProveedor=" + idProveedor + ", nombre_empresa=" + nombreEmpresa + ", direccion=" + direccion + ", telefono=" + telefono + ", correoElectronico=" + correoElectronico + ", estado=" + estado + '}';
+    }
+
+}
