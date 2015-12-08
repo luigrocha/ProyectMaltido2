@@ -7,10 +7,15 @@ package com.espe.distribuidas.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +31,10 @@ public class CitaMantenimiento implements Serializable {
     @Id
     @Column(name = "ID_CITA", nullable = false)
     private Integer idCita;
+
+    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Cliente clienteCita;
 
     @Column(name = "ID_CLIENTE", nullable = false)
     private String idCliente;
@@ -43,7 +52,18 @@ public class CitaMantenimiento implements Serializable {
     @Column(name = "ESTADO", nullable = false)
     private String estado;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "citaMantenimiento")
+    List<Mantenimiento> mantimientoCita;
+
     public CitaMantenimiento() {
+    }
+
+    public Cliente getClienteCita() {
+        return clienteCita;
+    }
+
+    public void setClienteCita(Cliente clienteCita) {
+        this.clienteCita = clienteCita;
     }
 
     public Integer getIdCita() {

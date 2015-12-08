@@ -6,10 +6,13 @@
 package com.espe.distribuidas.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,6 +42,11 @@ public class Cliente implements Serializable {
     @Column(name = "CORREO_ELECTRONICO", nullable = false)
     private String correoElectronico;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "clienteCita")
+    List<CitaMantenimiento> citaMantenimientoCliente;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "clienteFactura")
+    List<Factura> facturaCliente;    
     public Cliente() {
     }
 

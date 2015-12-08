@@ -8,11 +8,16 @@ package com.espe.distribuidas.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,35 +29,71 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "MANTENIMIENTO")
 @IdClass(MantenimientoPK.class)
-public class Mantenimiento implements Serializable{
+public class Mantenimiento implements Serializable {
+
     @Id
-    @Column(name = "ID_TECNICO", nullable = false)
-    private String idTecnico;
-    
+    @Column(name = "ID_EMPLEADO", nullable = false)
+    private String idEmpleado;
+
     @Id
     @Column(name = "ID_CITA", nullable = false)
     private Integer idCita;
-    
+
+    @JoinColumn(name = "ID_CITA", referencedColumnName = "ID_CITA", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private CitaMantenimiento citaMantenimiento;
+
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Empleado empleadoMantenimiento;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FECHA_INICIO", nullable = false)
     private Date fechaInicio;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FECHA_FIN", nullable = false)
     private Date fechaFin;
-    
+
     @Column(name = "PRECIO", nullable = false)
     private BigDecimal precio;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mantenimientoAsignacionInsumo")
+    private List<AsignacionInsumo> insumosAsignados;
 
     public Mantenimiento() {
     }
 
-    public String getIdTecnico() {
-        return idTecnico;
+    public List<AsignacionInsumo> getInsumosAsignados() {
+        return insumosAsignados;
     }
 
-    public void setIdTecnico(String idTecnico) {
-        this.idTecnico = idTecnico;
+    public void setInsumosAsignados(List<AsignacionInsumo> insumosAsignados) {
+        this.insumosAsignados = insumosAsignados;
+    }
+
+    public Empleado getEmpleadoMantenimiento() {
+        return empleadoMantenimiento;
+    }
+
+    public void setEmpleadoMantenimiento(Empleado empleadoMantenimiento) {
+        this.empleadoMantenimiento = empleadoMantenimiento;
+    }
+
+    public String getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public CitaMantenimiento getCitaMantenimiento() {
+        return citaMantenimiento;
+    }
+
+    public void setCitaMantenimiento(CitaMantenimiento citaMantenimiento) {
+        this.citaMantenimiento = citaMantenimiento;
     }
 
     public Integer getIdCita() {
@@ -90,7 +131,7 @@ public class Mantenimiento implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.idTecnico);
+        hash = 79 * hash + Objects.hashCode(this.idEmpleado);
         hash = 79 * hash + Objects.hashCode(this.idCita);
         return hash;
     }
@@ -107,20 +148,15 @@ public class Mantenimiento implements Serializable{
             return false;
         }
         final Mantenimiento other = (Mantenimiento) obj;
-        if (!Objects.equals(this.idTecnico, other.idTecnico)) {
+        if (!Objects.equals(this.idEmpleado, other.idEmpleado)) {
             return false;
         }
-        if (!Objects.equals(this.idCita, other.idCita)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.idCita, other.idCita);
     }
 
     @Override
     public String toString() {
-        return "Mantenimiento{" + "idTecnico=" + idTecnico + ", idCita=" + idCita + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", precio=" + precio + '}';
+        return "Mantenimiento{" + "idTecnico=" + idEmpleado + ", idCita=" + idCita + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", precio=" + precio + '}';
     }
-    
-    
 
 }

@@ -7,10 +7,13 @@ package com.espe.distribuidas.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,9 +51,12 @@ public class Empleado implements Serializable {
 
     @Column(name = "USUARIO", nullable = false)
     private String usuario;
-    
+
     @Column(name = "CONTRASENA", nullable = false)
     private String contrasena;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "empleadoMantenimiento")
+    List<Mantenimiento> mantenimientoTecnico;
 
     public Empleado() {
     }

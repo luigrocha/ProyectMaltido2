@@ -7,10 +7,13 @@ package com.espe.distribuidas.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,6 +42,15 @@ public class Insumos implements Serializable {
 
     @Column(name = "TIPO_INSUMO", nullable = false)
     private String tipoInsumo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "insumo")
+    List<AsignacionInsumo> insumoAsigndo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "devolucionInsumo")
+    List<DetalleDevolucion> detalleDevolucionInsumo;    
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "insumoPedido")
+    List<DetallePedido> detallePedido;    
 
     public Insumos() {
     }

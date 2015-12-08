@@ -12,6 +12,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,10 +48,37 @@ public class AsignacionInsumo implements Serializable {
     @Column(name = "CANTIDAD", nullable = false)
     private Integer cantidad;
 
+    @JoinColumns({
+        @JoinColumn(name = "ID_CITA", referencedColumnName = "ID_CITA", insertable = false, updatable = false),
+        @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
+    })
+    @ManyToOne(optional = false)
+    private Mantenimiento mantenimientoAsignacionInsumo;
+
+    @JoinColumn(name = "ID_INSUMO", referencedColumnName = "ID_INSUMO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Insumos insumo;
+
     public AsignacionInsumo() {
     }
 
-    public String getIdInsumo() {
+    public Mantenimiento getMantenimientoAsignacionInsumo() {
+        return mantenimientoAsignacionInsumo;
+    }
+
+    public void setMantenimientoAsignacionInsumo(Mantenimiento mantenimientoAsignacionInsumo) {
+        this.mantenimientoAsignacionInsumo = mantenimientoAsignacionInsumo;
+    }
+
+    public Insumos getInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(Insumos insumo) {
+        this.insumo = insumo;
+    }
+
+        public String getIdInsumo() {
         return idInsumo;
     }
 

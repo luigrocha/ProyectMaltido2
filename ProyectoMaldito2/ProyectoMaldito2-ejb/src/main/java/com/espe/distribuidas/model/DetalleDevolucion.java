@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -33,7 +35,31 @@ public class DetalleDevolucion implements Serializable {
     @Column(name = "CANTIDAD", nullable = false)
     private Integer cantidad;
 
+    @JoinColumn(name = "ID_DEVOLUCION", referencedColumnName = "ID_DEVOLUCION", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Devoluciones devolucion;
+
+    @JoinColumn(name = "ID_INSUMO", referencedColumnName = "ID_INSUMO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Insumos devolucionInsumo;
+
     public DetalleDevolucion() {
+    }
+
+    public Devoluciones getDevolucion() {
+        return devolucion;
+    }
+
+    public void setDevolucion(Devoluciones devolucion) {
+        this.devolucion = devolucion;
+    }
+
+    public Insumos getDevolucionInsumo() {
+        return devolucionInsumo;
+    }
+
+    public void setDevolucionInsumo(Insumos devolucionInsumo) {
+        this.devolucionInsumo = devolucionInsumo;
     }
 
     public String getIdInsumo() {

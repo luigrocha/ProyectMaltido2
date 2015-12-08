@@ -6,10 +6,13 @@
 package com.espe.distribuidas.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,7 +42,30 @@ public class Proveedor implements Serializable {
     @Column(name = "ESTADO", nullable = false)
     private String estado;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "devolucionProveedor")
+    List<Devoluciones> devoluciondesProveedor;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "proveedorPedido")
+    List<Pedido> pedidoProveedor;
+    
+
     public Proveedor() {
+    }
+
+    public List<Devoluciones> getDevoluciondesProveedor() {
+        return devoluciondesProveedor;
+    }
+
+    public void setDevoluciondesProveedor(List<Devoluciones> devoluciondesProveedor) {
+        this.devoluciondesProveedor = devoluciondesProveedor;
+    }
+
+    public List<Pedido> getPedidoProveedor() {
+        return pedidoProveedor;
+    }
+
+    public void setPedidoProveedor(List<Pedido> pedidoProveedor) {
+        this.pedidoProveedor = pedidoProveedor;
     }
 
     public String getIdProveedor() {

@@ -5,12 +5,16 @@
  */
 package com.espe.distribuidas.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,7 +24,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "DETALLE_FACTURA")
 @IdClass(DetalleFacturaPK.class)
-public class DetalleFactura {
+public class DetalleFactura implements Serializable{
 
     @Id
     @Column(name = "ID_FACTURA", nullable = false)
@@ -34,13 +38,48 @@ public class DetalleFactura {
     @Column(name = "ID_CITA", nullable = false)
     private Integer idCita;
 
+    @JoinColumn(name = "ID_FACTURA", referencedColumnName = "ID_FACTURA", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Factura factura;
+
     @Column(name = "CANTIDAD", nullable = false)
     private Integer cantidad;
 
     @Column(name = "VALOR_UNITARIO", nullable = false)
     private BigDecimal valorUnitario;
 
+    @JoinColumns({
+        @JoinColumn(name = "ID_CITA", referencedColumnName = "ID_CITA", insertable = false, updatable = false),
+        @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
+    })
+    @ManyToOne(optional = false)
+    private Mantenimiento mantenimientoDetalleFactura;
+
     public DetalleFactura() {
+    }
+
+    public Mantenimiento getMantenimientoDetalleFactura() {
+        return mantenimientoDetalleFactura;
+    }
+
+    public void setMantenimientoDetalleFactura(Mantenimiento mantenimientoDetalleFactura) {
+        this.mantenimientoDetalleFactura = mantenimientoDetalleFactura;
+    }
+
+    public Integer getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(Integer idFactura) {
+        this.idFactura = idFactura;
+    }
+
+    public Factura getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Factura factura) {
+        this.factura = factura;
     }
 
     public Integer getIdFtactura() {

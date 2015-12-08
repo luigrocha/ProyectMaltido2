@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -31,6 +33,14 @@ public class DetallePedido implements Serializable {
     @Column(name = "ID_INSUMO", nullable = false)
     private String idInsumo;
 
+    @JoinColumn(name = "ID_PEDIDO", referencedColumnName = "ID_PEDIDO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Pedido pedido;
+
+    @JoinColumn(name = "ID_INSUMO", referencedColumnName = "ID_INSUMO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Insumos insumoPedido;
+
     @Column(name = "CANTIDAD", nullable = false)
     private Integer cantidad;
 
@@ -38,6 +48,22 @@ public class DetallePedido implements Serializable {
     private BigDecimal precio;
 
     public DetallePedido() {
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public Insumos getInsumoPedido() {
+        return insumoPedido;
+    }
+
+    public void setInsumoPedido(Insumos insumoPedido) {
+        this.insumoPedido = insumoPedido;
     }
 
     public Integer getIdPedido() {

@@ -8,10 +8,15 @@ package com.espe.distribuidas.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,6 +33,10 @@ public class Factura implements Serializable {
     @Column(name = "ID_FACTURA", nullable = false)
     private Integer idFactura;
 
+    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Cliente clienteFactura;
+
     @Column(name = "ID_CLIENTE", nullable = false)
     private String idCliente;
 
@@ -38,7 +47,18 @@ public class Factura implements Serializable {
     @Column(name = "TOTAL", nullable = false)
     private BigDecimal total;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "factura")
+    List<DetalleFactura> detalleFacturaCliente;
+
     public Factura() {
+    }
+
+    public Cliente getClienteFactura() {
+        return clienteFactura;
+    }
+
+    public void setClienteFactura(Cliente clienteFactura) {
+        this.clienteFactura = clienteFactura;
     }
 
     public Integer getIdFactura() {
@@ -92,10 +112,7 @@ public class Factura implements Serializable {
             return false;
         }
         final Factura other = (Factura) obj;
-        if (!Objects.equals(this.idFactura, other.idFactura)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.idFactura, other.idFactura);
     }
 
     @Override

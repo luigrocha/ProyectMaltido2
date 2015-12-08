@@ -7,10 +7,15 @@ package com.espe.distribuidas.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,14 +32,37 @@ public class Devoluciones implements Serializable {
     @Column(name = "ID_DEVOLUCION", nullable = false)
     private Integer idDevoluciones;
 
+    @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Proveedor devolucionProveedor;
+
     @Column(name = "ID_PROVEEDOR", nullable = false)
     private String idProveedor;
-    
+
     @Temporal(TemporalType.DATE)
     @Column(name = "FECHA", nullable = false)
     private Date fecha;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "devolucion")
+    List<DetalleDevolucion> detalleDevolucion;
+
     public Devoluciones() {
+    }
+
+    public Proveedor getDevolucionProveedor() {
+        return devolucionProveedor;
+    }
+
+    public void setDevolucionProveedor(Proveedor devolucionProveedor) {
+        this.devolucionProveedor = devolucionProveedor;
+    }
+
+    public List<DetalleDevolucion> getDetalleDevolucion() {
+        return detalleDevolucion;
+    }
+
+    public void setDetalleDevolucion(List<DetalleDevolucion> detalleDevolucion) {
+        this.detalleDevolucion = detalleDevolucion;
     }
 
     public Integer getIdDevoluciones() {
