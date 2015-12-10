@@ -12,16 +12,16 @@ import java.util.Objects;
  *
  * @author Andres Vr
  */
-public class DetalleDevolcuionPK implements Serializable{
+public class DetalleDevolucionPK implements Serializable{
     private String idInsumo;
     private Integer idDevolucion;
 
-    public DetalleDevolcuionPK(String idInsumo, Integer idDevolucion) {
+    public DetalleDevolucionPK(String idInsumo, Integer idDevolucion) {
         this.idInsumo = idInsumo;
         this.idDevolucion = idDevolucion;
     }
 
-    public DetalleDevolcuionPK() {
+    public DetalleDevolucionPK() {
     }
 
     public String getIdInsumo() {
@@ -59,7 +59,7 @@ public class DetalleDevolcuionPK implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DetalleDevolcuionPK other = (DetalleDevolcuionPK) obj;
+        final DetalleDevolucionPK other = (DetalleDevolucionPK) obj;
         if (!Objects.equals(this.idInsumo, other.idInsumo)) {
             return false;
         }

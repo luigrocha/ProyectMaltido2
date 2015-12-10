@@ -20,8 +20,8 @@ import javax.persistence.Table;
  * @author Andres Vr
  */
 @Entity
-@Table(name = "DETALLE_DEVOLUCION")
-@IdClass(DetalleDevolcuionPK.class)
+@Table(name = "DETALLE_DEVOLUCION_001")
+@IdClass(DetalleDevolucionPK.class)
 public class DetalleDevolucion implements Serializable {
 
     @Id

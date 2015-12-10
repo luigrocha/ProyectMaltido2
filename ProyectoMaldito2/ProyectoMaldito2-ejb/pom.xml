@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>ProyectoMaldito2</artifactId>
-    <groupId>com.espe.distribuidas</groupId>
-    <version>1</version>
-  </parent>
+        <artifactId>ProyectoMaldito2</artifactId>
+        <groupId>com.espe.distribuidas</groupId>
+        <version>1</version>
+    </parent>
 
     <groupId>com.espe.distribuidas</groupId>
     <artifactId>ProyectoMaldito2-ejb</artifactId>
@@ -50,6 +50,22 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

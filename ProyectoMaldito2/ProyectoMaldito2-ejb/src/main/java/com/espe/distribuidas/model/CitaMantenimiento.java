@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
  * @author Andres Vr
  */
 @Entity
-@Table(name = "CITA_MANTENIMIENTO")
+@Table(name = "CITA_MANTENIMIENTO_001")
 public class CitaMantenimiento implements Serializable {
 
     @Id

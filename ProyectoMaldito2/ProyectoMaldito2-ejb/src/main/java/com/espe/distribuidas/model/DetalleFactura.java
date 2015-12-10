@@ -22,7 +22,7 @@ import javax.persistence.Table;
  * @author Andres Vr
  */
 @Entity
-@Table(name = "DETALLE_FACTURA")
+@Table(name = "DETALLE_FACTURA_001")
 @IdClass(DetalleFacturaPK.class)
 public class DetalleFactura implements Serializable{
 

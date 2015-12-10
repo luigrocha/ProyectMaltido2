@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
  * @author Andres Vr
  */
 @Entity
-@Table(name = "ASIGNACION_INSUMO")
+@Table(name = "ASIGNACION_INSUMO_001")
 @IdClass(AsignacionInsumoPK.class)
 
 public class AsignacionInsumo implements Serializable {
