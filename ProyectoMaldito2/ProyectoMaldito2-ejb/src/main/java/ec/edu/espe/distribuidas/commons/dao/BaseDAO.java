@@ -1,17 +1,14 @@
 /*
- * Gestorinc S.A.
- * Sistema: Gestor G5
- * Creado: 21-jul-2010 - 15:50:45
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
  * 
- * Los contenidos de este archivo son propiedad intelectual de Gestorinc S.A.
- * y se encuentran protegidos por la licencia: "GESTOR FIDUCIA/FONDOS G5".
- * 
- * Usted puede encontrar una copia de esta licencia en: 
- *   http://www.gestorinc.com
- * 
- * Copyright 2008-2010 Gestorinc S.A. Todos los derechos reservados.
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *  
+ *  
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
-package com.persist.common.dao;
+package ec.edu.espe.distribuidas.commons.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -25,7 +22,7 @@ import javax.persistence.PersistenceException;
  * La Clase BaseDAO implementa las operaciones básicas de acceso a datos DAO
  * utilizando usado por las clases DAO del módulo de ejecución de transacciones.
  *
- * @author Gestorinc S.A.
+ * @author R&R S.A.
  * @version $Rev $
  */
 public class BaseDAO {

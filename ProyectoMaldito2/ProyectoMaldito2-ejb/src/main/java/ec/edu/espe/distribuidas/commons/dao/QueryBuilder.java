@@ -1,6 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *  
+ *  
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package ec.edu.espe.distribuidas.commons.dao;
 
@@ -14,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  *
- * @author hcoral
+ * @author R&R S.A.
  */
 public class QueryBuilder<T> {
     

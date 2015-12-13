@@ -1,15 +1,12 @@
 /*
- * Gestorinc S.A.
- * Sistema: Gestor G5
- * Creado: 23-sep-2009 - 10:13:37
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
  * 
- * Los contenidos de este archivo son propiedad intelectual de Gestorinc S.A.
- * y se encuentran protegidos por la licencia: "GESTOR FIDUCIA/FONDOS G5".
- * 
- * Usted puede encontrar una copia de esta licencia en: 
- *   http://www.gestorinc.com
- * 
- * Copyright 2008-2010 Gestorinc S.A. Todos los derechos reservados.
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *  
+ *  
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package ec.edu.espe.distribuidas.commons.dao;
 
@@ -26,7 +23,7 @@ import java.util.List;
  * @param <ID> Tipo de la Clave Primaria de la clase modelo, esta clase debe
  * extender de java.io.Serializable
  *
- * @author Gestorinc S.A.
+ * @author R&R S.A.
  * @version $Revision: 5653 $
  */
 public interface GenericDAO<T, ID extends Serializable> {
