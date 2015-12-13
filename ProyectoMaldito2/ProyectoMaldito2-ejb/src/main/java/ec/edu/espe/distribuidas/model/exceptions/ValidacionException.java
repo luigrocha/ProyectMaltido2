@@ -1,15 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *  
+ *  
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package ec.edu.espe.distribuidas.model.exceptions;
 
 /**
- *
- * @author Luig Rocha
+ * Clase especial para validar exepciones de tipo RunTimeException.
+ * @author R&R S.A.
  */
 public class ValidacionException extends RuntimeException{
+    /**
+     * Constructor que despliega la exepcion predefinida.
+     * @param message recibe el mensaje a ejecutar.
+     */
   public ValidacionException(String message){
   super(message);
   }  
