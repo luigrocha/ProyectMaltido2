@@ -10,5 +10,4 @@
         <property name="URL" value="jdbc:oracle:thin:@localhost:1521:XE"/>
         <property name="driverClass" value="oracle.jdbc.OracleDriver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:module/jdbc/maldito2" object-type="user" pool-name="oracle-thin_XE_pmaldito2Pool"/>
 </resources>

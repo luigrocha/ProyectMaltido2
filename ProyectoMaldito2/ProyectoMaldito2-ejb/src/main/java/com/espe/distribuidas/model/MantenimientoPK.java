@@ -13,20 +13,22 @@ import java.util.Objects;
  * @author Andres Vr
  */
 public class MantenimientoPK implements Serializable{
-    private String idTecnico;
+    private String idEmpleado;
     
     private Integer idCita;
 
     public MantenimientoPK() {
     }
 
-    public String getIdTecnico() {
-        return idTecnico;
+    public String getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setIdTecnico(String idTecnico) {
-        this.idTecnico = idTecnico;
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
+
+
 
     public Integer getIdCita() {
         return idCita;
@@ -39,7 +41,7 @@ public class MantenimientoPK implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.idTecnico);
+        hash = 67 * hash + Objects.hashCode(this.idEmpleado);
         hash = 67 * hash + Objects.hashCode(this.idCita);
         return hash;
     }
@@ -56,7 +58,7 @@ public class MantenimientoPK implements Serializable{
             return false;
         }
         final MantenimientoPK other = (MantenimientoPK) obj;
-        if (!Objects.equals(this.idTecnico, other.idTecnico)) {
+        if (!Objects.equals(this.idEmpleado, other.idEmpleado)) {
             return false;
         }
         return Objects.equals(this.idCita, other.idCita);
