@@ -5,7 +5,6 @@
  */
 package ec.edu.espe.distribuidas.web;
 
-import com.espe.distribuidas.dao.EmpleadoDAO;
 import com.espe.distribuidas.model.Empleado;
 import com.espe.distribuidas.servicio.EmpleadoServicio;
 import java.io.Serializable;
@@ -22,7 +21,7 @@ import javax.faces.view.ViewScoped;
  */
 @ViewScoped
 @ManagedBean
-public class EmpleadoIngresoBean implements Serializable {
+public class LoginBean implements Serializable {
 
     @EJB
     private EmpleadoServicio empleadoServicio;
@@ -41,16 +40,23 @@ public class EmpleadoIngresoBean implements Serializable {
         this.empleado = empleado;
     }
 
-    public void registrarEmpleado() {
-            try {
-                empleadoServicio.ingresarEmpleado(empleado);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Correcto"));
-            } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Error en el Registro"));
+    public String iniciarSesion() {
+        Empleado empleadotmp;
+        String redireccion = null;
+        try {
+            empleadotmp = empleadoServicio.buscarPorUsuarioPassword(empleado.getUsuario(), empleado.getContrasena()).get(0);
+            if (empleadotmp != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Bienvenido"));
+                redireccion = "/empleado/listarEmpleados?faces-redirect=true";
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales Incorrectas"));
 
             }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Credenciales Incorrectas"));
+
+        }
+        return redireccion;
     }
-
-
 
 }

@@ -4,11 +4,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Login</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <p:inputText />
+        <h:form>
+            <p:growl id="mensaje" autoUpdate="true" severity="info,fatal" showSummary="true" showDetail="true"/>
+            <h:panelGrid id="login" columns="3">
+                <p:outputLabel for="usuario" value="Usuario"/>
+                <p:inputText id="usuario" value="#{loginBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido"/>
+                <p:message for="usuario"/>
+
+                <p:outputLabel for="clave" value="Clave"/>
+                <p:password id="clave" value="#{loginBean.empleado.contrasena}" required="true" requiredMessage="Campo Requerido"/>
+               <p:message for="clave"/>
+
+                <h:column/>
+                <p:commandButton icon="ui-icon-key" value="Iniciar Sesion" update="login" action="#{loginBean.iniciarSesion()}"/>
+            </h:panelGrid>
+            <p:separator />
+        </h:form>  <br />
     </h:body>
 </html>
 

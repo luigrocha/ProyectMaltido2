@@ -7,7 +7,7 @@
     <f:view contentType="text/html">
 
         <h:head>
-            <title>Ingresar Empleado</title>
+            <title>Modificar Empleado</title>
             <h:outputScript library="js" name="spanishLocale.js"/>
         </h:head>
         <h:body>
@@ -84,28 +84,37 @@
                         <p:panel id="panel" header="Ingresar Empleado" style="margin-bottom:1px;">
                             <p:growl id="mensaje" autoUpdate="true" severity="info,fatal" showSummary="true" showDetail="true"/>
                             <h:panelGrid columns="2">
+                                <p:fieldset id="fscredenciales" legend="Credeciales">
+
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel for="txtIdEmpleado" value="C.I: "/>
+                                        <p:inputText id="txtIdEmpleado" value="#{modificarEmpleadoBean.cedulaEmpleado}" required="true" requiredMessage="Campo Requerido"/>
+                                        <p:message for="txtIdEmpleado"/>
+
+                                    </h:panelGrid>
+                                    <p:commandButton id="btnCargar" icon="ui-icon-check" value="Buscar" update="fscredenciales" actionListener="#{modificarEmpleadoBean.cargarEmpleado()}" />
+                                </p:fieldset>
+
                                 <p:fieldset id="fsDatos" legend="Datos Del Empleado">
 
                                     <h:panelGrid columns="3">
-                                        <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
-                                        <p:inputText id="txtCedula" value="#{empleadoIngresoBean.empleado.idEmpleado}" required="true" requiredMessage="Campo Requerido"/>
-                                        <p:message for="txtCedula"/>
 
                                         <p:outputLabel for="txtNombre" value="Nombres: "/>
-                                        <p:inputText id="txtNombre" value="#{empleadoIngresoBean.empleado.nombre}" required="true" requiredMessage="Campo Requerido"/>
+                                        <f:facet name="output"><h:outputText value="#{modificarEmpleadoBean.empleado.nombre}" /></f:facet>
+                                        <f:facet name="output"><p:inputText id="txtNombre" value="#{modificarEmpleadoBean.empleado.nombre}" required="true" requiredMessage="Campo Requerido"/></f:facet>
                                         <p:message for="txtNombre"/>
 
                                         <p:outputLabel for="txtApellido" value="Apellidos: "/>
-                                        <p:inputText id="txtApellido" value="#{empleadoIngresoBean.empleado.apellido}" required="true" requiredMessage="Campo Requerido"/>
+                                        <p:inputText id="txtApellido" value="#{modificarEmpleadoBean.empleado.apellido}" required="true" requiredMessage="Campo Requerido"/>
                                         <p:message for="txtApellido"/>
 
 
                                         <p:outputLabel for="txtTelefono" value="Telefono: "/>
-                                        <p:inputText id="txtTelefono" value="#{empleadoIngresoBean.empleado.telefono}" required="true" requiredMessage="Campo Requerido"/>
+                                        <p:inputText id="txtTelefono" value="#{modificarEmpleadoBean.empleado.telefono}" required="true" requiredMessage="Campo Requerido"/>
                                         <p:message for="txtTelefono"/>
 
                                         <p:outputLabel for="txtCargo" value="Cargo: "/>
-                                        <p:selectOneMenu  id="txtCargo" value="#{empleadoIngresoBean.empleado.tipoEmpleado}" required="true" requiredMessage="Campo Requerido">
+                                        <p:selectOneMenu  id="txtCargo" value="#{modificarEmpleadoBean.empleado.tipoEmpleado}" required="true" requiredMessage="Campo Requerido">
                                             <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar..."/>
                                             <f:selectItem itemValue="Secretaria" itemLabel="Secretaria"/>
                                             <f:selectItem itemValue="Tecnico" itemLabel="Tecnico"/>
@@ -115,31 +124,12 @@
 
 
                                         <p:outputLabel for="txtfechaIngreso" value="Empleado desde:  "/>
-                                        <p:calendar id="txtfechaIngreso" locale="es" value="#{empleadoIngresoBean.empleado.fechaIngresoEmpresa}" required="true" requiredMessage="Campo Requerido"/>
+                                        <p:calendar id="txtfechaIngreso" locale="es" value="#{modificarEmpleadoBean.empleado.fechaIngresoEmpresa}" required="true" requiredMessage="Campo Requerido"/>
                                         <p:message for="txtfechaIngreso"/>
+                                        <p:commandButton id="Modificar" icon="ui-icon-check" value="Modificar Registro" update="fsDatos" actionListener="#{modificarEmpleadoBean.modificarEmpleado()}" />
 
                                     </h:panelGrid>
 
-                                </p:fieldset>
-                                <p:fieldset id="fsCuenta" legend="Datos de la Cuenta">
-
-                                    <h:panelGrid columns="3">
-                                        <p:outputLabel for="txtUsuario" value="Usuario: "/>
-                                        <p:inputText id="txtUsuario" value="#{empleadoIngresoBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido"/>
-                                        <p:message for="txtUsuario"/>
-
-                                        <p:outputLabel for="txtPas1" value="Clave: "/>
-                                        <p:password id="txtPas1" value="#{empleadoIngresoBean.empleado.contrasena}" 
-                                                    validatorMessage="No existe coincidencia de claves" weakLabel="Debil" strongLabel="fuerte" goodLabel="bueno"
-                                                    match="txtPas2" feedback="true" promptLabel="Ingresa una clave" required="true" requiredMessage="Campo Requerido"/>
-                                        <p:message for="txtPas1"/>
-
-                                        <p:outputLabel for="txtPas2" value="Repetir Clave: " />
-                                        <p:password id="txtPas2" requiredMessage="Campo Requerido"/>
-                                        <p:message for="txtPas2"/>
-
-                                    </h:panelGrid>
-                                    <p:commandButton id="btnGardar" icon="ui-icon-check" value="Registrar" update="fsCuenta, fsDatos" actionListener="#{empleadoIngresoBean.registrarEmpleado()}" />
                                 </p:fieldset>
                             </h:panelGrid>
                         </p:panel>
@@ -150,3 +140,4 @@
         </h:body>
     </f:view>
 </html>
+
