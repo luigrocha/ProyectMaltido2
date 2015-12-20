@@ -35,9 +35,9 @@
                     <p:ajax event="rowSelect" update="@form" listener="#{empleadoBean.onRowSelect}" />
 
                     <f:facet name="footer">
-                        <p:commandButton value="Nuevo" actionListener="#{empleadoBean.nuevo()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected ne null}"/>
+                        <p:commandButton value="Nuevo" actionListener="#{empleadoBean.nuevo()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected ne null}" styleClass=""/>
                         <p:commandButton value="Modificar" actionListener="#{empleadoBean.modificar()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{empleadoBean.eliminarEmpleado()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{empleadoBean.eliminar()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
                 <p:panel header="#{empleadoBean.title}" style="width: 100%" rendered="#{empleadoBean.enNuevo or empleadoBean.enModificar}">

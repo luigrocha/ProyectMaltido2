@@ -67,18 +67,18 @@ public class EmpleadoBean extends BaseBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
         }
     }
-    public void eliminarEmpleado() {
-       /* Empleado empleadotmp = empleado.obtenerEmpleadoPorID(cedulaEmpleado);
-        if (empleadotmp != null) {
-            empleado.eliminarEmpleado(cedulaEmpleado);
+    public void eliminar() {
+            this.empleado = new Empleado();
+            try {
+            BeanUtils.copyProperties(this.empleado, this.empleadoSelected);
+            this.empleadoServicio.eliminarEmpleado(this.empleado.getIdEmpleado());
           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Eliminado Corectamente"));
-           
+
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
         }
-        else{
-          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Registro no encontrado"));
-        
-        }*/
-    }
+                }
 
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Empleado Modificado");
@@ -117,7 +117,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
                 //Llamar a modificar no a crear
                 this.empleadoServicio.actualizarEmpleado(this.empleado);
                 BeanUtils.copyProperties(this.empleadoSelected, this.empleado);
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el cliente: " + this.empleado.toString(), null));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el cliente: " +  this.empleado.getNombre() + " " + this.empleado.getApellido(), null));
             } catch (ValidacionException | IllegalAccessException | InvocationTargetException e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
