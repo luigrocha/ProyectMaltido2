@@ -8,7 +8,7 @@
  *  
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
-package ec.edu.espe.distribuidas.commons.dao;
+package com.espe.distribuidas.commons.dao;
 
 /**
  * Clase de utilidad que define el ordenamiento de consultas.

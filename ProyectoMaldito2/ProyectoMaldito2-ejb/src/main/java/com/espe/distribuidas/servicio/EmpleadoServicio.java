@@ -12,7 +12,7 @@ package com.espe.distribuidas.servicio;
 
 import com.espe.distribuidas.dao.EmpleadoDAO;
 import com.espe.distribuidas.model.Empleado;
-import ec.edu.espe.distribuidas.model.exceptions.ValidacionException;
+import com.espe.distribuidas.model.exceptions.ValidacionException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -74,7 +74,7 @@ public class EmpleadoServicio {
      *
      * @param empleado recibe un objeto empleaso a actualizar.
      */
-    public void actulizarEmpleaso(Empleado empleado) {
+    public void actualizarEmpleado(Empleado empleado) {
         this.empleadoDAO.update(empleado);
     }
 

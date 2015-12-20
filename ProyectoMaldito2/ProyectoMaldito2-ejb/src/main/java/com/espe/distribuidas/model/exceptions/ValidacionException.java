@@ -8,7 +8,7 @@
  *  
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
-package ec.edu.espe.distribuidas.model.exceptions;
+package com.espe.distribuidas.model.exceptions;
 
 /**
  * Clase especial para validar exepciones de tipo RunTimeException.

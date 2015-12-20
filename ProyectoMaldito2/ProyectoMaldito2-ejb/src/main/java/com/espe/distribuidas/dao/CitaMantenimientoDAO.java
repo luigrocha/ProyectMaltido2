@@ -6,7 +6,7 @@
 package com.espe.distribuidas.dao;
 
 import com.espe.distribuidas.model.CitaMantenimiento;
-import ec.edu.espe.distribuidas.commons.dao.DefaultGenericDAOImple;
+import com.espe.distribuidas.commons.dao.DefaultGenericDAOImple;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 

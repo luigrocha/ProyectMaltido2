@@ -80,9 +80,11 @@
                         <p:menuitem value="Cerrar sesion" url="" icon="ui-icon-close" />
                     </p:megaMenu>
                     <h:form>
-                        <p:panel id="panel" header="Empelados de la Empresa" style="margin-bottom:10px;">
+                        <p:growl id="mensaje" autoUpdate="true" severity="info,fatal" showSummary="true" showDetail="true"/>
+                        <p:panel id="panel" header="Empleados de la Empresa" style="margin-bottom:10px;">
                             <h3 style="margin-top:0">Column Priority</h3>
-                            <p:dataTable var="empleados" value="#{eliminarEmpleadoBean.listaEmpleados}">
+
+                                <p:dataTable id="tablaEmpleados" var="empleados" value="#{eliminarEmpleadoBean.listaEmpleados}">
                                 <p:column headerText="C.I">
                                     <h:outputText value="#{empleados.idEmpleado}" />
                                 </p:column>
@@ -114,7 +116,7 @@
                                 <p:message for="txtIdEmpleado"/>
 
                             </h:panelGrid>
-                            <p:commandButton id="btnCargar" icon="ui-icon-check" value="Eliminar" update="fscredenciales,panel" actionListener="#{eliminarEmpleadoBean.eliminarEmpleado()}" />
+                            <p:commandButton id="btnCargar" icon="ui-icon-check" value="Eliminar" update="@form" actionListener="#{eliminarEmpleadoBean.eliminarEmpleado()}" />
                         </p:fieldset>
 
                     </h:form>

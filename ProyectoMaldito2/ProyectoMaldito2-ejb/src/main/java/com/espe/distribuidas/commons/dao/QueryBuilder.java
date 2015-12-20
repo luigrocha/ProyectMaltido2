@@ -8,7 +8,7 @@
  *  
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
-package ec.edu.espe.distribuidas.commons.dao;
+package com.espe.distribuidas.commons.dao;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

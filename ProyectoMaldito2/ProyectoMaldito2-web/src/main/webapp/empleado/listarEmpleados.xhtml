@@ -1,115 +1,95 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-    <f:view contentType="text/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/plantillas/template2.xhtml">
+            <ui:define name="lista">
+                <p:dataTable id="singleEmpleado" var="empleado" value="#{empleadoBean.empleados}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                              style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{empleadoBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" >
+                    <p:column headerText="C.I">
+                        <h:outputText value="#{empleado.idEmpleado}" />
+                    </p:column>
 
-        <h:head>
-            <title>ListarEmpleados</title>
-        </h:head>
-        <h:body>
-            <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="125" resizable="true" closable="true" collapsible="true">
-                    <p:graphicImage library="images" name="sw.PNG" width="100%"/>
-                </p:layoutUnit>
+                    <p:column headerText="Nombre" priority="3">
+                        <h:outputText value="#{empleado.nombre}" />
+                    </p:column>
 
-                <p:layoutUnit position="south" size="45" closable="true" collapsible="true">
-                    <h:column footerClass="" />
-                    <h:column footerClass="" />
-                    <p:outputLabel style="color: brown" value="© 2015 Proyecto Maldito 2. Todos los derechos reservados | Design by Luis Rocha - Andres Rivadeneira"/>
-                    <h:column footerClass="" />
-                </p:layoutUnit>
-                <p:layoutUnit position="center">
-                    <p:megaMenu  style="margin-top:2px">
-                        <p:submenu label="Clientes" icon="ui-icon-check">
-                            <p:column>
-                                <p:submenu >
-                                    <p:menuitem value="Ingresar" url="#" />
-                                    <p:menuitem value="Editar" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
-                        <p:submenu label="Insumos" icon="ui-icon-check">
-                            <p:column>
-                                <p:submenu >
-                                    <p:menuitem value="Ingresar" url="#" />
-                                    <p:menuitem value="Editar" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
+                    <p:column headerText="Apellido" priority="2">
+                        <h:outputText value="#{empleado.apellido}" />
+                    </p:column>
 
-                        <p:submenu label="Pedidos" icon="ui-icon-document">
-                            <p:column>
-                                <p:submenu >
-                                    <p:menuitem value="Ingresar" url="#" />
-                                    <p:menuitem value="Editar" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
+                    <p:column headerText="Cargo" priority="4">
+                        <h:outputText value="#{empleado.tipoEmpleado}" />
+                    </p:column>
+                    <p:column headerText="Empleado desde" priority="4">
+                        <h:outputText value="#{empleado.fechaIngresoEmpresa}" />
+                    </p:column>
+                    <p:column headerText="Telefono" priority="4">
+                        <h:outputText value="#{empleado.telefono}" />
+                    </p:column>
+                    <p:ajax event="rowSelect" update="@form" listener="#{empleadoBean.onRowSelect}" />
 
-                        <p:submenu label="Proveedores" icon="ui-icon-pencil">
-                            <p:column>
-                                <p:submenu >
-                                    <p:menuitem value="Ingresar" url="#" />
-                                    <p:menuitem value="Editar" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
+                    <f:facet name="footer">
+                        <p:commandButton value="Nuevo" actionListener="#{empleadoBean.nuevo()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected ne null}"/>
+                        <p:commandButton value="Modificar" actionListener="#{empleadoBean.modificar()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{empleadoBean.eliminarEmpleado()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected eq null}"/>
+                    </f:facet>
+                </p:dataTable>
+                <p:panel header="#{empleadoBean.title}" style="width: 100%" rendered="#{empleadoBean.enNuevo or empleadoBean.enModificar}">
 
-                        <p:submenu label="Devoluciones" icon="ui-icon-contact">
-                            <p:column>
-                                <p:submenu >
-                                    <p:menuitem value="Ingresar" url="#" />
-                                    <p:menuitem value="Editar" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
-                        <p:submenu label="Facturación" icon="ui-icon-contact">
-                            <p:column>
-                                <p:submenu >
-                                    <p:menuitem value="Ingresar" url="#" />
-                                    <p:menuitem value="Editar" url="#" />
-                                    <p:menuitem value="Buscar" url="#" />
-                                    <p:menuitem value="Eliminar" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
+                    <h:panelGrid columns="3">
+                        <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
+                        <p:inputText id="txtCedula" value="#{empleadoBean.empleado.idEmpleado }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtCedula"/>
 
-                        <p:menuitem value="Cerrar sesion" url="" icon="ui-icon-close" />
-                    </p:megaMenu>
-                    <h:form>
-                        <p:panel id="panel" header="Empelados de la Empresa" style="margin-bottom:10px;">
-                            <h3 style="margin-top:0">Column Priority</h3>
-                            <p:dataTable var="empleados" value="#{listarEmpleadosBean.listaEmpleados}">
-                                <p:column headerText="C.I">
-                                    <h:outputText value="#{empleados.idEmpleado}" />
-                                </p:column>
+                        <p:outputLabel for="txtNombre" value="Nombres: "/>
+                        <p:inputText id="txtNombre" value="#{empleadoBean.empleado.nombre }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtNombre"/>
 
-                                <p:column headerText="Nombre" priority="3">
-                                    <h:outputText value="#{empleados.nombre}" />
-                                </p:column>
+                        <p:outputLabel for="txtApellido" value="Apellidos: "/>
+                        <p:inputText id="txtApellido" value="#{empleadoBean.empleado.apellido}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtApellido"/>
 
-                                <p:column headerText="Apellido" priority="2">
-                                    <h:outputText value="#{empleados.apellido}" />
-                                </p:column>
 
-                                <p:column headerText="Cargo" priority="4">
-                                    <h:outputText value="#{empleados.tipoEmpleado}" />
-                                </p:column>
-                                <p:column headerText="Empleado desde" priority="4">
-                                    <h:outputText value="#{empleados.fechaIngresoEmpresa}" />
-                                </p:column>
-                                <p:column headerText="Telefono" priority="4">
-                                    <h:outputText value="#{empleados.telefono}" />
-                                </p:column>
-                            </p:dataTable>
-                        </p:panel>
-                    </h:form>
-                </p:layoutUnit>
-            </p:layout>
-        </h:body>
-    </f:view>
+                        <p:outputLabel for="txtTelefono" value="Telefono: "/>
+                        <p:inputText id="txtTelefono" value="#{empleadoBean.empleado.telefono}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtTelefono"/>
+
+                        <p:outputLabel for="txtCargo" value="Cargo: "/>
+                        <p:selectOneMenu  id="txtCargo" value="#{empleadoBean.empleado.tipoEmpleado}" required="true" requiredMessage="Campo Requerido">
+                            <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar..."/>
+                            <f:selectItem itemValue="Secretaria" itemLabel="Secretaria"/>
+                            <f:selectItem itemValue="Tecnico" itemLabel="Tecnico"/>
+                            <f:selectItem itemValue="Gerente" itemLabel="Gerente"/>
+                        </p:selectOneMenu>
+                        <p:message for="txtCargo"/>
+                        <p:outputLabel for="txtfechaIngreso" value="Empleado desde:  "/>
+                        <p:calendar id="txtfechaIngreso" locale="es" value="#{empleadoBean.empleado.fechaIngresoEmpresa}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtfechaIngreso"/>
+                        <p:outputLabel for="txtUsuario" value="Usuario: "/>
+                        <p:inputText id="txtUsuario" value="#{empleadoBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtUsuario"/>
+
+                        <p:outputLabel for="txtPas1" value="Clave: "/>
+                        <p:password id="txtPas1" value="#{empleadoBean.empleado.contrasena}" 
+                                    validatorMessage="No existe coincidencia de claves" weakLabel="Debil" strongLabel="fuerte" goodLabel="bueno"
+                                    match="txtPas2" feedback="true" promptLabel="Ingresa una clave" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtPas1"/>
+
+                        <p:outputLabel for="txtPas2" value="Repetir Clave: " />
+                        <p:password id="txtPas2" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtPas2"/>
+                        <p:commandButton value="Aceptar" actionListener="#{empleadoBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Canelar" actionListener="#{empleadoBean.cancelar()}"  update="@form"/>
+                    </h:panelGrid>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>
 

@@ -92,7 +92,7 @@
                                         <p:message for="txtIdEmpleado"/>
 
                                     </h:panelGrid>
-                                    <p:commandButton id="btnCargar" icon="ui-icon-check" value="Buscar" update="fscredenciales" actionListener="#{modificarEmpleadoBean.cargarEmpleado()}" />
+                                    <p:commandButton id="btnCargar" icon="ui-icon-check" value="Buscar" update="@form" actionListener="#{modificarEmpleadoBean.cargarEmpleado()}" />
                                 </p:fieldset>
 
                                 <p:fieldset id="fsDatos" legend="Datos Del Empleado">

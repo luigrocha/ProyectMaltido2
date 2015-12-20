@@ -12,7 +12,7 @@ package com.espe.distribuidas.servicio;
 
 import com.espe.distribuidas.dao.ClienteDAO;
 import com.espe.distribuidas.model.Cliente;
-import ec.edu.espe.distribuidas.model.exceptions.ValidacionException;
+import com.espe.distribuidas.model.exceptions.ValidacionException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
