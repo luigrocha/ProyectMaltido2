@@ -10,15 +10,17 @@
         <ui:composition template="/plantillas/template1.xhtml">
             <ui:define name="contenido">
                 <p:growl id="mensaje" autoUpdate="true" showSummary="true" showDetail="true"/>
-            <h:panelGrid id="login" columns="5">
-                <p:outputLabel for="usuario" value="Usuario" styleClass="textb"/>
-                <p:inputText id="usuario" value="#{loginBean.empleado.usuario}" required="true" requiredMessage="Ingrese usuario"/>
+                <h:panelGrid id="login" columns="5">
+                    <p:outputLabel for="usuario" value="Usuario" styleClass="textb"/>
+                    <p:inputText id="usuario" value="#{loginBean.empleado.usuario}" required="true" requiredMessage="Ingrese usuario"/>
 
-                <p:outputLabel for="clave" value="Clave" styleClass="textb"/>
-                <p:password id="clave" value="#{loginBean.empleado.contrasena}" required="true" requiredMessage="Ingrese Clave"/>
-                <p:commandButton icon="ui-icon-key" value="Iniciar Sesion" update="login" action="#{loginBean.iniciarSesion()}"/>
-            </h:panelGrid>
+                    <p:outputLabel for="clave" value="Clave" styleClass="textb"/>
+                    <p:password id="clave" value="#{loginBean.empleado.contrasena}" required="true" requiredMessage="Ingrese Clave"/>
+                    <p:commandButton icon="ui-icon-key" value="Iniciar Sesion" update="login" action="#{loginBean.iniciarSesion()}"/>
+                </h:panelGrid>
             </ui:define>
         </ui:composition>
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
     </h:body>
 </html>

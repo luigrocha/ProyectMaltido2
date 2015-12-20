@@ -15,21 +15,21 @@
                         <h:outputText value="#{empleado.idEmpleado}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" priority="3">
+                    <p:column headerText="Nombre" >
                         <h:outputText value="#{empleado.nombre}" />
                     </p:column>
 
-                    <p:column headerText="Apellido" priority="2">
+                    <p:column headerText="Apellido" >
                         <h:outputText value="#{empleado.apellido}" />
                     </p:column>
 
-                    <p:column headerText="Cargo" priority="4">
+                    <p:column headerText="Cargo" >
                         <h:outputText value="#{empleado.tipoEmpleado}" />
                     </p:column>
-                    <p:column headerText="Empleado desde" priority="4">
+                    <p:column headerText="Empleado desde" >
                         <h:outputText value="#{empleado.fechaIngresoEmpresa}" />
                     </p:column>
-                    <p:column headerText="Telefono" priority="4">
+                    <p:column headerText="Telefono" >
                         <h:outputText value="#{empleado.telefono}" />
                     </p:column>
                     <p:ajax event="rowSelect" update="@form" listener="#{empleadoBean.onRowSelect}" />
@@ -71,6 +71,15 @@
                         <p:outputLabel for="txtfechaIngreso" value="Empleado desde:  "/>
                         <p:calendar id="txtfechaIngreso" locale="es" value="#{empleadoBean.empleado.fechaIngresoEmpresa}" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtfechaIngreso"/>
+                        
+                        <p:outputLabel for="txtEstado" value="Estado: "/>
+                                        <p:selectOneMenu  id="txtEstado" value="#{empleadoBean.empleado.estado}" required="true" requiredMessage="Campo Requerido">
+                                            <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar..."/>
+                                            <f:selectItem itemValue="ACT" itemLabel="Activo"/>
+                                            <f:selectItem itemValue="DES" itemLabel="Deshabilitado"/>
+                                        </p:selectOneMenu>
+                                        <p:message for="txtEstado"/>
+                                        
                         <p:outputLabel for="txtUsuario" value="Usuario: "/>
                         <p:inputText id="txtUsuario" value="#{empleadoBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtUsuario"/>
