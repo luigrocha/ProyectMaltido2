@@ -44,25 +44,36 @@
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
                         <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
-                        <p:inputText id="txtCedula" value="#{empleadoBean.empleado.idEmpleado }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtCedula" value="#{empleadoBean.empleado.idEmpleado }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                            <f:validateRegex pattern="^[0-9]+$" />
+                            <f:validateLength minimum="3" maximum="15" />
+                        </p:inputText> 
                         <p:message for="txtCedula"/>
 
                         <p:outputLabel for="txtNombre" value="Nombres: "/>
-                        <p:inputText id="txtNombre" value="#{empleadoBean.empleado.nombre }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtNombre" value="#{empleadoBean.empleado.nombre }" required="true" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
+                            <f:validateRegex pattern="^[a-zA-Z]+$" />
+                            <f:validateLength minimum="3" maximum="30" />
+                        </p:inputText> 
                         <p:message for="txtNombre"/>
 
                         <p:outputLabel for="txtApellido" value="Apellidos: "/>
-                        <p:inputText id="txtApellido" value="#{empleadoBean.empleado.apellido}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtApellido" value="#{empleadoBean.empleado.apellido}" required="true" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
+                            <f:validateRegex pattern="^[a-zA-Z]+$" />
+                            <f:validateLength minimum="3" maximum="30" />
+                        </p:inputText> 
                         <p:message for="txtApellido"/>
 
 
                         <p:outputLabel for="txtTelefono" value="Telefono: "/>
-                        <p:inputText id="txtTelefono" value="#{empleadoBean.empleado.telefono}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtTelefono" value="#{empleadoBean.empleado.telefono}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese telefono minimo 8 y maximo de 15 números">
+                            <f:validateLength minimum="8" maximum="15" />
+                        </p:inputText>
                         <p:message for="txtTelefono"/>
 
                         <p:outputLabel for="txtCargo" value="Cargo: "/>
                         <p:selectOneMenu  id="txtCargo" value="#{empleadoBean.empleado.tipoEmpleado}" required="true" requiredMessage="Campo Requerido">
-                            <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar..."/>
+                            <f:selectItem itemValue="null" itemLabel="Seleccionar..."/>
                             <f:selectItem itemValue="Secretaria" itemLabel="Secretaria"/>
                             <f:selectItem itemValue="Tecnico" itemLabel="Tecnico"/>
                             <f:selectItem itemValue="Gerente" itemLabel="Gerente"/>
@@ -74,20 +85,22 @@
                         
                         <p:outputLabel for="txtEstado" value="Estado: "/>
                                         <p:selectOneMenu  id="txtEstado" value="#{empleadoBean.empleado.estado}" required="true" requiredMessage="Campo Requerido">
-                                            <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar..."/>
+                                            <f:selectItem itemValue="null" itemLabel="Seleccionar..."/>
                                             <f:selectItem itemValue="ACT" itemLabel="Activo"/>
                                             <f:selectItem itemValue="DES" itemLabel="Deshabilitado"/>
                                         </p:selectOneMenu>
                                         <p:message for="txtEstado"/>
                                         
                         <p:outputLabel for="txtUsuario" value="Usuario: "/>
-                        <p:inputText id="txtUsuario" value="#{empleadoBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtUsuario" value="#{empleadoBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese usuario mínimo 8 y máximo de 20 números">
+                            <f:validateLength minimum="8" maximum="20" />
+                        </p:inputText>
                         <p:message for="txtUsuario"/>
 
                         <p:outputLabel for="txtPas1" value="Clave: "/>
                         <p:password id="txtPas1" value="#{empleadoBean.empleado.contrasena}" 
                                     validatorMessage="No existe coincidencia de claves" weakLabel="Debil" strongLabel="fuerte" goodLabel="bueno"
-                                    match="txtPas2" feedback="true" promptLabel="Ingresa una clave" required="true" requiredMessage="Campo Requerido"/>
+                                    match="txtPas2" feedback="true" promptLabel="Ingresa una clave" required="true" requiredMessage="Campo Requerido" />
                         <p:message for="txtPas1"/>
 
                         <p:outputLabel for="txtPas2" value="Repetir Clave: " />

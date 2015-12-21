@@ -44,30 +44,42 @@
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
                         <p:outputLabel for="txtCodigo" value="Codigo de Insumo: "/>
-                        <p:inputText id="txtCodigo" value="#{insumoBean.insumos.idInsumo }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtCodigo" value="#{insumoBean.insumos.idInsumo }" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese código mínimo 1 y máximo 10 carácteres">
+                            <f:validateLength minimum="1" maximum="10" />
+                        </p:inputText>
                         <p:message for="txtCodigo"/>
 
                         <p:outputLabel for="txtNombre" value="Nombre: "/>
-                        <p:inputText id="txtNombre" value="#{insumoBean.insumos.nombre }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtNombre" value="#{insumoBean.insumos.nombre }" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese nombre máximo 10 carácteres">
+                            <f:validateLength minimum="1" maximum="10" />
+                        </p:inputText>
                         <p:message for="txtNombre"/>
 
                         <p:outputLabel for="txtDescripcion" value="Descripción "/>
-                        <p:inputText id="txtDescripcion" value="#{insumoBean.insumos.descripcion}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtDescripcion" value="#{insumoBean.insumos.descripcion}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese descripción máximo 100 carácteres">
+                            <f:validateLength minimum="1" maximum="100" />
+                        </p:inputText>
                         <p:message for="txtDescripcion"/>
 
                         <p:outputLabel for="txtPrecio" value="Precio "/>
-                        <p:inputText id="txtPrecio" value="#{insumoBean.insumos.precioCompra}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtPrecio" value="#{insumoBean.insumos.precioCompra}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                            <f:validateRegex pattern="^[0-9]\d*(\.\d+)?$" />
+                            <f:validateLength minimum="3" maximum="10" />
+                        </p:inputText> 
                         <p:message for="txtPrecio"/>
 
                         <p:outputLabel for="txtTipo" value="Tipo: "/>
                         <p:selectOneMenu  id="txtTipo" value="#{insumoBean.insumos.tipoInsumo}" required="true" requiredMessage="Campo Requerido">
-                            <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar..."/>
+                            <f:selectItem itemValue="null" itemLabel="Seleccionar..."/>
                             <f:selectItem itemValue="MateriaPrima" itemLabel="Materia Prima"/>
                             <f:selectItem itemValue="Repuesto" itemLabel="Repuesto"/>
                         </p:selectOneMenu>
                         <br/>
                         <p:outputLabel for="txtCantidad" value="Cantidad: "/>
-                        <p:inputText id="txtCantidad" value="#{insumoBean.insumos.cantidad}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtCantidad" value="#{insumoBean.insumos.cantidad}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                            <f:validateRegex pattern="^[0-9]+$" />
+                            <f:validateLength maximum="15" />
+                        </p:inputText> 
                         <p:message for="txtCantidad"/>
                         
                         <p:commandButton value="Aceptar" actionListener="#{insumoBean.aceptar()}"  update="@form"/>
