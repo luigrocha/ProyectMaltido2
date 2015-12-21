@@ -86,16 +86,6 @@ public class ClienteBean extends BaseBean implements Serializable {
         }
     }
 
-    public void onRowEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Cliente Modificado");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edicion Cancelada");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
     @Override
     public void cancelar() {
         super.cancelar();

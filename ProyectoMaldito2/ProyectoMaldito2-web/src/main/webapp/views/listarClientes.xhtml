@@ -42,7 +42,7 @@
                 </p:dataTable>
                 <p:panel header="#{clienteBean.title}" style="width: 100%" rendered="#{clienteBean.enNuevo or clienteBean.enModificar}">
 
-                    <h:panelGrid columns="3">
+                    <h:panelGrid columns="3" style="margin: 0 auto;">
                         <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
                         <p:inputText id="txtCedula" value="#{clienteBean.cliente.idCliente }" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtCedula"/>
