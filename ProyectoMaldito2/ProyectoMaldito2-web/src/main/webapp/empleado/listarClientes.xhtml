@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/plantillas/template2.xhtml">
+            <ui:define name="lista">
+                <p:dataTable id="singleEmpleado" var="cliente" value="#{clienteBean.clientes}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{clienteBean.clienteSelected}" rowKey="#{cliente.idCliente}" >
+                    <p:column headerText="C.I">
+                        <h:outputText value="#{cliente.idCliente}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre" >
+                        <h:outputText value="#{cliente.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Apellido" >
+                        <h:outputText value="#{cliente.apellido}" />
+                    </p:column>
+
+                    <p:column headerText="Dirección" >
+                        <h:outputText value="#{cliente.direccion}" />
+                    </p:column>
+                    <p:column headerText="Teléfono" >
+                        <h:outputText value="#{cliente.telefono}" />
+                    </p:column>
+                    <p:column headerText="Correo" >
+                        <h:outputText value="#{cliente.correoElectronico}" />
+                    </p:column>
+                    <p:ajax event="rowSelect" update="@form" listener="#{clienteBean.onRowSelect}" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Nuevo" actionListener="#{clienteBean.nuevo()}" immediate="true" update="@form" disabled="#{clienteBean.clienteSelected ne null}" styleClass=""/>
+                        <p:commandButton value="Modificar" actionListener="#{clienteBean.modificar()}" immediate="true" update="@form" disabled="#{clienteBean.clienteSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{clienteBean.eliminar()}" immediate="true" update="@form" disabled="#{clienteBean.clienteSelected eq null}"/>
+                    </f:facet>
+                </p:dataTable>
+                <p:panel header="#{clienteBean.title}" style="width: 100%" rendered="#{clienteBean.enNuevo or clienteBean.enModificar}">
+
+                    <h:panelGrid columns="3">
+                        <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
+                        <p:inputText id="txtCedula" value="#{clienteBean.cliente.idCliente }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtCedula"/>
+
+                        <p:outputLabel for="txtNombre" value="Nombres: "/>
+                        <p:inputText id="txtNombre" value="#{clienteBean.cliente.nombre }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtNombre"/>
+
+                        <p:outputLabel for="txtApellido" value="Apellidos: "/>
+                        <p:inputText id="txtApellido" value="#{clienteBean.cliente.apellido}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtApellido"/>
+                        
+                        <p:outputLabel for="txtDireccion" value="Dirección "/>
+                        <p:inputText id="txtDireccion" value="#{clienteBean.cliente.direccion}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtDireccion"/>
+
+                        <p:outputLabel for="txtTelefono" value="Telefono: "/>
+                        <p:inputText id="txtTelefono" value="#{clienteBean.cliente.telefono}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtTelefono"/>
+                                        
+                        <p:outputLabel for="txtCorreo" value="Correo "/>
+                        <p:inputText id="txtCorreo" value="#{clienteBean.cliente.correoElectronico}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtCorreo"/>
+
+                        <p:commandButton value="Aceptar" actionListener="#{clienteBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Canelar" actionListener="#{clienteBean.cancelar()}"  update="@form"/>
+                    </h:panelGrid>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

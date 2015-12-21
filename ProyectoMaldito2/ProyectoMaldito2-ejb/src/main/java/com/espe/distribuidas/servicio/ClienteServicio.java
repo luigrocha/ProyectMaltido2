@@ -90,6 +90,6 @@ public class ClienteServicio {
      * @param cliente recibe un objeto de cliente a eliminar.
      */
     public void eliminarCliente(Cliente cliente) {
-        this.clienteDAO.update(cliente);
+        this.clienteDAO.remove(cliente);
     }
 }
