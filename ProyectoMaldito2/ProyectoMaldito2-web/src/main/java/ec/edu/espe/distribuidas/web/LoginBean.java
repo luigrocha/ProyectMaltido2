@@ -47,7 +47,7 @@ public class LoginBean implements Serializable {
             empleadotmp = empleadoServicio.buscarPorUsuarioPassword(empleado.getUsuario(), empleado.getContrasena()).get(0);
             if (empleadotmp != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Bienvenido"));
-                redireccion = "/empleado/listarEmpleados?faces-redirect=true";
+                redireccion = "/views/listarEmpleados?faces-redirect=true";
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales Incorrectas"));
 
