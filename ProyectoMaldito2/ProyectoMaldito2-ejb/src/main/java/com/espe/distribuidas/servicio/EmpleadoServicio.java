@@ -89,7 +89,7 @@ public class EmpleadoServicio {
             Empleado empleadotmp = this.obtenerEmpleadoPorID(idempleado);
             this.empleadoDAO.remove(empleadotmp);
         } catch (Exception e) {
-            throw new ValidacionException("El empleado " + idempleado + " esta asociada a un candidado");
+            throw new ValidacionException("El empleado " + idempleado + " esta asociada");
         }
     }
 

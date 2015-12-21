@@ -94,7 +94,7 @@
                         <p:password id="txtPas2" requiredMessage="Campo Requerido"/>
                         <p:message for="txtPas2"/>
                         <p:commandButton value="Aceptar" actionListener="#{empleadoBean.aceptar()}"  update="@form"/>
-                        <p:commandButton value="Canelar" actionListener="#{empleadoBean.cancelar()}"  update="@form"/>
+                        <p:commandButton value="Cancelar" actionListener="#{empleadoBean.cancelar()}" immediate="true"  update="@form"/>
                     </h:panelGrid>
                 </p:panel>
             </ui:define>

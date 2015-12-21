@@ -8,9 +8,12 @@ package ec.edu.espe.distribuidas.web;
 import com.espe.distribuidas.model.Cliente;
 import com.espe.distribuidas.servicio.ClienteServicio;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -40,8 +43,8 @@ public class ClienteBean extends BaseBean implements Serializable {
     private Cliente clienteSelected;
 
     private Boolean disabled = true;
-    
-    private String title="";
+
+    private String title = "";
 
     @PostConstruct
     public void inicializar() {
@@ -67,18 +70,21 @@ public class ClienteBean extends BaseBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
         }
     }
+
     public void eliminar() {
-            this.cliente = new Cliente();
-            try {
+        this.cliente = new Cliente();
+        try {
             BeanUtils.copyProperties(this.cliente, this.clienteSelected);
-            this.clienteServicio.eliminarCliente(this.cliente);
-          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Eliminado Corectamente"));
+            this.clienteServicio.eliminarCliente(this.cliente.getIdCliente());
+            this.clientes.remove(this.cliente);
+            this.setClienteSelected(null);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Eliminado Corectamente"));
 
         } catch (IllegalAccessException | InvocationTargetException e) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
         }
-                }
+    }
 
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Cliente Modificado");
@@ -117,14 +123,15 @@ public class ClienteBean extends BaseBean implements Serializable {
                 //Llamar a modificar no a crear
                 this.clienteServicio.actulizarCliente(this.cliente);
                 BeanUtils.copyProperties(this.clienteSelected, this.cliente);
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el cliente: " +  this.cliente.getNombre() + " " + this.cliente.getApellido(), null));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el cliente: " + this.cliente.getNombre() + " " + this.cliente.getApellido(), null));
             } catch (ValidacionException | IllegalAccessException | InvocationTargetException e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
             }
         }
-        
+
         this.reset();
+        this.setClienteSelected(null);
     }
 
     public String getTitle() {
@@ -134,7 +141,7 @@ public class ClienteBean extends BaseBean implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
     public Boolean getDisabled() {
         return disabled;
     }

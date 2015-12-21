@@ -68,7 +68,7 @@
                         <p:message for="txtCorreo"/>
 
                         <p:commandButton value="Aceptar" actionListener="#{clienteBean.aceptar()}"  update="@form"/>
-                        <p:commandButton value="Canelar" actionListener="#{clienteBean.cancelar()}"  update="@form"/>
+                        <p:commandButton value="Canelar" actionListener="#{clienteBean.cancelar()}" immediate="true" update="@form"/>
                     </h:panelGrid>
                 </p:panel>
             </ui:define>

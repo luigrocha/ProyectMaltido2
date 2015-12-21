@@ -12,6 +12,7 @@ package com.espe.distribuidas.servicio;
 
 import com.espe.distribuidas.dao.ClienteDAO;
 import com.espe.distribuidas.model.Cliente;
+import com.espe.distribuidas.model.Empleado;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -87,9 +88,15 @@ public class ClienteServicio {
 
     /**
      *Permite eliminar clientes de la base de datos.
-     * @param cliente recibe un objeto de cliente a eliminar.
+     * @param idcliente recibe un objeto de cliente a eliminar.
      */
-    public void eliminarCliente(Cliente cliente) {
-        this.clienteDAO.remove(cliente);
+    public void eliminarCliente(String idcliente) {
+
+                try {
+            Cliente clientetmp = this.obtenerClientePorID(idcliente);
+            this.clienteDAO.remove(clientetmp);
+        } catch (Exception e) {
+            throw new ValidacionException("El empleado " + idcliente + " esta asociada");
+        }
     }
 }

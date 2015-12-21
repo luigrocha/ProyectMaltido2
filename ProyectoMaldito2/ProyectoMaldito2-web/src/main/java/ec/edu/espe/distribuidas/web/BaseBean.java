@@ -42,6 +42,7 @@ public class BaseBean  implements Serializable{
     
     public void cancelar() {
         this.reset();
+
     }
     
     public void reset() {
