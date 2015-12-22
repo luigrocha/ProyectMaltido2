@@ -40,29 +40,42 @@
                 <p:panel header="#{proveedorBean.title}" style="width: 100%" rendered="#{proveedorBean.enNuevo or proveedorBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
-                        <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
-                        <p:inputText id="txtCedula" value="#{proveedorBean.proveedores.idProveedor }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:outputLabel for="txtCedula" value="Cedula/RUC: "/>
+                        <p:inputText id="txtCedula" value="#{proveedorBean.proveedores.idProveedor }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                            <f:validateRegex pattern="^[0-9]+$" />
+                            <f:validateLength minimum="3" maximum="15" />
+                        </p:inputText> 
                         <p:message for="txtCedula"/>
 
                         <p:outputLabel for="txtNombre" value="Nombres: "/>
-                        <p:inputText id="txtNombre" value="#{proveedorBean.proveedores.nombreEmpresa }" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtNombre" value="#{proveedorBean.proveedores.nombreEmpresa }" required="true" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
+                            <f:validateRegex pattern="^[a-zA-Z]+$" />
+                            <f:validateLength minimum="3" maximum="30" />
+                        </p:inputText> 
                         <p:message for="txtNombre"/>
 
                         <p:outputLabel for="txtDireccion" value="Dirección "/>
-                        <p:inputText id="txtDireccion" value="#{proveedorBean.proveedores.direccion}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtDireccion" value="#{proveedorBean.proveedores.direccion}" required="true" requiredMessage="Campo Requerido">
+                            <f:validateLength minimum="3" maximum="50" />
+                        </p:inputText>
                         <p:message for="txtDireccion"/>
 
                         <p:outputLabel for="txtTelefono" value="Telefono: "/>
-                        <p:inputText id="txtTelefono" value="#{proveedorBean.proveedores.telefono}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtTelefono" value="#{proveedorBean.proveedores.telefono}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese teléfono mínimo 8 y máximo de 15 números">
+                            <f:validateLength minimum="8" maximum="15" />
+                        </p:inputText>
                         <p:message for="txtTelefono"/>
 
                         <p:outputLabel for="txtCorreo" value="Correo "/>
-                        <p:inputText id="txtCorreo" value="#{proveedorBean.proveedores.correoElectronico}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:inputText id="txtCorreo" value="#{proveedorBean.proveedores.correoElectronico}" required="true" requiredMessage="Campo Requerido" validatorMessage="Email no es válido">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                            <f:validateLength minimum="3" maximum="50" />
+                        </p:inputText>
                         <p:message for="txtCorreo"/>
 
                         <p:outputLabel for="txtEstado" value="Estado: "/>
                         <p:selectOneMenu  id="txtEstado" value="#{proveedorBean.proveedores.estado}" required="true" requiredMessage="Campo Requerido">
-                            <f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar..."/>
+                            <f:selectItem itemValue="null" itemLabel="Seleccionar..."/>
                             <f:selectItem itemValue="ACT" itemLabel="Activo"/>
                             <f:selectItem itemValue="DES" itemLabel="Deshabilitado"/>
                         </p:selectOneMenu>

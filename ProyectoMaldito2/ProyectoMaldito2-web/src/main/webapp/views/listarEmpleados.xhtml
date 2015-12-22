@@ -43,7 +43,7 @@
                 <p:panel header="#{empleadoBean.title}" style="width: 100%" rendered="#{empleadoBean.enNuevo or empleadoBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
-                        <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
+                        <p:outputLabel for="txtCedula" value="Cedula/RUC: "/>
                         <p:inputText id="txtCedula" value="#{empleadoBean.empleado.idEmpleado }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                             <f:validateRegex pattern="^[0-9]+$" />
                             <f:validateLength minimum="3" maximum="15" />
