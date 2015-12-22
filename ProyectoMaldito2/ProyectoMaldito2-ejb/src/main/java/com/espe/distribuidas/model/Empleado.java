@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.model;
 
@@ -19,8 +23,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Andres Vr
+ * Clase que representa a la  entidad EMPLEADO
+ * contiene todos los datos asociados a la entidad.
+ * @author R&R S.A.
  */
 @Entity
 @Table(name = "EMPLEADO_001")

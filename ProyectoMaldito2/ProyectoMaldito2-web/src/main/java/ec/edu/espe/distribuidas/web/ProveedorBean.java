@@ -5,7 +5,6 @@
  */
 package ec.edu.espe.distribuidas.web;
 
-import com.espe.distribuidas.model.Insumos;
 import com.espe.distribuidas.model.Proveedor;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
 import com.espe.distribuidas.servicio.ProveedorServicio;

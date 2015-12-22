@@ -39,7 +39,6 @@ public class EmpleadoServicio {
     public List<Empleado> obtenerTodosEmpleados() {
         return this.empleadoDAO.findAll();
     }
-    
 
     /**
      * Permite realizar una busqueda para encontrar un empleado por ID de
@@ -89,14 +88,36 @@ public class EmpleadoServicio {
             Empleado empleadotmp = this.obtenerEmpleadoPorID(idempleado);
             this.empleadoDAO.remove(empleadotmp);
         } catch (Exception e) {
-            throw new ValidacionException("El empleado " + idempleado + " esta asociada");
+            throw new ValidacionException("El empleado " + idempleado + " esta asociadao");
         }
     }
+
+    /**
+     * Permite consultar si un usurio y una contraseña son validos para la
+     * autenticación dentro de la aplicacion.
+     *
+     * @param usuario cadena de texto que identifica al nombre de usuario.
+     * @param password cadena de texro que identifica la contraseña.
+     * @return retorna una lista de empleados que coincidan con el usuario y la
+     * contraseña en este caso la coincidencia de la lista arrojaria una unica
+     * coincidencia.
+     */
 
     public List<Empleado> buscarPorUsuarioPassword(String usuario, String password) {
         Empleado empleado = new Empleado();
         empleado.setUsuario(usuario);
         empleado.setContrasena(password);
+        return this.empleadoDAO.find(empleado);
+    }
+    
+   /**
+    * Permite consultar si un usurio es valido para ser registrado.
+    * @param usuario string del usuario.
+    * @return 
+    */
+    public List<Empleado> buscarPorUsuario(String usuario) {
+        Empleado empleado = new Empleado();
+        empleado.setUsuario(usuario);
         return this.empleadoDAO.find(empleado);
     }
 

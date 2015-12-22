@@ -91,7 +91,7 @@
                                         
                         <p:outputLabel for="txtUsuario" value="Usuario: "/>
                         <p:inputText id="txtUsuario" value="#{empleadoBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese usuario mínimo 8 y máximo de 20 números">
-                            <f:validateLength minimum="8" maximum="20" />
+                            <f:validateLength minimum="4" maximum="20" />
                         </p:inputText>
                         <p:message for="txtUsuario"/>
 

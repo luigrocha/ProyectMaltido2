@@ -7,16 +7,17 @@ package ec.edu.espe.distribuidas.web;
 
 import com.espe.distribuidas.model.Empleado;
 import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+
+
 
 /**
  *
  * @author Luig Rocha
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class PlantillaBean implements Serializable {
 
@@ -34,5 +35,7 @@ public class PlantillaBean implements Serializable {
         } catch (Exception e) {
         }
     }
-
+    public void cerrarSesion(){
+    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+    }
 }

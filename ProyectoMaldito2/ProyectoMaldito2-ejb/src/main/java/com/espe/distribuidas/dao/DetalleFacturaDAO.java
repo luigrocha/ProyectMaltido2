@@ -1,11 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires.
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *   
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package com.espe.distribuidas.dao;
 
-import com.espe.distribuidas.model.DetalleDevolucion;
 import com.espe.distribuidas.model.DetalleFactura;
 import com.espe.distribuidas.model.DetalleFacturaPK;
 import com.espe.distribuidas.commons.dao.DefaultGenericDAOImple;
@@ -13,8 +16,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 /**
- *
- * @author Andres Vr
+ * Clase DAO de la entidad DETALLE_FACTURA.
+ * @author R&R S.A.
  */
 @LocalBean
 @Stateless 
