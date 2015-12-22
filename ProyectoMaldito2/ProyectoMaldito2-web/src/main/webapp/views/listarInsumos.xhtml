@@ -24,7 +24,7 @@
                     </p:column>
 
                     <p:column headerText="Precio" >
-                        <h:outputText value="#{insumo.descripcion}" />
+                        <h:outputText value="#{insumo.precioCompra}" />
                     </p:column>
                     <p:column headerText="Cantidad" >
                         <h:outputText value="#{insumo.cantidad}" />
@@ -63,8 +63,6 @@
 
                         <p:outputLabel for="txtPrecio" value="Precio "/>
                         <p:inputText id="txtPrecio" value="#{insumoBean.insumos.precioCompra}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
-                            <f:validateRegex pattern="^[0-9]\d*(\.\d+)?$" />
-                            <f:validateLength minimum="3" maximum="10" />
                         </p:inputText> 
                         <p:message for="txtPrecio"/>
 
@@ -76,8 +74,6 @@
                         <br/>
                         <p:outputLabel for="txtCantidad" value="Cantidad: "/>
                         <p:inputText id="txtCantidad" value="#{insumoBean.insumos.cantidad}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
-                            <f:validateRegex pattern="^[0-9]+$" />
-                            <f:validateLength maximum="15" />
                         </p:inputText> 
                         <p:message for="txtCantidad"/>
                         

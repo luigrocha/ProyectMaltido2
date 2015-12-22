@@ -34,7 +34,7 @@ public class AsignacionInsumo implements Serializable {
     private String idInsumo;
 
     @Id
-    @Column(name = "ID_TECNICO", nullable = false)
+    @Column(name = "ID_EMPLEADO", nullable = false)
     private String idTecnico;
 
     @Id

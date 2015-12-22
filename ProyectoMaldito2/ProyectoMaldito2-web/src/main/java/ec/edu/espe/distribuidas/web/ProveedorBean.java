@@ -49,7 +49,8 @@ public class ProveedorBean extends BaseBean implements Serializable {
 
     @Override
     public void cancelar() {
-        super.cancelar(); //To change body of generated methods, choose Tools | Templates.
+        super.cancelar(); 
+        this.setProveedorSelected(null);
     }
 
     public void onRowSelect(SelectEvent event) {
@@ -101,7 +102,7 @@ public class ProveedorBean extends BaseBean implements Serializable {
     public void nuevo() {
         super.nuevo();
         this.proveedores = new Proveedor();
-        this.setTitle("Ingresar Insumos");
+        this.setTitle("Ingresar Proveedor");
     }
 
     public void eliminar() {

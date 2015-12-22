@@ -7,6 +7,7 @@ package ec.edu.espe.distribuidas.web;
 
 import com.espe.distribuidas.model.Empleado;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -15,15 +16,19 @@ import javax.inject.Named;
  *
  * @author Luig Rocha
  */
-@Named
 @ViewScoped
-public class PlantillaBean implements Serializable{
-    
-    public void verificarSesion(){
+@ManagedBean
+public class PlantillaBean implements Serializable {
+
+    public String redireccionar() {
+        return "/index.xhtml";
+    }
+
+    public void verificarSesion() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             Empleado empleado = (Empleado) context.getExternalContext().getSessionMap().get("usuario");
-            if (empleado == null){
+            if (empleado == null) {
                 context.getExternalContext().redirect("./../permisos.xhtml");
             }
         } catch (Exception e) {

@@ -89,7 +89,7 @@ public class ClienteBean extends BaseBean implements Serializable {
     @Override
     public void cancelar() {
         super.cancelar();
-
+        this.setClienteSelected(null);
     }
 
     public void onRowSelect(SelectEvent event) {

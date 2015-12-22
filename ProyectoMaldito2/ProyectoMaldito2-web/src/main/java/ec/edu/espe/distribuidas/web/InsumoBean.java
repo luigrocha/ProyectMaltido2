@@ -50,6 +50,7 @@ public class InsumoBean extends BaseBean implements Serializable {
     @Override
     public void cancelar() {
         super.cancelar();
+        this.setInsumoSelected(null);
     }
 
     public void onRowSelect(SelectEvent event) {

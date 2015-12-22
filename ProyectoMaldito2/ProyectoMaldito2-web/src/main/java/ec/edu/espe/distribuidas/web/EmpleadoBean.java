@@ -97,6 +97,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
     @Override
     public void cancelar() {
             super.cancelar();
+            this.setEmpleadoSelected(null);
          
     }
 
