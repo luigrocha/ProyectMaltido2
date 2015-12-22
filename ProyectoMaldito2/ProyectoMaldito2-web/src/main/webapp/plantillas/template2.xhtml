@@ -5,7 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      >
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Spotlights-Wires</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -15,6 +16,7 @@
         <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700,900" rel="stylesheet"/>
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/move-top.js"></script>
         <h:outputScript library="js" name="spanishLocale.js"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}"/>
     </h:head>
     <h:body>
         <!--banner start here-->
