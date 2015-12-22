@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * R&R S.A.
+ * Sistema: Spotlights&Wires
+ * Creado: 05-Dec-2015 - 15:50:45
+ * 
+ * Los contenidos de este archivo son propiedad intelectual de R&R S.A.
+ *  
+ *  
+ * Copyright 2015 R&R S.A. Todos los derechos reservados.
  */
 package ec.edu.espe.distribuidas.web;
 
@@ -16,8 +21,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 /**
+ * Clase LoginBean que maneja index.xhtml.
  *
- * @author Andres Vr
+ * @author R&R S.A.
  */
 @ViewScoped
 @ManagedBean
@@ -25,21 +31,26 @@ public class LoginBean implements Serializable {
 
     @EJB
     private EmpleadoServicio empleadoServicio;
+    
+    /**
+     * variable de tipo empleado.
+     */
     private Empleado empleado;
 
+     /**
+     * metodo que se inicializa despues de cargar el formulario contiene la
+     * anotacion postconstructor.
+     */
     @PostConstruct
     public void inicializar() {
         empleado = new Empleado();
     }
-
-    public Empleado getEmpleado() {
-        return empleado;
-    }
-
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
-    }
-
+    
+    /**
+     * metodo que valida el inicio de sesion a la aplicacion.
+     * @return retorna un string con el argumento de redirección a la pagina despues de 
+     * iniciar sesion.
+     */
     public String iniciarSesion() {
         Empleado empleadotmp;
         String redireccion = null;
@@ -59,5 +70,23 @@ public class LoginBean implements Serializable {
         }
         return redireccion;
     }
+
+    /**
+     * metodo get del objeto empleado.
+     * @return retorna un tipo empleado.
+     */
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+    
+    /**
+     * metodo set de empleado.
+     * @param empleado  acepta un objeto de tipo empleado.
+     */
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    
 
 }

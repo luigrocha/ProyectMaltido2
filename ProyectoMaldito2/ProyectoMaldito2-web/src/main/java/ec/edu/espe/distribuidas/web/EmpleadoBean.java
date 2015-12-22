@@ -23,7 +23,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.beanutils.BeanUtils;
-import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -173,7 +172,9 @@ public class EmpleadoBean extends BaseBean implements Serializable {
     }
 
     /**
-     * metodo aceptar nuevo habilita opciones de la interfaz.
+     * metodo que controla el boton aceptar del formulario. se comporta de 2
+     * maneras, para la primera guarda un nuevo registro en la base de datos.
+     * para la segunda actualiza un registro de la base de datos.
      */
     public void aceptarNuevo() {
         super.nuevo();
