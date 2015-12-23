@@ -10,6 +10,7 @@
 package com.espe.distribuidas.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -51,7 +52,10 @@ public class AsignacionInsumo implements Serializable {
     private Date fechaAsignacion;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private Integer cantidad;
+    private BigDecimal cantidad;
+    
+    @Column(name="UNIDAD_MEDIDA",nullable = false)
+    private String unidadMedida;
 
     @JoinColumns({
         @JoinColumn(name = "ID_CITA", referencedColumnName = "ID_CITA", insertable = false, updatable = false),
@@ -115,13 +119,22 @@ public class AsignacionInsumo implements Serializable {
         this.fechaAsignacion = fechaAsignacion;
     }
 
-    public Integer getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
+
+    public String getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public void setUnidadMedida(String unidadMedida) {
+        this.unidadMedida = unidadMedida;
+    }
+
 
     @Override
     public int hashCode() {

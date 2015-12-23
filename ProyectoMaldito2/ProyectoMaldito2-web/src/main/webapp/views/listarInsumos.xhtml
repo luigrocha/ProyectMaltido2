@@ -26,12 +26,18 @@
                     <p:column headerText="Precio" >
                         <h:outputText value="#{insumo.precioCompra}" />
                     </p:column>
+                    <p:column headerText="Unidad de Medida" >
+                        <h:outputText value="#{insumo.unidadMedida}" />
+                    </p:column>
+
                     <p:column headerText="Cantidad" >
                         <h:outputText value="#{insumo.cantidad}" />
                     </p:column>
                     <p:column headerText="Tipo" >
                         <h:outputText value="#{insumo.tipoInsumo}" />
                     </p:column>
+
+
                     <p:ajax event="rowSelect" update="@form" listener="#{insumoBean.onRowSelect}" />
 
                     <f:facet name="footer">
@@ -72,11 +78,18 @@
                             <f:selectItem itemValue="Repuesto" itemLabel="Repuesto"/>
                         </p:selectOneMenu>
                         <br/>
+                        <p:outputLabel for="txtUnidad" value="Unidad: "/>
+                        <p:selectOneMenu  id="txtUnidad" value="#{insumoBean.insumos.unidadMedida}" required="true" requiredMessage="Campo Requerido">
+                            <f:selectItem itemValue="metro" itemLabel="metro"/>
+                            <f:selectItem itemValue="unidad" itemLabel="unidad"/>
+                        </p:selectOneMenu>
+
+                        <br/>
                         <p:outputLabel for="txtCantidad" value="Cantidad: "/>
                         <p:inputText id="txtCantidad" value="#{insumoBean.insumos.cantidad}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                         </p:inputText> 
                         <p:message for="txtCantidad"/>
-                        
+
                         <p:commandButton value="Aceptar" actionListener="#{insumoBean.aceptar()}"  update="@form"/>
                         <p:commandButton value="Canelar" actionListener="#{insumoBean.cancelar()}" immediate="true" update="@form"/>
                     </h:panelGrid>
