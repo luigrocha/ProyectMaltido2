@@ -61,6 +61,12 @@ public class EmpleadoBean extends BaseBean implements Serializable {
      * variable tipo String para los titulos del formulario.
      */
     private String title = "";
+    
+    /**
+     * variable tipo boolean para inhabilitar datos del formulario.
+     */
+    private Boolean disabledCampoModificar = true;
+    
 
     /**
      * metodo que se inicializa despues de cargar el formulario contiene la
@@ -271,5 +277,14 @@ public class EmpleadoBean extends BaseBean implements Serializable {
     public void setEmpleadoSelected(Empleado empleadoSelected) {
         this.empleadoSelected = empleadoSelected;
     }
+
+    public Boolean getDisabledCampoModificar() {
+        return disabledCampoModificar;
+    }
+
+    public void setDisabledCampoModificar(Boolean disabledCampoModificar) {
+        this.disabledCampoModificar = disabledCampoModificar;
+    }
+    
 
 }

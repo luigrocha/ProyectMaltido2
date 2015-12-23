@@ -10,7 +10,7 @@
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
                 <p:dataTable id="singleEmpleado" var="empleado" value="#{empleadoBean.empleados}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                              style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{empleadoBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" >
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{empleadoBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" >
                     <p:column headerText="C.I">
                         <h:outputText value="#{empleado.idEmpleado}" />
                     </p:column>
@@ -27,7 +27,10 @@
                         <h:outputText value="#{empleado.tipoEmpleado}" />
                     </p:column>
                     <p:column headerText="Empleado desde" >
-                        <h:outputText value="#{empleado.fechaIngresoEmpresa}" />
+                        <h:outputText value="#{empleado.fechaIngresoEmpresa}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+
                     </p:column>
                     <p:column headerText="Telefono" >
                         <h:outputText value="#{empleado.telefono}" />
@@ -79,16 +82,16 @@
                         </p:selectOneMenu>
                         <p:message for="txtCargo"/>
                         <p:outputLabel for="txtfechaIngreso" value="Empleado desde:  "/>
-                        <p:calendar id="txtfechaIngreso" locale="es" value="#{empleadoBean.empleado.fechaIngresoEmpresa}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:calendar id="txtfechaIngreso" locale="es" pattern="dd/MM/yyyy" value="#{empleadoBean.empleado.fechaIngresoEmpresa}" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtfechaIngreso"/>
-                        
+
                         <p:outputLabel for="txtEstado" value="Estado: "/>
-                                        <p:selectOneMenu  id="txtEstado" value="#{empleadoBean.empleado.estado}" required="true" requiredMessage="Campo Requerido">
-                                            <f:selectItem itemValue="ACT" itemLabel="Activo"/>
-                                            <f:selectItem itemValue="DES" itemLabel="Deshabilitado"/>
-                                        </p:selectOneMenu>
-                                        <p:message for="txtEstado"/>
-                                        
+                        <p:selectOneMenu  id="txtEstado" value="#{empleadoBean.empleado.estado}" required="true" requiredMessage="Campo Requerido">
+                            <f:selectItem itemValue="ACT" itemLabel="Activo"/>
+                            <f:selectItem itemValue="DES" itemLabel="Deshabilitado"/>
+                        </p:selectOneMenu>
+                        <p:message for="txtEstado"/>
+
                         <p:outputLabel for="txtUsuario" value="Usuario: "/>
                         <p:inputText id="txtUsuario" value="#{empleadoBean.empleado.usuario}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese usuario mínimo 8 y máximo de 20 números">
                             <f:validateLength minimum="4" maximum="20" />
