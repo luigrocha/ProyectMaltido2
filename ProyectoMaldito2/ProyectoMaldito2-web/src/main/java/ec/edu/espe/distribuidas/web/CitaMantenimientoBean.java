@@ -82,6 +82,12 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
     private String title = "";
 
     /**
+     * variable que controla el estado del boton aceptar de la tabla de
+     * seleccion de cliente.
+     */
+    private boolean diableAceptar = true;
+
+    /**
      * metodo que se inicializa despues de cargar el formulario contiene la
      * anotacion postconstructor.
      */
@@ -98,7 +104,7 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
     @Override
     public void nuevo() {
         super.seleccionar();
-//    super.nuevo();
+        // super.nuevo();
         this.cita = new CitaMantenimiento();
         this.setTitle("Ingresar Cita de Mantenimiento");
     }
@@ -159,7 +165,8 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         this.disabled = false;
     }
 
-    public void onRowSelectPopUp(SelectEvent evt) {
+    public void onRowSelectPopUp(SelectEvent event) {
+        this.diableAceptar = false;
     }
 
     /**
@@ -173,8 +180,9 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
             try {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
                 this.citaServicio.ingresarCitaMantenimiento(this.cita);
-                this.citas.add(0, this.cita);
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la cita: " + this.cita.getIdCita() + " del cliente: " + this.cita.getClienteCita().getIdCliente(), null));
+                // this.citas.add(0, this.cita);
+                this.citas = this.citaServicio.obtenerTodasCitas();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la cita del cliente: " + this.cita.getIdCliente(), null));
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -204,16 +212,18 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
      */
     public void aceptarPopUp() {
         super.nuevo();
-            this.cliente=new Cliente();
+        this.cliente = new Cliente();
         try {
-          
+
             BeanUtils.copyProperties(this.cliente, this.clienteSelected);
-              this.cita.setIdCliente(this.cliente.getIdCliente());
-  
-            super.quitarSeleccion();
+            this.cita.setIdCliente(this.cliente.getIdCliente());
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(CitaMantenimientoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.setCitaSelected(null);
+        this.setCliente(null);
+        super.quitarSeleccion();
+
     }
 
     /**
@@ -306,6 +316,22 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
 
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public boolean isDiableAceptar() {
+        return diableAceptar;
+    }
+
+    public void setDiableAceptar(boolean diableAceptar) {
+        this.diableAceptar = diableAceptar;
     }
 
 }

@@ -115,6 +115,7 @@ public class BaseBean implements Serializable {
     public void reset() {
         this.enModificar = false;
         this.enNuevo = false;
+        this.enSeleccionar=false;
     }
     /**
      * desabilita la seleccion de argumentos.

@@ -40,6 +40,7 @@
                         <p:commandButton value="Borrar" actionListener="#{clienteBean.eliminar()}" immediate="true" update="@form" disabled="#{clienteBean.clienteSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
+                
                 <p:panel header="#{clienteBean.title}" style="width: 100%" rendered="#{clienteBean.enNuevo or clienteBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
