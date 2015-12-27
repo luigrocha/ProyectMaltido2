@@ -30,6 +30,11 @@ public class BaseBean implements Serializable {
     private boolean enModificar;
 
     /**
+     * seleccion de cliente.
+     */
+    private boolean enSeleccionar;
+
+    /**
      * metodo get de enNuevo.
      *
      * @return retirna el valor de ennuevo.
@@ -81,6 +86,13 @@ public class BaseBean implements Serializable {
     }
 
     /**
+     * seleciconae.
+     */
+    public void seleccionar() {
+        this.enSeleccionar = true;
+    }
+
+    /**
      * metodo generico que denotara la operacion Modificar del CRUD
      */
     public void cancelar() {
@@ -88,11 +100,26 @@ public class BaseBean implements Serializable {
 
     }
 
+    public boolean isEnSeleccionar() {
+        return enSeleccionar;
+    }
+
+    public void setEnSeleccionar(boolean enSeleccionar) {
+        this.enSeleccionar = enSeleccionar;
+    }
+
     /**
-     * metodo generico que denotara el reseteo de las variables ennuevo y enmodificar.
-     */    
+     * metodo generico que denotara el reseteo de las variables ennuevo y
+     * enmodificar.
+     */
     public void reset() {
         this.enModificar = false;
         this.enNuevo = false;
+    }
+    /**
+     * desabilita la seleccion de argumentos.
+     */
+    public void quitarSeleccion(){
+    this.enSeleccionar=false;
     }
 }

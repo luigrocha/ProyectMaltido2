@@ -81,6 +81,7 @@
                             <f:selectItem itemValue="Gerente" itemLabel="Gerente"/>
                         </p:selectOneMenu>
                         <p:message for="txtCargo"/>
+
                         <p:outputLabel for="txtfechaIngreso" value="Empleado desde:  "/>
                         <p:calendar id="txtfechaIngreso" locale="es" pattern="dd/MM/yyyy" value="#{empleadoBean.empleado.fechaIngresoEmpresa}" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtfechaIngreso"/>

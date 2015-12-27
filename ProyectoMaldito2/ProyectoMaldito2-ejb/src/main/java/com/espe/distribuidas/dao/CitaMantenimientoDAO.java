@@ -20,7 +20,7 @@ import javax.ejb.Stateless;
  */
 @LocalBean
 @Stateless 
-public class CitaMantenimientoDAO extends DefaultGenericDAOImple<CitaMantenimiento, String> {
+public class CitaMantenimientoDAO extends DefaultGenericDAOImple<CitaMantenimiento, Integer> {
      public CitaMantenimientoDAO() {
         super(CitaMantenimiento.class);
     }

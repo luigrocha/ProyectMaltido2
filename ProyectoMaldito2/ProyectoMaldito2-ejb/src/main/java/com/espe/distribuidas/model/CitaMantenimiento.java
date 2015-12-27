@@ -16,6 +16,8 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,7 +35,7 @@ import javax.persistence.TemporalType;
 @Table(name = "CITA_MANTENIMIENTO_001")
 public class CitaMantenimiento implements Serializable {
 
-    @Id
+    @Id 
     @Column(name = "ID_CITA", nullable = false)
     private Integer idCita;
 

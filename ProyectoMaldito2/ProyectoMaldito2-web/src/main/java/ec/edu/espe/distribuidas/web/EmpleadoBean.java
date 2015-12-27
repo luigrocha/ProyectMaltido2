@@ -278,10 +278,18 @@ public class EmpleadoBean extends BaseBean implements Serializable {
         this.empleadoSelected = empleadoSelected;
     }
 
+    /**
+     * metodo get de desabilitar campos.
+     * @return retorna un boolean.
+     */
     public Boolean getDisabledCampoModificar() {
         return disabledCampoModificar;
     }
 
+    /**
+     * metodo set de desabilitar campos.
+     * @param disabledCampoModificar acepta un boolean.
+     */
     public void setDisabledCampoModificar(Boolean disabledCampoModificar) {
         this.disabledCampoModificar = disabledCampoModificar;
     }

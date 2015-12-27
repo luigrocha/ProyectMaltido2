@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/plantillas/template2.xhtml">
+            <ui:define name="lista">
+                <p:dataTable id="singleCita" var="cita" value="#{citaMantenimientoBean.citas}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{citaMantenimientoBean.citaSelected}" rowKey="#{cita.idCita}" >
+
+                    <p:column headerText="ID Cita">
+                        <h:outputText value="#{cita.idCita}" />
+                    </p:column>
+
+                    <p:column headerText="C.I" filterBy="#{cita.clienteCita.idCliente}" filterMatchMode="contains">
+                        <h:outputText value="#{cita.clienteCita.idCliente}" />
+                    </p:column> 
+
+                    <p:column headerText="Cliente" >
+                        <h:outputText value="#{cita.clienteCita.nombre}" />
+
+                    </p:column>
+
+                    <p:column headerText="Fecha" >
+                        <h:outputText value="#{cita.fecha}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Tipo" >
+                        <h:outputText value="#{cita.tipoMantenimiento}" />
+                    </p:column>
+
+                    <p:column headerText="Descripción" >
+                        <h:outputText value="#{cita.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Estado" >
+                        <h:outputText value="#{cita.estado}" />
+                    </p:column>
+
+                    <p:ajax event="rowSelect" update="@form" listener="#{citaMantenimientoBean.onRowSelect}" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Nuevo" actionListener="#{citaMantenimientoBean.nuevo()}" immediate="true" update="@form" disabled="#{citaMantenimientoBean.citaSelected ne null}" styleClass=""/>
+                        <p:commandButton value="Modificar" actionListener="#{citaMantenimientoBean.modificar()}" immediate="true" update="@form" disabled="#{citaMantenimientoBean.citaSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{citaMantenimientoBean.eliminar()}" immediate="true" update="@form" disabled="#{citaMantenimientoBean.citaSelected eq null}"/>
+                    </f:facet>
+                </p:dataTable>
+
+                <p:panel id="dialog" widgetVar="seleccionarClienteDialog" header="Seleccionar Cliente" rendered="#{citaMantenimientoBean.enSeleccionar}">
+                    
+                    <p:dataTable id="singleCliente" var="cliente" value="#{citaMantenimientoBean.clientes}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{citaMantenimientoBean.clienteSelected}" rowKey="#{cliente.idCliente}" >
+                        <p:column headerText="C.I">
+                            <h:outputText value="#{cliente.idCliente}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre" >
+                            <h:outputText value="#{cliente.nombre} #{cliente.apellido}" />
+                        </p:column>
+
+                        <p:column headerText="Telefono" >
+                            <h:outputText value="#{cliente.telefono}" />
+                        </p:column>
+
+
+                        <p:ajax event="rowSelect" update="@form" listener="#{citaMantenimientoBean.onRowSelect}" />
+
+
+                    </p:dataTable>
+                    <p:commandButton value="Aceptar" actionListener="#{citaMantenimientoBean.aceptarPopUp()}" update="@form" />
+                        <p:commandButton value="Cancelar" actionListener="#{citaMantenimientoBean.cancelarPopUp()}" immediate="true" update="@form"/>
+
+                </p:panel>
+
+
+
+
+                <p:panel header="#{citaMantenimientoBean.title}" style="width: 100%" rendered="#{ citaMantenimientoBean.enNuevo or citaMantenimientoBean.enModificar}">
+
+                    <h:panelGrid columns="3" style="margin: 0 auto;">
+                        <p:outputLabel for="txtCedula" value="Cliente: "/>
+                        <p:inputText id="txtCedula" value="#{citaMantenimientoBean.cita.idCliente}" onselect="#{citaMantenimientoBean.habilitarSeleccionCliente()}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        </p:inputText>
+                        <p:message for="txtCedula"/>
+                        <p:outputLabel for="txtfecha" value="Fecha:  "/>
+                        <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" value="#{citaMantenimientoBean.cita.fecha}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtfecha"/>
+
+                        <p:outputLabel for="txtTipo" value="Tipo: "/>
+                        <p:selectOneMenu  id="txtTipo" value="#{citaMantenimientoBean.cita.tipoMantenimiento}" required="true" requiredMessage="Campo Requerido">
+                            <f:selectItem itemValue="PR" itemLabel="Preventivo"/>
+                            <f:selectItem itemValue="CR" itemLabel="Correctivo"/>
+                        </p:selectOneMenu>
+                        <p:message for="txtTipo"/>
+
+                        <p:outputLabel for="txtDescripcion" value="Descripción "/>
+                        <p:inputText id="txtDescripcion" value="#{citaMantenimientoBean.cita.descripcion}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese descripción máximo 100 carácteres">
+                            <f:validateLength minimum="1" maximum="100" />
+                        </p:inputText>
+                        <p:message for="txtDescripcion"/>
+
+                        <p:outputLabel for="txtEstado" value="Estado: "/>
+                        <p:selectOneMenu  id="txtEstado" value="#{citaMantenimientoBean.cita.estado}" required="true" requiredMessage="Campo Requerido">
+                            <f:selectItem itemValue="ACT" itemLabel="Activo"/>
+                            <f:selectItem itemValue="DES" itemLabel="Deshabilitado"/>
+                        </p:selectOneMenu>
+                        <p:message for="txtEstado"/>
+
+
+                        <p:commandButton value="Aceptar" actionListener="#{citaMantenimientoBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Canelar" actionListener="#{citaMantenimientoBean.cancelar()}" immediate="true" update="@form"/>
+                    </h:panelGrid>
+                </p:panel>
+
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
