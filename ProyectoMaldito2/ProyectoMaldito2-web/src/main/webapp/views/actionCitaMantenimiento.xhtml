@@ -23,7 +23,7 @@
                         <h:outputText value="#{cita.clienteCita.nombre} #{cita.clienteCita.apellido}" />
                     </p:column>
 
-                    <p:column headerText="Fecha" >
+                    <p:column headerText="Fecha" filterBy="#{cita.fecha}" filterMatchMode="contains">
                         <h:outputText value="#{cita.fecha}">
                             <f:convertDateTime pattern="yyyy-MM-dd" />
                         </h:outputText>
