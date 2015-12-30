@@ -252,7 +252,7 @@ public class DevolucionBean extends BaseBean implements Serializable {
 
                     this.detalleDevolucionServicio.ingresarDetalleDevolucion(detalleDevolucione);
                 }
-
+                this.devoluciones=devolucionServicio.obtenerTodasDevoluciones();
                 //this.devoluciones.add(0, this.devolucion);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la devolucion: "
                         + this.devolucion.getIdDevoluciones() + " del proveedor: " + this.devolucion.getDevolucionProveedor().getIdProveedor(), null));
