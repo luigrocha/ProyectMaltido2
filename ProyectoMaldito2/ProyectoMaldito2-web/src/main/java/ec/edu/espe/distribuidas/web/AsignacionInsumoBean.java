@@ -10,16 +10,18 @@
  */
 package ec.edu.espe.distribuidas.web;
 
-import com.espe.distribuidas.model.CitaMantenimiento;
-import com.espe.distribuidas.model.Empleado;
+import com.espe.distribuidas.model.AsignacionInsumo;
+import com.espe.distribuidas.model.AsignacionInsumoPK;
+import com.espe.distribuidas.model.Insumos;
 import com.espe.distribuidas.model.Mantenimiento;
 import com.espe.distribuidas.model.MantenimientoPK;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
-import com.espe.distribuidas.servicio.CitaMantenimientoServicio;
-import com.espe.distribuidas.servicio.EmpleadoServicio;
+import com.espe.distribuidas.servicio.AsignacionInsumoServicio;
+import com.espe.distribuidas.servicio.InsumoServicio;
 import com.espe.distribuidas.servicio.MantenimientoServicio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -31,58 +33,67 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.event.SelectEvent;
 
 /**
- * Clase de bean de mantenimiento, define todas las operaciones del CRUD y
- * busqueda.
+ * Clase de bean de insumo Asignado al mantenimiento, define todas las
+ * operaciones del CRUD y busqueda.
  *
  * @author R&R S.A.
  *
  */
 @ViewScoped
 @ManagedBean
-
-
-public class MantenimientoBean extends BaseBean implements Serializable {
+public class AsignacionInsumoBean extends BaseBean implements Serializable {
 
     @EJB
-    private CitaMantenimientoServicio citaServicio;
+    private InsumoServicio insumoServicio;
 
     @EJB
-    private EmpleadoServicio empleadoServicio;
-    
+    private AsignacionInsumoServicio asignacionInsumoServicio;
+
     @EJB
     private MantenimientoServicio mantenimientoServicio;
-   
-        
-    /**
-     * variable que referencia a un empleado seleccionado.
-     */
-    private Empleado empleadoSelected;
 
     /**
-     * variable de referencia al objeto empleado.
+     * variable temporal para retener el id del mantenimiento en toda la lista.
      */
-    private Empleado empleado;
+    private MantenimientoPK idmantenimiento;
     /**
-     * lista de empleados.
+     * variable que referencia a un insumo seleccionado.
      */
-    private List<Empleado> empleados;
-    
+    private Insumos insumoSelected;
+
     /**
-     * variable tipo lista de citas de mantenimiento para setar a una tabla del
+     * cantidad de un insumo.
+     */
+    private BigDecimal cantidad;
+    /**
+     * variable de referencia al objeto insumo.
+     */
+    private Insumos insumo;
+    /**
+     * lista de insumos.
+     */
+    private List<Insumos> insumos;
+
+    /**
+     * variable tipo lista de AsignacionInsumo para setar a una tabla del
      * formulario.
      */
-    private List<CitaMantenimiento> citas;
+    private List<AsignacionInsumo> asignacionInsumos;
 
     /**
-     * variable tipo cita de mantenimiento.
+     * variable tipo AsignacionInsumos.
      */
-    private CitaMantenimiento cita;
+    private AsignacionInsumo asignacionInsumo;
 
     /**
-     * variable tipo cita para seleccion.
+     * variable tipo AsignacionInsumo para seleccion.
      */
-    private CitaMantenimiento citaSelected;
+    private AsignacionInsumo asignacionInsumoSelected;
 
+    /**
+     * lista de insumos para guardar.
+     */
+    private List<AsignacionInsumo> guardarAsignacionInsumo;
     /**
      * variable tipo lista de mantenimiento para setar a una tabla del
      * formulario.
@@ -98,12 +109,12 @@ public class MantenimientoBean extends BaseBean implements Serializable {
      * variable tipo mantenimiento para seleccion.
      */
     private Mantenimiento mantenimientoSelected;
-    
+
     /**
      * clase clave primaria
      */
-    private MantenimientoPK primaryKey;
-    
+    private AsignacionInsumoPK primaryKey;
+
     /**
      * variable tipo boolean para estados del formulario.
      */
@@ -126,10 +137,11 @@ public class MantenimientoBean extends BaseBean implements Serializable {
      */
     @PostConstruct
     public void inicializar() {
-        this.citas = this.citaServicio.obtenerTodasCitas();
-        this.empleados = this.empleadoServicio.buscasPorTecnico();
-        this.mantenimientos=this.mantenimientoServicio.obtenerTodasMantenimiento();
-        this.primaryKey=new MantenimientoPK();
+        this.asignacionInsumos = this.asignacionInsumoServicio.obtenerTodasInsumosAsignados();
+        this.insumos = this.insumoServicio.obtenerTodosInsumos();
+        this.mantenimientos = this.mantenimientoServicio.obtenerTodasMantenimiento();
+        this.primaryKey = new AsignacionInsumoPK();
+        this.idmantenimiento = new MantenimientoPK();
     }
 
     /**
@@ -138,10 +150,21 @@ public class MantenimientoBean extends BaseBean implements Serializable {
      */
     @Override
     public void nuevo() {
-       // super.seleccionar();
-         super.nuevo();
+        // super.seleccionar();
+        super.nuevo();
         this.mantenimiento = new Mantenimiento();
         this.setTitle("Ingresar Cita de Mantenimiento");
+    }
+
+    public void ingresarInsumo() {
+        this.primaryKey.setIdEmpleado(this.idmantenimiento.getIdEmpleado());
+        this.primaryKey.setIdCita(this.idmantenimiento.getIdCita());
+        this.primaryKey.setIdInsumo(this.insumoSelected.getIdInsumo());
+        this.asignacionInsumo.setPrimaryKey(primaryKey);
+        this.asignacionInsumo.setUnidadMedida(this.insumoSelected.getUnidadMedida());
+        this.asignacionInsumo.setCantidad(this.cantidad);
+        this.guardarAsignacionInsumo.add(asignacionInsumo);
+
     }
 
     /**
@@ -165,13 +188,13 @@ public class MantenimientoBean extends BaseBean implements Serializable {
      * metodo eliminar, permite borrar un registro de la base de datos.
      */
     public void eliminar() {
-        this.cita = new CitaMantenimiento();
+        this.asignacionInsumo = new AsignacionInsumo();
         try {
-            BeanUtils.copyProperties(this.mantenimiento, this.mantenimientoSelected);
-            this.mantenimientoServicio.eliminarMantenimiento(this.mantenimiento);
+            BeanUtils.copyProperties(this.asignacionInsumo, this.asignacionInsumoSelected);
+            this.asignacionInsumoServicio.eliminarInsumosAsignados(this.asignacionInsumo);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Eliminado Corectamente"));
-            this.citas.remove(this.cita);
-            this.setCitaSelected(null);
+            this.asignacionInsumos.remove(this.asignacionInsumo);
+            this.setAsignacionInsumoSelected(null);
         } catch (IllegalAccessException | InvocationTargetException e) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
@@ -185,7 +208,7 @@ public class MantenimientoBean extends BaseBean implements Serializable {
     @Override
     public void cancelar() {
         super.cancelar();
-        this.setCitaSelected(null);
+        this.setAsignacionInsumoSelected(null);
 
     }
 
@@ -200,19 +223,17 @@ public class MantenimientoBean extends BaseBean implements Serializable {
         this.disabled = false;
     }
 
-    public void onRowSelectEmpleado(SelectEvent event) {
-            // this.diableAceptar = false;
+    public void onRowSelectMantenimiento(SelectEvent event) {
+        // this.diableAceptar = false;
 //            BeanUtils.copyProperties(this.empleado, this.empleadoSelected);
-            this.primaryKey.setIdEmpleado(this.empleadoSelected.getIdEmpleado());
-            this.mantenimiento.setPrimaryKey(primaryKey);
+
+        this.idmantenimiento.setIdEmpleado(this.mantenimientoSelected.getPrimaryKey().getIdEmpleado());
+        this.idmantenimiento.setIdCita(this.mantenimientoSelected.getPrimaryKey().getIdCita());
+
     }
-    public void onRowSelectCita(SelectEvent event) {
-      
-            // this.diableAceptar = false;
-            //BeanUtils.copyProperties(this.cita, this.citaSelected);
-            this.primaryKey.setIdCita(this.citaSelected.getIdCita());
-            this.mantenimiento.setPrimaryKey(primaryKey);
-         
+
+    public void onRowSelectInsumo(SelectEvent event) {
+
     }
 
     /**
@@ -224,11 +245,13 @@ public class MantenimientoBean extends BaseBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         if (super.isEnNuevo()) {
             try {
+
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
-                this.mantenimientoServicio.ingresarMantenimiento(this.mantenimiento);
+                this.asignacionInsumoServicio.ingresarInsumoAsignado(this.guardarAsignacionInsumo);
+                listaActualizar();
                 // this.citas.add(0, this.cita);
                 this.mantenimientos = this.mantenimientoServicio.obtenerTodasMantenimiento();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el mantenimiento: " + this.mantenimiento.getPrimaryKey().getIdEmpleado()+" "+this.mantenimiento.getPrimaryKey().getIdCita(), null));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "El o los registros se registraron corectamente", null));
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -236,9 +259,9 @@ public class MantenimientoBean extends BaseBean implements Serializable {
         } else {
             try {
                 //Llamar a modificar no a crear
-                this.mantenimientoServicio.actulizarMantenimiento(this.mantenimiento);
-                BeanUtils.copyProperties(this.mantenimientoSelected, this.mantenimiento);
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el mantenimiento del empleado: " + this.mantenimiento.getPrimaryKey().getIdEmpleado()+ " de la cita: " + this.mantenimiento.getPrimaryKey().getIdCita(), null));
+                this.asignacionInsumoServicio.actulizarInsumoAsignado(this.asignacionInsumo);
+                BeanUtils.copyProperties(this.asignacionInsumoSelected, this.asignacionInsumo);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el insumo asignado del de: " + this.asignacionInsumo.getPrimaryKey().getIdEmpleado() + " de la cita: " + this.asignacionInsumo.getPrimaryKey().getIdCita(), null));
             } catch (ValidacionException | IllegalAccessException | InvocationTargetException e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -246,40 +269,26 @@ public class MantenimientoBean extends BaseBean implements Serializable {
         }
 
         this.reset();
-        this.setCitaSelected(null);
+        this.setMantenimientoSelected(null);
     }
 
     public void habilitarSeleccionCliente() {
         super.seleccionar();
     }
 
-    
-    /**
-     * setea el id de la tabla en el parametro del formulario.
-     */
-    /*
-    public void aceptarPopUp() {
-        super.nuevo();
-        this.cliente = new Cliente();
-        try {
+    public void listaActualizar() {
+        for (int i = 0; i < guardarAsignacionInsumo.size(); i++) {
+            this.insumoServicio.actualizarInsumo(new Insumos(guardarAsignacionInsumo.get(i).getPrimaryKey().getIdInsumo(), guardarAsignacionInsumo.get(i).getCantidad()));
 
-            BeanUtils.copyProperties(this.cliente, this.clienteSelected);
-            this.cita.setIdCliente(this.cliente.getIdCliente());
-        } catch (IllegalAccessException | InvocationTargetException ex) {
-            Logger.getLogger(CitaMantenimientoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.setCitaSelected(null);
-        this.setCliente(null);
-        super.quitarSeleccion();
 
     }
-    */
+
     /**
      * desactiva la tabla de seleccion
      */
     public void cancelarPopUp() {
     }
-
 
     /**
      * metodo get de titulo.
@@ -317,52 +326,76 @@ public class MantenimientoBean extends BaseBean implements Serializable {
         this.disabled = disabled;
     }
 
-    public List<CitaMantenimiento> getCitas() {
-        return citas;
+    public MantenimientoServicio getMantenimientoServicio() {
+        return mantenimientoServicio;
     }
 
-    public void setCitas(List<CitaMantenimiento> citas) {
-        this.citas = citas;
+    public void setMantenimientoServicio(MantenimientoServicio mantenimientoServicio) {
+        this.mantenimientoServicio = mantenimientoServicio;
     }
 
-    public CitaMantenimiento getCita() {
-        return cita;
+    public Insumos getInsumoSelected() {
+        return insumoSelected;
     }
 
-    public void setCita(CitaMantenimiento cita) {
-        this.cita = cita;
+    public void setInsumoSelected(Insumos insumoSelected) {
+        this.insumoSelected = insumoSelected;
     }
 
-    public CitaMantenimiento getCitaSelected() {
-        return citaSelected;
+    public Insumos getInsumo() {
+        return insumo;
     }
 
-    public void setCitaSelected(CitaMantenimiento citaSelected) {
-        this.citaSelected = citaSelected;
+    public void setInsumo(Insumos insumo) {
+        this.insumo = insumo;
     }
 
-    public Empleado getEmpleadoSelected() {
-        return empleadoSelected;
+    public List<Insumos> getInsumos() {
+        return insumos;
     }
 
-    public void setEmpleadoSelected(Empleado empleadoSelected) {
-        this.empleadoSelected = empleadoSelected;
+    public void setInsumos(List<Insumos> insumos) {
+        this.insumos = insumos;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public List<AsignacionInsumo> getAsignacionInsumos() {
+        return asignacionInsumos;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setAsignacionInsumos(List<AsignacionInsumo> asignacionInsumos) {
+        this.asignacionInsumos = asignacionInsumos;
     }
 
-    public List<Empleado> getEmpleados() {
-        return empleados;
+    public AsignacionInsumo getAsignacionInsumo() {
+        return asignacionInsumo;
     }
 
-    public void setEmpleados(List<Empleado> empleados) {
-        this.empleados = empleados;
+    public void setAsignacionInsumo(AsignacionInsumo asignacionInsumo) {
+        this.asignacionInsumo = asignacionInsumo;
+    }
+
+    public AsignacionInsumo getAsignacionInsumoSelected() {
+        return asignacionInsumoSelected;
+    }
+
+    public void setAsignacionInsumoSelected(AsignacionInsumo asignacionInsumoSelected) {
+        this.asignacionInsumoSelected = asignacionInsumoSelected;
+    }
+
+    public List<AsignacionInsumo> getGuardarAsignacionInsumo() {
+        return guardarAsignacionInsumo;
+    }
+
+    public void setGuardarAsignacionInsumo(List<AsignacionInsumo> guardarAsignacionInsumo) {
+        this.guardarAsignacionInsumo = guardarAsignacionInsumo;
+    }
+
+    public AsignacionInsumoPK getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(AsignacionInsumoPK primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
     public List<Mantenimiento> getMantenimientos() {
@@ -389,14 +422,28 @@ public class MantenimientoBean extends BaseBean implements Serializable {
         this.mantenimientoSelected = mantenimientoSelected;
     }
 
-    
-    
     public boolean isDiableAceptar() {
         return diableAceptar;
     }
 
     public void setDiableAceptar(boolean diableAceptar) {
         this.diableAceptar = diableAceptar;
+    }
+
+    public MantenimientoPK getIdmantenimiento() {
+        return idmantenimiento;
+    }
+
+    public void setIdmantenimiento(MantenimientoPK idmantenimiento) {
+        this.idmantenimiento = idmantenimiento;
+    }
+
+    public BigDecimal getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(BigDecimal cantidad) {
+        this.cantidad = cantidad;
     }
 
 }

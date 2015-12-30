@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -31,22 +32,11 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "ASIGNACION_INSUMO_001")
-@IdClass(AsignacionInsumoPK.class)
 
 public class AsignacionInsumo implements Serializable {
-
-    @Id
-    @Column(name = "ID_INSUMO", nullable = false)
-    private String idInsumo;
-
-    @Id
-    @Column(name = "ID_EMPLEADO", nullable = false)
-    private String idTecnico;
-
-    @Id
-    @Column(name = "ID_CITA", nullable = false)
-    private Integer idCita;
-
+    @EmbeddedId
+    AsignacionInsumoPK primaryKey;
+    
     @Temporal(TemporalType.DATE)
     @Column(name = "FECHA_ASIGNACION", nullable = false)
     private Date fechaAsignacion;
@@ -87,29 +77,15 @@ public class AsignacionInsumo implements Serializable {
         this.insumo = insumo;
     }
 
-        public String getIdInsumo() {
-        return idInsumo;
+    public AsignacionInsumoPK getPrimaryKey() {
+        return primaryKey;
     }
 
-    public void setIdInsumo(String idInsumo) {
-        this.idInsumo = idInsumo;
+    public void setPrimaryKey(AsignacionInsumoPK primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
-    public String getIdTecnico() {
-        return idTecnico;
-    }
-
-    public void setIdTecnico(String idTecnico) {
-        this.idTecnico = idTecnico;
-    }
-
-    public Integer getIdCita() {
-        return idCita;
-    }
-
-    public void setIdCita(Integer idCita) {
-        this.idCita = idCita;
-    }
+    
 
     public Date getFechaAsignacion() {
         return fechaAsignacion;
@@ -135,13 +111,10 @@ public class AsignacionInsumo implements Serializable {
         this.unidadMedida = unidadMedida;
     }
 
-
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.idInsumo);
-        hash = 17 * hash + Objects.hashCode(this.idTecnico);
-        hash = 17 * hash + Objects.hashCode(this.idCita);
+        int hash = 3;
+        hash = 11 * hash + Objects.hashCode(this.primaryKey);
         return hash;
     }
 
@@ -157,18 +130,15 @@ public class AsignacionInsumo implements Serializable {
             return false;
         }
         final AsignacionInsumo other = (AsignacionInsumo) obj;
-        if (!Objects.equals(this.idInsumo, other.idInsumo)) {
-            return false;
-        }
-        if (!Objects.equals(this.idTecnico, other.idTecnico)) {
-            return false;
-        }
-        return Objects.equals(this.idCita, other.idCita);
+        return Objects.equals(this.primaryKey, other.primaryKey);
     }
 
     @Override
     public String toString() {
-        return "AsignacionInsumo{" + "idInsumo=" + idInsumo + ", idTecnico=" + idTecnico + ", idCita=" + idCita + ", fechaAsignacion=" + fechaAsignacion + ", cantidad=" + cantidad + '}';
+        return "AsignacionInsumo{" + "primaryKey=" + primaryKey + ", fechaAsignacion=" + fechaAsignacion + ", cantidad=" + cantidad + ", unidadMedida=" + unidadMedida + ", mantenimientoAsignacionInsumo=" + mantenimientoAsignacionInsumo + ", insumo=" + insumo + '}';
     }
+
+    
+ 
 
 }

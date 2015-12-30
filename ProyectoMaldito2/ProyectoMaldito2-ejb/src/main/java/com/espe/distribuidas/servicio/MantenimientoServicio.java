@@ -12,7 +12,6 @@
 package com.espe.distribuidas.servicio;
 
 import com.espe.distribuidas.dao.MantenimientoDAO;
-import com.espe.distribuidas.model.CitaMantenimiento;
 import com.espe.distribuidas.model.Mantenimiento;
 import com.espe.distribuidas.model.MantenimientoPK;
 import com.espe.distribuidas.model.exceptions.ValidacionException;

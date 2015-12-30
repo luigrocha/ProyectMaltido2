@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/plantillas/template2.xhtml">
+            <ui:define name="lista">
+                <p:dataTable id="singleAsignacionInsumo" var="asignacion" value="#{asignacionInsumoBean.asignacionInsumos}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{asignacionInsumoBean.asignacionInsumoSelected}" rowKey="#{asignacion.primaryKey}" >
+
+                    <p:column headerText="ID Insumo">
+                        <h:outputText value="#{asignacion.primaryKey.idInsumo}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre Insumo">
+                        <h:outputText value="#{asignacion.insumo.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="I.D. Cita">
+                        <h:outputText value="#{asignacion.mantenimientoAsignacionInsumo.primaryKey.idCita}" />
+                    </p:column>
+
+                    <p:column headerText="C.I Empleado">
+                        <h:outputText value="#{asignacion.primaryKey.idEmpleado}" />
+                    </p:column>
+
+                    <p:column headerText="Empleado Nombre" filterBy="#{asignacion.mantenimientoAsignacionInsumo.empleadoMantenimiento.nombre}" filterMatchMode="contains" >
+                        <h:outputText value="#{asignacion.mantenimientoAsignacionInsumo.empleadoMantenimiento.nombre}" />
+                    </p:column>
+
+
+
+                    <p:column headerText="Empleado Apellido" filterBy="#{asignacion.mantenimientoAsignacionInsumo.empleadoMantenimiento.apellido}" filterMatchMode="contains" >
+                        <h:outputText value="#{asignacion.mantenimientoAsignacionInsumo.empleadoMantenimiento.apellido}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha" filterBy="#{asignacion.fechaAsignacion}" filterMatchMode="contains">
+                        <h:outputText value="#{asignacion.fechaAsignacion}">
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Unidad de Medida" >
+                        <h:outputText value="#{asignacion.unidadMedida}" />
+                    </p:column>
+
+                    <p:column headerText="Cantidad" >
+                        <h:outputText value="#{asignacion.cantidad}" />
+                    </p:column>
+
+
+                    <p:ajax event="rowSelect" update="@form" listener="#{asignacionInsumoBean.onRowSelect}"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Nuevo" actionListener="#{asignacionInsumoBean.nuevo()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected ne null}" styleClass=""/>
+                        <p:commandButton value="Modificar" actionListener="#{asignacionInsumoBean.modificar()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{asignacionInsumoBean.eliminar()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected eq null}"/>
+                    </f:facet>
+                </p:dataTable>
+
+                <p:panel id="dialog"  header="Seleccionar Mantenimiento" rendered="#{asignacionInsumoBean.enNuevo}">
+
+                    <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{asignacionInsumoBean.mantenimientos}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{asignacionInsumoBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
+                        <p:column headerText="Cita">
+                            <h:outputText value="id: #{mantenimiento.primaryKey.idCita}, empleado: #{mantenimiento.primaryKey.setIdEmpleado(idEmpleado)}" />
+                        </p:column>
+
+                        <p:column headerText="Empleado Nombre" filterBy="#{mantenimiento.empleadoMantenimiento.nombre}" filterMatchMode="contains" >
+                            <h:outputText value="#{mantenimiento.empleadoMantenimiento.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Empleado Apellido" filterBy="#{mantenimiento.empleadoMantenimiento.apellido}" filterMatchMode="contains" >
+                            <h:outputText value="#{mantenimiento.empleadoMantenimiento.apellido}" />
+                        </p:column>
+
+                        <p:column headerText="Fecha Inicio:" >
+                            <h:outputText value="#{mantenimiento.fechaInicio}" />
+              <!--              <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />-->
+                        </p:column>
+
+                        <p:column headerText="Fecha Fin:" >
+                            <h:outputText value="#{mantenimiento.fechaFin}" />
+                  <!--          <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />-->
+                        </p:column>
+
+                        <p:ajax event="rowSelect" update="@form" listener="#{asignacionInsumoBean.onRowSelectMantenimiento}" />
+
+
+                    </p:dataTable>
+
+                    <p:dataTable id="singleInsumo" var="insumo" widgetVar="tablaInsumo" value="#{asignacionInsumoBean.insumos}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{asignacionInsumoBean.insumoSelected}" rowKey="#{insumo.idInsumo}" >
+                        <p:column headerText="ID Insumo">
+                            <h:outputText value="#{insumo.idInsumo}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre" >
+                            <h:outputText value="#{insumo.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Unidad" >
+                            <h:outputText value="#{insumo.unidadMedida}" />
+                        </p:column>
+
+                        <p:column headerText="Cantidad" >
+                            <h:outputText value="#{insumo.cantidad}" />
+                        </p:column>
+
+
+                        <p:ajax event="rowSelect" update="@form" listener="#{asignacionInsumoBean.onRowSelectInsumo}" />
+
+
+                    </p:dataTable>
+                    <p:outputLabel for="txtCantidad" value="Cantidad: "/>
+                    <p:inputText id="txtCantidad" value="#{asignacionInsumoBean.cantidad }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                    </p:inputText> 
+                    <p:message for="txtCantidad"/>
+                    <p:commandButton value="Agregar" actionListener="#{asignacionInsumoBean.ingresarInsumo()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected ne null}" styleClass=""/>
+                    <p:commandButton value="Cancelar"  immediate="true" update="@form" onclick="tablaInsumo.unselectAllRows()"/>
+
+
+                </p:panel>
+
+                <!--formualrio de ingreso-->
+                <p:panel header="#{asignacionInsumoBean.title}" style="width: 100%" rendered="#{asignacionInsumoBean.enNuevo or asignacionInsumoBean.enModificar}">
+
+                    <h:panelGrid columns="3" style="margin: 0 auto;">
+
+                        <p:outputLabel for="txtCita" value="Cita: "/>
+                        <p:inputText id="txtCita" value="#{asignacionInsumoBean.idmantenimiento.idCita }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        </p:inputText> 
+                        <p:message for="txtCita"/>
+
+                        <p:outputLabel for="txtEmpleado" value="Empleado: "/>
+                        <p:inputText id="txtEmpleado" value="#{asignacionInsumoBean.idmantenimiento.idEmpleado}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        </p:inputText> 
+                        <p:message for="txtEmpleado"/>
+
+                        <p:dataTable id="guardarAsignacionInsumo" var="asignacionI" value="#{asignacionInsumoBean.guardarAsignacionInsumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                               style="width: 100%;" styleClass="textlb" selectionMode="single"  rowKey="#{asignacionI.primaryKey}" >
+
+                            <p:column headerText="Unidad de Medida">
+                                <h:outputText value="#{asignacionI.unidadMedida}" />
+                            </p:column>
+
+                            <p:column headerText="Cantidad" >
+                                <h:outputText value="#{asignacionI.cantidad}" />
+                            </p:column>
+
+                            <p:column headerText="ID Insumo">
+                                <h:outputText value="#{asignacionI.primaryKey.idInsumo}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre Insumo">
+                                <h:outputText value="#{asignacionI.insumo.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+
+
+                        <p:commandButton value="Aceptar" actionListener="#{asignacionInsumoBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Cancelar" actionListener="#{asignacionInsumoBean.cancelar()}" immediate="true"  update="@form"/>
+                    </h:panelGrid>
+                </p:panel>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

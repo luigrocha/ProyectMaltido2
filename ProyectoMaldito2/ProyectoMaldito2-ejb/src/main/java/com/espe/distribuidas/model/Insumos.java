@@ -63,6 +63,12 @@ public class Insumos implements Serializable {
     public Insumos() {
     }
 
+    public Insumos(String idInsumo, BigDecimal cantidad) {
+        this.idInsumo = idInsumo;
+        this.cantidad = cantidad;
+    }
+    
+
     public String getIdInsumo() {
         return idInsumo;
     }

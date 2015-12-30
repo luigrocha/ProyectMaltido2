@@ -67,6 +67,7 @@ public class InsumoServicio {
             throw new ValidacionException("El codigo" + insumo.getIdInsumo()+ "ya existe");
         }
     }
+    
 
     /**
      * Permite actualizar insumos de la base de datos.
