@@ -43,7 +43,7 @@ public class Insumos implements Serializable {
     private BigDecimal precioCompra;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private BigDecimal cantidad;
+    private Integer cantidad;
 
     @Column(name = "TIPO_INSUMO", nullable = false)
     private String tipoInsumo;
@@ -95,11 +95,11 @@ public class Insumos implements Serializable {
         this.precioCompra = precioCompra;
     }
 
-    public BigDecimal getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(BigDecimal cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 

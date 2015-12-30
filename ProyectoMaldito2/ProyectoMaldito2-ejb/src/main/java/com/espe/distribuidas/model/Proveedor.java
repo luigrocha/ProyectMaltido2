@@ -47,10 +47,10 @@ public class Proveedor implements Serializable {
     @Column(name = "ESTADO", nullable = false)
     private String estado;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "devolucionProveedor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "devolucionProveedor")
     List<Devoluciones> devoluciondesProveedor;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "proveedorPedido")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedorPedido")
     List<Pedido> pedidoProveedor;
     
 

@@ -31,21 +31,79 @@ a:hover {
     src:url(../fonts/MontserratAlternates-Regular.ttf) format('truetype');
 }
 
-/*--header start here--*/
-nav a {
-    position: relative;
+nav {
+    background-color: rgba(51, 51, 51, 0);
+    color: #fff;
+    display: block;
+    margin: 0;
+    overflow: hidden;
+}
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+nav ul li {
+    margin: 0;
     display: inline-block;
-    outline: none;
-    color: #000;
-    text-decoration: none;
-    text-shadow: 0 0 1px rgba(255,255,255,0.3);
-    font-size: 1em;
+    list-style-type: none;
+    transition: all 1s;
 }
 
-nav a:hover,
-nav a:focus {
-    outline: none;
+nav > ul > li > a {
+    color: #aaa;
+    display: block;
+    line-height: 1.8em;
+    padding: 0.5em 1.8em;
+    }
+
+nav li > ul{
+    display : none;
+    margin-top:1px;
+    background-color: #bbb;
+
 }
+
+nav li > ul li{
+    display: block;
+}
+
+nav  li > ul li a {
+    color: #111;
+    display: block;
+    line-height: 1em;
+    padding: 0.5em 1em;
+    text-decoration: none;
+}
+
+nav li:hover {
+    background-color: #666;
+}
+nav li:hover > ul{
+    position:absolute;
+    display : block;
+}
+nav li > ul > li ul  {
+    display: none;
+    background-color: #888;
+}
+nav li > ul > li:hover > ul  {
+    position:absolute;
+    display : block;
+    margin-left:100%;
+    margin-top:-3em;
+}
+
+nav ul > li.sub{
+    background: url(../images/ic_keyboard_arrow_down_white_18dp.png) right center no-repeat;
+}
+
+nav ul > li.sub li.sub{
+    background: url(../images/ic_keyboard_arrow_right_white_18dp.png) right center no-repeat;
+}
+
+
+
 /* Effect 1: Brackets */
 .cl-effect-1 a::before,
 .cl-effect-1 a::after {
@@ -149,7 +207,7 @@ span.menu {
 }
 .banner-two {
     background: url(../images/1.jpg)no-repeat;
-    min-height:80px;
+    min-height:160px;
     background-size: cover;
 }
 .banner-bottom {
@@ -1595,7 +1653,7 @@ h3.typo1 {
         padding: 2em 0em 3em 0em;
     }
     .banner-two {
-        min-height: 80px;
+        min-height: 160px;
     }
     .services-top h2 {
         font-size: 2.5em;
