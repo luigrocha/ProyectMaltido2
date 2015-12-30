@@ -102,22 +102,33 @@ public class EmpleadoServicio {
      * contraseña en este caso la coincidencia de la lista arrojaria una unica
      * coincidencia.
      */
-
     public List<Empleado> buscarPorUsuarioPassword(String usuario, String password) {
         Empleado empleado = new Empleado();
         empleado.setUsuario(usuario);
         empleado.setContrasena(password);
         return this.empleadoDAO.find(empleado);
     }
-    
-   /**
-    * Permite consultar si un usurio es valido para ser registrado.
-    * @param usuario string del usuario.
-    * @return 
-    */
+
+    /**
+     * Permite consultar si un usurio es valido para ser registrado.
+     *
+     * @param usuario string del usuario.
+     * @return
+     */
     public List<Empleado> buscarPorUsuario(String usuario) {
         Empleado empleado = new Empleado();
         empleado.setUsuario(usuario);
+        return this.empleadoDAO.find(empleado);
+    }
+
+    /**
+     * Permite consultar si la lista de tecnicos de la empresa.
+     *
+     * @return retorna la lista tipo empleado.
+     */
+    public List<Empleado> buscasPorTecnico() {
+        Empleado empleado = new Empleado();
+        empleado.setTipoEmpleado("Tecnico");
         return this.empleadoDAO.find(empleado);
     }
 

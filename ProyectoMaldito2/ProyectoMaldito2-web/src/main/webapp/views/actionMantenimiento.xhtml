@@ -1,16 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/plantillas/template2.xhtml">
+            <ui:define name="lista">
+                <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{mantenimientoBean.mantenimientos}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientoBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
+
+                    <p:column headerText="Cita">
+                        <h:outputText value="id: #{mantenimiento.primaryKey.idCita} cliente: #{mantenimiento.citaMantenimiento.clienteCita.nombre} #{mantenimiento.citaMantenimiento.clienteCita.apellido}" />
+                    </p:column>
+
+                    <p:column headerText="C.I Empleado">
+                        <h:outputText value="#{mantenimiento.primaryKey.idEmpleado}" />
+                    </p:column>
+
+                    <p:column headerText="Empleado Nombre" filterBy="#{mantenimiento.empleadoMantenimiento.nombre}" filterMatchMode="contains" >
+                        <h:outputText value="#{mantenimiento.empleadoMantenimiento.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Empleado Apellido" filterBy="#{mantenimiento.empleadoMantenimiento.apellido}" filterMatchMode="contains" >
+                        <h:outputText value="#{mantenimiento.empleadoMantenimiento.apellido}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha Inicio" filterBy="#{mantenimiento.fechaInicio}" filterMatchMode="contains">
+                        <h:outputText value="#{mantenimiento.fechaInicio}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fecha Fin" filterBy="#{mantenimiento.fechaFin}" filterMatchMode="contains">
+                        <h:outputText value="#{mantenimiento.fechaFin}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+
+                    </p:column>
+                    <p:column headerText="Precio" >
+                        <h:outputText value="#{mantenimiento.precio}" />
+                    </p:column>
+
+
+                    <p:ajax event="rowSelect" update="@form" listener="#{mantenimientoBean.onRowSelect}"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Nuevo" actionListener="#{mantenimientoBean.nuevo()}" immediate="true" update="@form" disabled="#{mantenimientoBean.mantenimientoSelected ne null}" styleClass=""/>
+                        <p:commandButton value="Modificar" actionListener="#{mantenimientoBean.modificar()}" immediate="true" update="@form" disabled="#{mantenimientoBean.mantenimientoSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{mantenimientoBean.eliminar()}" immediate="true" update="@form" disabled="#{mantenimientoBean.mantenimientoSelected eq null}"/>
+                    </f:facet>
+                </p:dataTable>
+                <p:panel id="dialog"  header="Seleccionar Empleado" rendered="#{mantenimientoBean.enNuevo}">
+
+                    <p:dataTable id="singleEmpleado" var="empleado" value="#{mantenimientoBean.empleados}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientoBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" >
+                        <p:column headerText="C.I">
+                            <h:outputText value="#{empleado.idEmpleado}" />
+                        </p:column>
+
+                        <p:column headerText="Empleado" >
+                            <h:outputText value="#{empleado.nombre} #{empleado.apellido}" />
+                        </p:column>
+
+                        <p:column headerText="Telefono" >
+                            <h:outputText value="#{empleado.telefono}" />
+                        </p:column>
+
+
+                        <p:ajax event="rowSelect" update="@form" listener="#{mantenimientoBean.onRowSelectEmpleado}" />
+
+
+                    </p:dataTable>
+                    <p:dataTable id="singleCita" var="cita" value="#{mantenimientoBean.citas}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 60%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientoBean.citaSelected}" rowKey="#{cita.idCita}" >
+                        <p:column headerText="ID Cita">
+                            <h:outputText value="#{cita.idCita}" />
+                        </p:column>
+
+                        <p:column headerText="Cliente" >
+                            <h:outputText value="#{cita.clienteCita.nombre} #{cita.clienteCita.apellido}" />
+                        </p:column>
+
+                        <p:column headerText="Fecha" filterBy="#{cita.fecha}" filterMatchMode="exact">
+                            <h:outputText value="#{cita.fecha}">
+                                <f:convertDateTime pattern="yyyy-MM-dd" />
+                            </h:outputText>
+
+                        </p:column>
+                        <p:column headerText="Tipo" >
+                            <h:outputText value="#{cita.tipoMantenimiento}" />
+                        </p:column>
+
+                        <p:column headerText="Descripción" >
+                            <h:outputText value="#{cita.descripcion}" />
+                        </p:column>
+
+
+                        <p:ajax event="rowSelect" update="@form" listener="#{mantenimientoBean.onRowSelectCita}" />
+
+
+                    </p:dataTable>
+
+                </p:panel>
+
+
+                <p:panel header="#{mantenimientoBean.title}" style="width: 100%" rendered="#{mantenimientoBean.enNuevo or mantenimientoBean.enModificar}">
+
+                    <h:panelGrid columns="3" style="margin: 0 auto;">
+
+                        <p:outputLabel for="txtCita" value="Cita: "/>
+                        <p:inputText id="txtCita" value="#{mantenimientoBean.mantenimiento.primaryKey.idCita }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        </p:inputText> 
+                        <p:message for="txtCita"/>
+
+                        <p:outputLabel for="txtEmpleado" value="Empleado: "/>
+                        <p:inputText id="txtEmpleado" value="#{mantenimientoBean.mantenimiento.primaryKey.idEmpleado }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        </p:inputText> 
+                        <p:message for="txtEmpleado"/>
+
+                        <p:outputLabel for="txtfechaInicio" value="Fecha Inicio:  "/>
+                        <p:calendar id="txtfechaInicio" locale="es" pattern="MM/dd/yyyy HH:mm:ss" value="#{mantenimientoBean.mantenimiento.fechaInicio}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtfechaInicio"/>
+
+                        <p:outputLabel for="txtfechaFin" value="Fecha Fin:  "/>
+                        <p:calendar id="txtfechaFin" locale="es" pattern="MM/dd/yyyy HH:mm:ss" value="#{mantenimientoBean.mantenimiento.fechaFin}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="txtfechaFin"/> 
+
+                        <p:outputLabel for="txtPrecio" value="Precio "/>
+                        <p:inputText id="txtPrecio" value="#{mantenimientoBean.mantenimiento.precio}" required="true" requiredMessage="Campo Requerido">
+                        </p:inputText>
+                        <p:message for="txtPrecio"/>
+
+                        <p:commandButton value="Aceptar" actionListener="#{mantenimientoBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Cancelar" actionListener="#{mantenimientoBean.cancelar()}" immediate="true"  update="@form"/>
+                    </h:panelGrid>
+                </p:panel>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>
+

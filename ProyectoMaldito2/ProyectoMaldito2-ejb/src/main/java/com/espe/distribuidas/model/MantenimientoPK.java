@@ -11,20 +11,42 @@ package com.espe.distribuidas.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
- * Clase que representa a la clave primaria de la  entidad MANTENIMIENTO
- * contiene todos los datos asociados a la entidad.
+ * Clase que representa a la clave primaria de la entidad MANTENIMIENTO contiene
+ * todos los datos asociados a la entidad.
+ *
  * @author R&R S.A.
  */
-public class MantenimientoPK implements Serializable{
+@Embeddable
+public class MantenimientoPK implements Serializable {
+
+    @Column(name = "ID_EMPLEADO", nullable = false)
     private String idEmpleado;
-    
+
+    @Column(name = "ID_CITA", nullable = false)
     private Integer idCita;
 
     public MantenimientoPK() {
     }
 
+    public MantenimientoPK(String idEmpleado, Integer idCita) {
+        this.idEmpleado = idEmpleado;
+        this.idCita = idCita;
+    }
+
+    public MantenimientoPK(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public MantenimientoPK(Integer idCita) {
+        this.idCita = idCita;
+    }
+    
+    
+    
     public String getIdEmpleado() {
         return idEmpleado;
     }
@@ -32,8 +54,6 @@ public class MantenimientoPK implements Serializable{
     public void setIdEmpleado(String idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
-
-
 
     public Integer getIdCita() {
         return idCita;
@@ -68,6 +88,5 @@ public class MantenimientoPK implements Serializable{
         }
         return Objects.equals(this.idCita, other.idCita);
     }
-    
-    
+
 }

@@ -89,7 +89,7 @@ public class CitaMantenimientoServicio {
             CitaMantenimiento citatmp = this.obtenerCitaPorID(idCita);
             this.citaMantenimiento.remove(citatmp);
         } catch (Exception e) {
-            throw new ValidacionException("El empleado " + idCita + " esta asociada");
+            throw new ValidacionException("La cita: " + idCita + " esta asociada");
         }
     }
 }

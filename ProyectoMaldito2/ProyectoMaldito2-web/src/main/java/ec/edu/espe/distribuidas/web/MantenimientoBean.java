@@ -7,18 +7,20 @@
  *  
  *  
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
- */package ec.edu.espe.distribuidas.web;
+ */
+package ec.edu.espe.distribuidas.web;
 
 import com.espe.distribuidas.model.CitaMantenimiento;
-import com.espe.distribuidas.model.Cliente;
+import com.espe.distribuidas.model.Empleado;
+import com.espe.distribuidas.model.Mantenimiento;
+import com.espe.distribuidas.model.MantenimientoPK;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
 import com.espe.distribuidas.servicio.CitaMantenimientoServicio;
-import com.espe.distribuidas.servicio.ClienteServicio;
+import com.espe.distribuidas.servicio.EmpleadoServicio;
+import com.espe.distribuidas.servicio.MantenimientoServicio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -29,7 +31,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.event.SelectEvent;
 
 /**
- * Clase de bean de cita mantenimiento, define todas las operaciones del CRUD y
+ * Clase de bean de mantenimiento, define todas las operaciones del CRUD y
  * busqueda.
  *
  * @author R&R S.A.
@@ -38,26 +40,33 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 @ManagedBean
 
-public class CitaMantenimientoBean extends BaseBean implements Serializable {
+
+public class MantenimientoBean extends BaseBean implements Serializable {
 
     @EJB
     private CitaMantenimientoServicio citaServicio;
 
     @EJB
-    private ClienteServicio clienteServicio;
+    private EmpleadoServicio empleadoServicio;
+    
+    @EJB
+    private MantenimientoServicio mantenimientoServicio;
+   
+        
     /**
-     * variable que referencia un cliente seleccionado
+     * variable que referencia a un empleado seleccionado.
      */
-    private Cliente clienteSelected;
+    private Empleado empleadoSelected;
 
     /**
-     * variable de referencia al objeto cliente
+     * variable de referencia al objeto empleado.
      */
-    private Cliente cliente;
+    private Empleado empleado;
     /**
-     * lista de clientes para el popup
+     * lista de empleados.
      */
-    private List<Cliente> clientes;
+    private List<Empleado> empleados;
+    
     /**
      * variable tipo lista de citas de mantenimiento para setar a una tabla del
      * formulario.
@@ -65,15 +74,36 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
     private List<CitaMantenimiento> citas;
 
     /**
-     * variable tipo cita de mantenimiento para las operaciones del CRUD.
+     * variable tipo cita de mantenimiento.
      */
     private CitaMantenimiento cita;
 
     /**
-     * variable tipo cita.
+     * variable tipo cita para seleccion.
      */
     private CitaMantenimiento citaSelected;
 
+    /**
+     * variable tipo lista de mantenimiento para setar a una tabla del
+     * formulario.
+     */
+    private List<Mantenimiento> mantenimientos;
+
+    /**
+     * variable tipo mantenimiento.
+     */
+    private Mantenimiento mantenimiento;
+
+    /**
+     * variable tipo mantenimiento para seleccion.
+     */
+    private Mantenimiento mantenimientoSelected;
+    
+    /**
+     * clase clave primaria
+     */
+    private MantenimientoPK primaryKey;
+    
     /**
      * variable tipo boolean para estados del formulario.
      */
@@ -97,7 +127,9 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         this.citas = this.citaServicio.obtenerTodasCitas();
-        this.clientes = this.clienteServicio.obtenerTodosClientes();
+        this.empleados = this.empleadoServicio.buscasPorTecnico();
+        this.mantenimientos=this.mantenimientoServicio.obtenerTodasMantenimiento();
+        this.primaryKey=new MantenimientoPK();
     }
 
     /**
@@ -106,9 +138,9 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
      */
     @Override
     public void nuevo() {
-        super.seleccionar();
-        // super.nuevo();
-        this.cita = new CitaMantenimiento();
+       // super.seleccionar();
+         super.nuevo();
+        this.mantenimiento = new Mantenimiento();
         this.setTitle("Ingresar Cita de Mantenimiento");
     }
 
@@ -119,10 +151,10 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
     @Override
     public void modificar() {
         super.modificar();
-        this.cita = new CitaMantenimiento();
-        this.setTitle("Modificar Cita de Mantenimiento");
+        this.mantenimiento = new Mantenimiento();
+        this.setTitle("Modificar Mantenimiento");
         try {
-            BeanUtils.copyProperties(this.cita, this.citaSelected);
+            BeanUtils.copyProperties(this.mantenimiento, this.mantenimientoSelected);
         } catch (IllegalAccessException | InvocationTargetException e) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
@@ -135,8 +167,8 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
     public void eliminar() {
         this.cita = new CitaMantenimiento();
         try {
-            BeanUtils.copyProperties(this.cita, this.citaSelected);
-            this.citaServicio.eliminarCita(this.cita.getIdCita());
+            BeanUtils.copyProperties(this.mantenimiento, this.mantenimientoSelected);
+            this.mantenimientoServicio.eliminarMantenimiento(this.mantenimiento);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Eliminado Corectamente"));
             this.citas.remove(this.cita);
             this.setCitaSelected(null);
@@ -168,8 +200,19 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         this.disabled = false;
     }
 
-    public void onRowSelectPopUp(SelectEvent event) {
-        this.diableAceptar = false;
+    public void onRowSelectEmpleado(SelectEvent event) {
+            // this.diableAceptar = false;
+//            BeanUtils.copyProperties(this.empleado, this.empleadoSelected);
+            this.primaryKey.setIdEmpleado(this.empleadoSelected.getIdEmpleado());
+            this.mantenimiento.setPrimaryKey(primaryKey);
+    }
+    public void onRowSelectCita(SelectEvent event) {
+      
+            // this.diableAceptar = false;
+            //BeanUtils.copyProperties(this.cita, this.citaSelected);
+            this.primaryKey.setIdCita(this.citaSelected.getIdCita());
+            this.mantenimiento.setPrimaryKey(primaryKey);
+         
     }
 
     /**
@@ -182,10 +225,10 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         if (super.isEnNuevo()) {
             try {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
-                this.citaServicio.ingresarCitaMantenimiento(this.cita);
+                this.mantenimientoServicio.ingresarMantenimiento(this.mantenimiento);
                 // this.citas.add(0, this.cita);
-                this.citas = this.citaServicio.obtenerTodasCitas();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la cita del cliente: " + this.cita.getIdCliente(), null));
+                this.mantenimientos = this.mantenimientoServicio.obtenerTodasMantenimiento();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el mantenimiento: " + this.mantenimiento.getPrimaryKey().getIdEmpleado()+" "+this.mantenimiento.getPrimaryKey().getIdCita(), null));
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -193,9 +236,9 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         } else {
             try {
                 //Llamar a modificar no a crear
-                this.citaServicio.actulizarCita(this.cita);
-                BeanUtils.copyProperties(this.citaSelected, this.cita);
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el cliente: " + this.cita.getIdCita() + " del cliente: " + this.cita.getClienteCita().getIdCliente(), null));
+                this.mantenimientoServicio.actulizarMantenimiento(this.mantenimiento);
+                BeanUtils.copyProperties(this.mantenimientoSelected, this.mantenimiento);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el mantenimiento del empleado: " + this.mantenimiento.getPrimaryKey().getIdEmpleado()+ " de la cita: " + this.mantenimiento.getPrimaryKey().getIdCita(), null));
             } catch (ValidacionException | IllegalAccessException | InvocationTargetException e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -210,9 +253,11 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         super.seleccionar();
     }
 
+    
     /**
      * setea el id de la tabla en el parametro del formulario.
      */
+    /*
     public void aceptarPopUp() {
         super.nuevo();
         this.cliente = new Cliente();
@@ -226,8 +271,9 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         this.setCitaSelected(null);
         this.setCliente(null);
         super.quitarSeleccion();
-    }
 
+    }
+    */
     /**
      * desactiva la tabla de seleccion
      */
@@ -304,30 +350,56 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         this.citaSelected = citaSelected;
     }
 
-    public Cliente getClienteSelected() {
-        return clienteSelected;
+    public Empleado getEmpleadoSelected() {
+        return empleadoSelected;
     }
 
-    public void setClienteSelected(Cliente clienteSelected) {
-        this.clienteSelected = clienteSelected;
+    public void setEmpleadoSelected(Empleado empleadoSelected) {
+        this.empleadoSelected = empleadoSelected;
     }
 
-    public List<Cliente> getClientes() {
-        return clientes;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public List<Empleado> getEmpleados() {
+        return empleados;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
     }
 
+    public List<Mantenimiento> getMantenimientos() {
+        return mantenimientos;
+    }
+
+    public void setMantenimientos(List<Mantenimiento> mantenimientos) {
+        this.mantenimientos = mantenimientos;
+    }
+
+    public Mantenimiento getMantenimiento() {
+        return mantenimiento;
+    }
+
+    public void setMantenimiento(Mantenimiento mantenimiento) {
+        this.mantenimiento = mantenimiento;
+    }
+
+    public Mantenimiento getMantenimientoSelected() {
+        return mantenimientoSelected;
+    }
+
+    public void setMantenimientoSelected(Mantenimiento mantenimientoSelected) {
+        this.mantenimientoSelected = mantenimientoSelected;
+    }
+
+    
+    
     public boolean isDiableAceptar() {
         return diableAceptar;
     }
