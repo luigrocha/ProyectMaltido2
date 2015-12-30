@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Spotlights-Wires</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+         <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/styles.css" rel="stylesheet"/>
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.css" rel="stylesheet"/>
+        <link href="//fonts.googleapis.com/css?family=Squada+One" rel="stylesheet"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700,900" rel="stylesheet"/>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/move-top.js"></script>
+        <h:outputScript library="js" name="spanishLocale.js"/>
+    </h:head>
+    <h:body>
+        <!--banner start here-->
+        <div class="banner">
+            <div class="header">
+                <div class="container">
+                    <div class="header-main">
+                        <div class="logo">
+                            <h1><a href="index.xhtml">Spotlights-Wires</a></h1>
+                        </div>
+                        <div class="top-nav">
+                            <h:form>
+                                <p:growl id="growl" showDetail="true" life="3000"  />    
+                                <ui:insert name="contenido">
+                                </ui:insert>
+                            </h:form>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+                <section class="slider">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <div class="banner-bottom">
+                                    <h2>Proyecto Maldito2</h2>
+                                    <p>Bienvenidos</p>
+                                    <a href="#bann-info">Leer Mas</a>
+                                </div>
+                            </li>
+                            <!-- <li>
+                                  <div class="banner-bottom">
+                                          <h2>Lights - Cables</h2>
+                                          <p>Los mejores en Instalaciones Electricas</p>
+                                          <a href="single.html">Leer Mas</a>
+                                  </div>
+                            </li>
+                            <li>
+                                  <div class="banner-bottom">
+                                          <h2>Lights - Cables</h2>
+                                          <p>Proyecto Maldito 2</p>
+                                          <a href="single.html">Leer Mas</a>
+                                  </div>
+                            </li> --> 
+                        </ul>
+                    </div>
+                    <div class="clearfix"> </div>
+                </section>
+            </div>
+        </div>
+        <!--banner end here-->
+        <!-- FlexSlider -->
+        <script src="#{facesContext.externalContext.requestContextPath}/resources/js/jquery.flexslider.js"></script>
+        <script type="text/javascript">
+            $(function () {
+
+            });
+            $(window).load(function () {
+                $('.flexslider').flexslider({
+                    animation: "slide",
+                    start: function (slider) {
+                        $('body').removeClass('loading');
+                    }
+                });
+            });
+        </script>
+        <!-- FlexSlider -->
+        <!--banner-info strat here-->
+        <div class="bann-info">
+            <div class="container">
+                <div class="bann-info-main">
+                    <div class="bann-info-bottom">
+                        <div class="col-md-4 bann-info-grid">
+                            <img src="#{facesContext.externalContext.requestContextPath}/images/b2.jpg" alt="" class="img-responsive"></img>
+                        </div>
+                        <div class="col-md-4 bann-info-grid">
+                            <img src="#{facesContext.externalContext.requestContextPath}/images/b1.jpg" alt="" class="img-responsive"></img>
+                        </div>
+                        <div class="col-md-4 bann-info-grid">
+                            <img src="#{facesContext.externalContext.requestContextPath}/images/b3.jpg" alt="" class="img-responsive"></img>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <h3>Empresa especializada en Instalaciónes Electricas</h3>			
+                    <p> Ofrecemos nuestros servicios de calidad a buenos precios</p>
+                </div>
+            </div>
+        </div>
+        <!--planing strat here-->
+        <div class="plan">
+            <div class="container">
+                <div class="plan-main">
+                    <div class="plan-bottom">
+                        <div class="col-md-6 plan-left">
+                            <a href="single.html"><img src="#{facesContext.externalContext.requestContextPath}/images/m1.jpg" alt="" class="img-responsive"/></a>
+                            <div class="plan-bot-text">
+                                <h4><a href="single.html">Basamos nuestro servicio en sus requermientos Tecnicos</a></h4>
+                                <p>Contamos con especialistas para realizar trabajos dentro y fuera de su empresa</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 plan-right">
+                            <a href="single.html"><img src="#{facesContext.externalContext.requestContextPath}/images/m2.jpg" alt="" class="img-responsive"/></a>
+                            <div class="plan-bot-text">
+                                <h4><a href="single.html">Ofrecemos Insumos de ultma Tecnologia</a></h4>
+                                <p>Puede visitar nuestro catalogo de insumos que ponemos a su disposicion</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+        <!--planing end here-->
+        <!--footer start here-->
+        <div class="footer">
+            <div class="container">
+                <div class="footer-main">
+                    <div class="col-md-4 ftr-gd">
+                        <h3>Siguenos</h3>
+                        <ul>
+                            <li><a href="#" class="fa"><img src="#{facesContext.externalContext.requestContextPath}/images/log_FB.png" alt="" class="img-responsive"/> </a></li>
+                            <li><a href="#" class="tw"><img src="#{facesContext.externalContext.requestContextPath}/images/log_TW.png" alt="" class="img-responsive"/> </a></li>
+                            <li><a href="#" class="g"><img src="#{facesContext.externalContext.requestContextPath}/images/log_GPLUS.png" alt="" class="img-responsive"/> </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 ftr-gd">
+                        <h3>Suscríbete</h3>
+                        <form>
+                            <input  type="text" value="Ingrese su Email" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                        this.value = 'Enter Your email';}"/>
+                            <input type="submit" value="Subscribe"/>
+                        </form>
+                    </div>
+                    <div class="col-md-4 ftr-gd">
+                        <h3>Dirección</h3>
+                        <p>Quito sur</p>
+                        <p></p>
+                        <p>cell :+593 998299109</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="copyright">
+                    <p>© 2015 Proyecto Maldito 2. Todos los derechos reservados | Design by  <a href="" target="_blank">  R-R S.A </a></p>
+                </div>
+                <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+            </div>
+        </div>
+        <!--footer end here-->
+    </h:body>
+</html>

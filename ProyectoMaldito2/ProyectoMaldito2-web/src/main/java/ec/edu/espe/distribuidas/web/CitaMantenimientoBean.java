@@ -226,7 +226,6 @@ public class CitaMantenimientoBean extends BaseBean implements Serializable {
         this.setCitaSelected(null);
         this.setCliente(null);
         super.quitarSeleccion();
-
     }
 
     /**

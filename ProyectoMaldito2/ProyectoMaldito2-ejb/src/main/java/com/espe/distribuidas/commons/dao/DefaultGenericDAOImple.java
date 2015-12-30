@@ -142,9 +142,9 @@ public class DefaultGenericDAOImple<T, ID extends Serializable> implements
         try {
             Query query = this.qryBuilder.buildQuery(0, this.entityBeanType.newInstance());
             return query.getResultList();
-        } catch (Exception ex) {
+        } catch (InstantiationException | IllegalAccessException ex) {
             LOGGER.log(Level.INFO,"Error al ejecutar sentencia all.",ex);
-            return new ArrayList<T>();
+            return new ArrayList<>();
         } 
     }
     

@@ -9,8 +9,9 @@
     <h:body>
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
-                <p:dataTable id="singleCita" var="cita" value="#{citaMantenimientoBean.citas}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{citaMantenimientoBean.citaSelected}" rowKey="#{cita.idCita}" >
+                <p:dataTable id="singleCita" var="cita" value="#{citaMantenimientoBean.citas}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{citaMantenimientoBean.citaSelected}" rowKey="#{cita.idCita}" 
+                             emptyMessage="No hay registros ingresados">
                     <p:column headerText="ID Cita">
                         <h:outputText value="#{cita.idCita}" />
                     </p:column>
@@ -50,7 +51,7 @@
                 </p:dataTable>
                 <p:panel id="dialog" widgetVar="seleccionarClienteDialog" header="Seleccionar Cliente" rendered="#{citaMantenimientoBean.enSeleccionar}">
 
-                    <p:dataTable id="singleCliente" var="cliente" value="#{citaMantenimientoBean.clientes}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                    <p:dataTable id="singleCliente" var="cliente" value="#{citaMantenimientoBean.clientes}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="150"
                                  style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{citaMantenimientoBean.clienteSelected}" rowKey="#{cliente.idCliente}" >
                         <p:column headerText="C.I">
                             <h:outputText value="#{cliente.idCliente}" />
@@ -64,9 +65,7 @@
                             <h:outputText value="#{cliente.telefono}" />
                         </p:column>
 
-
                         <p:ajax event="rowSelect" update="@form" listener="#{citaMantenimientoBean.onRowSelectPopUp}" />
-
 
                     </p:dataTable>
                     <p:commandButton value="Aceptar" actionListener="#{citaMantenimientoBean.aceptarPopUp()}" disabled="#{citaMantenimientoBean.diableAceptar}" update="@form" />

@@ -45,7 +45,7 @@
                                         <ul>
                                             <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionDevoluciones.xhtml">Devoluciones</a></li>
                                             <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionPedidos.xhtml">Pedidos</a></li>
-                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionCitaMantenimiento.xhtml">Citas</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionCitas.xhtml">Citas</a></li>
                                             <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionMantenimientos.xhtml">Mantenimiento</a></li>
                                         </ul>
                                     </li>
@@ -83,43 +83,35 @@
             </div>
         </div>
         <!--banner end here-->
-        <!--about start here-->
+        <!--content-->
         <div class="container">
-            <h:form>
-                <p:growl id="growl"  autoUpdate="true" severity="info,fatal" showDetail="true" life="3000"  />    
-                <ui:insert name="lista">
-                </ui:insert>
-            </h:form>
-            <div class="clearfix"> </div>
+            <div class="contact">
+                <h:form>
+                    <p:growl id="growl"  autoUpdate="true" severity="info,fatal" showDetail="true" life="3000"  />    
+
+                    <div class="contact-md">
+                        <ui:insert name="titulo">
+                        </ui:insert>
+                    </div>
+                    <div class="col-md-6 contact-top">
+                        <ui:insert name="derecha">
+                        </ui:insert>
+                    </div>
+                </h:form>
+                <div class="col-md-6 contact-top">
+                    <h:form>
+                        <p:growl id="growl"  autoUpdate="true" severity="info,fatal" showDetail="true" life="3000"  />    
+                        <ui:insert name="izquierda">
+                        </ui:insert>
+                    </h:form>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
         </div>
+        <!--contact end here-->
         <!--footer1 start here-->
         <div class="footer1">
             <div class="container">
-                <div class="footer1-main">
-                    <div class="col-md-4 ftr-gd">
-                        <h3>Siguenos</h3>
-                        <ul>
-                            <li><a href="#" class="fa"><img src="#{facesContext.externalContext.requestContextPath}/images/log_FB.png" alt="" class="img-responsive"/> </a></li>
-                            <li><a href="#" class="tw"><img src="#{facesContext.externalContext.requestContextPath}/images/log_TW.png" alt="" class="img-responsive"/> </a></li>
-                            <li><a href="#" class="g"><img src="#{facesContext.externalContext.requestContextPath}/images/log_GPLUS.png" alt="" class="img-responsive"/> </a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 ftr-gd">
-                        <h3>Suscríbete</h3>
-                        <form>
-                            <input  type="text" value="Ingrese su Email" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                        this.value = 'Enter Your email';
-                                    }"/>
-                            <input type="submit" value="Subscribe"/>
-                        </form>
-                    </div>
-                    <div class="col-md-4 ftr-gd">
-                        <h3>Dirección</h3>
-                        <p>Quito sur</p>
-                        <p></p>
-                        <p>cell :+593 998299109</p>
-                    </div>
-                </div>
                 <div class="copyright">
                     <p>© 2015 Proyecto Maldito 2. Todos los derechos reservados | Design by  <a href="" target="_blank">  R-R S.A </a></p>
                 </div>
