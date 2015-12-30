@@ -10,6 +10,7 @@
 package com.espe.distribuidas.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class DetalleDevolucion implements Serializable {
     private Integer idDevolucion;
 
     @Column(name = "CANTIDAD", nullable = false)
-    private Integer cantidad;
+    private BigDecimal cantidad;
 
     @JoinColumn(name = "ID_DEVOLUCION", referencedColumnName = "ID_DEVOLUCION", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -83,13 +84,14 @@ public class DetalleDevolucion implements Serializable {
         this.idDevolucion = idDevolucion;
     }
 
-    public Integer getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
+
 
     @Override
     public int hashCode() {

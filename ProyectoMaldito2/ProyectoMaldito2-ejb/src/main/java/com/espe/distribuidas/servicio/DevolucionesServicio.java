@@ -45,6 +45,11 @@ public class DevolucionesServicio {
     public List<Devoluciones> obtenerTodasDevoluciones() {
         return this.devolucion.findAll();
     }
+    
+    public Devoluciones findLast(){
+    
+        return this.devolucion.findAll().get(this.devolucion.findAll().size()-1);
+    }
 
     /**
      * Permite realizar una busqueda para encontrar un proveedor por ID de

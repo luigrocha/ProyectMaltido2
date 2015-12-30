@@ -44,7 +44,7 @@ public class DevolucionBean extends BaseBean implements Serializable {
 
     @EJB
     private DevolucionesServicio devolucionServicio;
-    
+
     @EJB
     private DetalleDevolucionServicio detalleDevolucionServicio;
 
@@ -104,10 +104,10 @@ public class DevolucionBean extends BaseBean implements Serializable {
      * variable tipo devolucion.
      */
     private List<Devoluciones> devolucionSelected;
-    
+
     /**
-     * variable tipo lista de detalles devoluciones  para setear a una
-     * tabla del formulario.
+     * variable tipo lista de detalles devoluciones para setear a una tabla del
+     * formulario.
      */
     private List<DetalleDevolucion> detalleDevoluciones;
 
@@ -221,9 +221,9 @@ public class DevolucionBean extends BaseBean implements Serializable {
     public void onRowSelectInsumo(SelectEvent evt) {
         this.insumodetalle = new Insumos();
         insumoDetalle.add(this.insumoSelected);
-        
-        this.detalledevolucion =  new DetalleDevolucion();
-        
+
+        this.detalledevolucion = new DetalleDevolucion();
+
         this.detalledevolucion.setIdInsumo(this.insumoSelected.getIdInsumo());
         this.detalledevolucion.setIdDevolucion(28);
         this.detalledevolucion.setCantidad(this.insumoSelected.getCantidad());
@@ -238,16 +238,21 @@ public class DevolucionBean extends BaseBean implements Serializable {
      * para la segunda actualiza un registro de la base de datos.
      */
     public void aceptar() {
+        Devoluciones devolucionestmp;
         FacesContext context = FacesContext.getCurrentInstance();
         if (super.isEnNuevo()) {
             try {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
                 this.devolucionServicio.ingresarDevolucion(this.devolucion);
-                
+               
+                devolucionestmp = this.devolucionServicio.findLast();
+                insertarIdDevolusion(devolucionestmp, detalleDevoluciones);
+
                 for (DetalleDevolucion detalleDevolucione : detalleDevoluciones) {
+
                     this.detalleDevolucionServicio.ingresarDetalleDevolucion(detalleDevolucione);
                 }
-                
+
                 //this.devoluciones.add(0, this.devolucion);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la devolucion: "
                         + this.devolucion.getIdDevoluciones() + " del proveedor: " + this.devolucion.getDevolucionProveedor().getIdProveedor(), null));
@@ -270,6 +275,18 @@ public class DevolucionBean extends BaseBean implements Serializable {
 
         this.reset();
         this.setDevolucionSelected(null);
+    }
+
+    /**
+     *inserta en la lista de detalles de devolucion el is de la devo;lucion asociada.
+     * @param devolucionesid recive el objeto del id de devolucion asociada.
+     * @param lista recove la lista a insertar.
+     */
+    public void insertarIdDevolusion(Devoluciones devolucionesid,List<DetalleDevolucion> lista) {
+        for(int i=0;i<lista.size();i++)
+        {
+        lista.get(i).setIdDevolucion(devolucionesid.getIdDevoluciones());
+        }
     }
 
     public void habilitarSeleccionProveedor() {
@@ -414,8 +431,6 @@ public class DevolucionBean extends BaseBean implements Serializable {
     public void setDetalledevolucion(DetalleDevolucion detalledevolucion) {
         this.detalledevolucion = detalledevolucion;
     }
-    
-    
 
     public void setDevoluciones(List<Devoluciones> devoluciones) {
         this.devoluciones = devoluciones;
