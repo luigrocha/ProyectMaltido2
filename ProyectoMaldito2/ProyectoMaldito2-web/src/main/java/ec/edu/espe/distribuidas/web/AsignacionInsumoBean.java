@@ -22,6 +22,8 @@ import com.espe.distribuidas.servicio.MantenimientoServicio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -55,7 +57,6 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
     /**
      * variable temporal para retener el id del mantenimiento en toda la lista.
      */
-    private MantenimientoPK idmantenimiento;
     /**
      * variable que referencia a un insumo seleccionado.
      */
@@ -64,7 +65,7 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
     /**
      * cantidad de un insumo.
      */
-    private BigDecimal cantidad;
+    private Insumos cantidad;
     /**
      * variable de referencia al objeto insumo.
      */
@@ -141,7 +142,8 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
         this.insumos = this.insumoServicio.obtenerTodosInsumos();
         this.mantenimientos = this.mantenimientoServicio.obtenerTodasMantenimiento();
         this.primaryKey = new AsignacionInsumoPK();
-        this.idmantenimiento = new MantenimientoPK();
+        this.guardarAsignacionInsumo = new ArrayList<>();
+        this.cantidad = new Insumos();
     }
 
     /**
@@ -157,13 +159,18 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
     }
 
     public void ingresarInsumo() {
-        this.primaryKey.setIdEmpleado(this.idmantenimiento.getIdEmpleado());
-        this.primaryKey.setIdCita(this.idmantenimiento.getIdCita());
+        this.asignacionInsumo = new AsignacionInsumo();
+
+        this.primaryKey.setIdEmpleado(this.getMantenimientoSelected().getPrimaryKey().getIdEmpleado());
+        this.primaryKey.setIdCita(this.getMantenimientoSelected().getPrimaryKey().getIdCita());
         this.primaryKey.setIdInsumo(this.insumoSelected.getIdInsumo());
         this.asignacionInsumo.setPrimaryKey(primaryKey);
         this.asignacionInsumo.setUnidadMedida(this.insumoSelected.getUnidadMedida());
-        this.asignacionInsumo.setCantidad(this.cantidad);
-        this.guardarAsignacionInsumo.add(asignacionInsumo);
+        this.asignarCantidad(cantidad);
+        this.asignacionInsumo.setMantenimientoAsignacionInsumo(this.mantenimientoSelected);
+        this.asignacionInsumo.setInsumo(this.insumoSelected);
+        this.asignacionInsumo.setFechaAsignacion(new Date());
+        this.guardarAsignacionInsumo.add(this.asignacionInsumo);
 
     }
 
@@ -227,13 +234,15 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
         // this.diableAceptar = false;
 //            BeanUtils.copyProperties(this.empleado, this.empleadoSelected);
 
-        this.idmantenimiento.setIdEmpleado(this.mantenimientoSelected.getPrimaryKey().getIdEmpleado());
-        this.idmantenimiento.setIdCita(this.mantenimientoSelected.getPrimaryKey().getIdCita());
-
+//        this.primaryKey.setIdEmpleado(this.mantenimientoSelected.getPrimaryKey().getIdEmpleado());
     }
 
     public void onRowSelectInsumo(SelectEvent event) {
+        this.setDiableAceptar(false);
+    }
 
+    public void asignarCantidad(Insumos cantidad) {
+        this.asignacionInsumo.setCantidad(cantidad.getCantidad());
     }
 
     /**
@@ -250,7 +259,7 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
                 this.asignacionInsumoServicio.ingresarInsumoAsignado(this.guardarAsignacionInsumo);
                 listaActualizar();
                 // this.citas.add(0, this.cita);
-                this.mantenimientos = this.mantenimientoServicio.obtenerTodasMantenimiento();
+                this.asignacionInsumos = this.asignacionInsumoServicio.obtenerTodasInsumosAsignados();
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "El o los registros se registraron corectamente", null));
             } catch (Exception e) {
 
@@ -278,7 +287,10 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
 
     public void listaActualizar() {
         for (int i = 0; i < guardarAsignacionInsumo.size(); i++) {
-            this.insumoServicio.actualizarInsumo(new Insumos(guardarAsignacionInsumo.get(i).getPrimaryKey().getIdInsumo(), guardarAsignacionInsumo.get(i).getCantidad()));
+            Insumos insumoTmp = guardarAsignacionInsumo.get(i).getInsumo();
+
+            insumoTmp.setCantidad(insumoTmp.getCantidad().subtract(guardarAsignacionInsumo.get(i).getCantidad()));
+            this.insumoServicio.actualizarInsumo(insumoTmp);
 
         }
 
@@ -430,19 +442,11 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
         this.diableAceptar = diableAceptar;
     }
 
-    public MantenimientoPK getIdmantenimiento() {
-        return idmantenimiento;
-    }
-
-    public void setIdmantenimiento(MantenimientoPK idmantenimiento) {
-        this.idmantenimiento = idmantenimiento;
-    }
-
-    public BigDecimal getCantidad() {
+    public Insumos getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(BigDecimal cantidad) {
+    public void setCantidad(Insumos cantidad) {
         this.cantidad = cantidad;
     }
 

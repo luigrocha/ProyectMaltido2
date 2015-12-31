@@ -57,7 +57,6 @@
 
                     <f:facet name="footer">
                         <p:commandButton value="Nuevo" actionListener="#{asignacionInsumoBean.nuevo()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected ne null}" styleClass=""/>
-                        <p:commandButton value="Modificar" actionListener="#{asignacionInsumoBean.modificar()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected eq null}"/>
                         <p:commandButton value="Borrar" actionListener="#{asignacionInsumoBean.eliminar()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
@@ -67,7 +66,7 @@
                     <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{asignacionInsumoBean.mantenimientos}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                                  style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{asignacionInsumoBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
                         <p:column headerText="Cita">
-                            <h:outputText value="id: #{mantenimiento.primaryKey.idCita}, empleado: #{mantenimiento.primaryKey.setIdEmpleado(idEmpleado)}" />
+                            <h:outputText value="id: #{mantenimiento.primaryKey.idCita}, empleado: #{mantenimiento.primaryKey.idEmpleado}" />
                         </p:column>
 
                         <p:column headerText="Empleado Nombre" filterBy="#{mantenimiento.empleadoMantenimiento.nombre}" filterMatchMode="contains" >
@@ -117,10 +116,10 @@
 
                     </p:dataTable>
                     <p:outputLabel for="txtCantidad" value="Cantidad: "/>
-                    <p:inputText id="txtCantidad" value="#{asignacionInsumoBean.cantidad }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                    <p:inputText id="txtCantidad" value="#{asignacionInsumoBean.cantidad.cantidad}" disabled="#{asignacionInsumoBean.diableAceptar}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                     </p:inputText> 
                     <p:message for="txtCantidad"/>
-                    <p:commandButton value="Agregar" actionListener="#{asignacionInsumoBean.ingresarInsumo()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected ne null}" styleClass=""/>
+                    <p:commandButton value="Agregar" actionListener="#{asignacionInsumoBean.ingresarInsumo()}"  update="@form" disabled="#{asignacionInsumoBean.diableAceptar}" styleClass=""/>
                     <p:commandButton value="Cancelar"  immediate="true" update="@form" onclick="tablaInsumo.unselectAllRows()"/>
 
 
@@ -131,15 +130,18 @@
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
 
-                        <p:outputLabel for="txtCita" value="Cita: "/>
-                        <p:inputText id="txtCita" value="#{asignacionInsumoBean.idmantenimiento.idCita }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
-                        </p:inputText> 
-                        <p:message for="txtCita"/>
+                        <p:dataTable id="guardarAsignacionInfo" var="asignacionInfo" value="#{asignacionInsumoBean.guardarAsignacionInsumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                     style="width: 100%;" styleClass="textlb" selectionMode="single"  rowKey="#{asignacionInfo.primaryKey}" >
 
-                        <p:outputLabel for="txtEmpleado" value="Empleado: "/>
-                        <p:inputText id="txtEmpleado" value="#{asignacionInsumoBean.idmantenimiento.idEmpleado}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
-                        </p:inputText> 
-                        <p:message for="txtEmpleado"/>
+                            <p:column headerText="Id Cita">
+                                <h:outputText value="#{asignacionInfo.primaryKey.idCita}" />
+                            </p:column>
+
+                            <p:column headerText="ID Empleado" >
+                                <h:outputText value="#{asignacionInfo.primaryKey.idEmpleado}" />
+                            </p:column>
+
+                        </p:dataTable>
 
                         <p:dataTable id="guardarAsignacionInsumo" var="asignacionI" value="#{asignacionInsumoBean.guardarAsignacionInsumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                                style="width: 100%;" styleClass="textlb" selectionMode="single"  rowKey="#{asignacionI.primaryKey}" >
