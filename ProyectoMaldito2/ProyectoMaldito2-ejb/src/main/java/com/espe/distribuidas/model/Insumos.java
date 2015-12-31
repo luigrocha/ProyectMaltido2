@@ -63,6 +63,17 @@ public class Insumos implements Serializable {
     public Insumos() {
     }
 
+    public Insumos(String idInsumo, String nombre, String descripcion, BigDecimal precioCompra, BigDecimal cantidad, String tipoInsumo, String unidadMedida) {
+        this.idInsumo = idInsumo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precioCompra = precioCompra;
+        this.cantidad = cantidad;
+        this.tipoInsumo = tipoInsumo;
+        this.unidadMedida = unidadMedida;
+    }
+    
+
     public Insumos(String idInsumo, BigDecimal cantidad) {
         this.idInsumo = idInsumo;
         this.cantidad = cantidad;
