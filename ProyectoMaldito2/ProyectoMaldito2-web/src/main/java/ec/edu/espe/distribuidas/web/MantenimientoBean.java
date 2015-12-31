@@ -128,7 +128,7 @@ public class MantenimientoBean extends BaseBean implements Serializable {
     public void inicializar() {
         this.citas = this.citaServicio.obtenerTodasCitas();
         this.empleados = this.empleadoServicio.buscasPorTecnico();
-        this.mantenimientos=this.mantenimientoServicio.obtenerTodasMantenimiento();
+        this.mantenimientos=this.mantenimientoServicio.obtenerTodosMantenimiento();
         this.primaryKey=new MantenimientoPK();
     }
 
@@ -227,7 +227,7 @@ public class MantenimientoBean extends BaseBean implements Serializable {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
                 this.mantenimientoServicio.ingresarMantenimiento(this.mantenimiento);
                 // this.citas.add(0, this.cita);
-                this.mantenimientos = this.mantenimientoServicio.obtenerTodasMantenimiento();
+                this.mantenimientos = this.mantenimientoServicio.obtenerTodosMantenimiento();
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el mantenimiento: " + this.mantenimiento.getPrimaryKey().getIdEmpleado()+" "+this.mantenimiento.getPrimaryKey().getIdCita(), null));
             } catch (Exception e) {
 

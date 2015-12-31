@@ -140,7 +140,7 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
     public void inicializar() {
         this.asignacionInsumos = this.asignacionInsumoServicio.obtenerTodasInsumosAsignados();
         this.insumos = this.insumoServicio.obtenerTodosInsumos();
-        this.mantenimientos = this.mantenimientoServicio.obtenerTodasMantenimiento();
+        this.mantenimientos = this.mantenimientoServicio.obtenerTodosMantenimiento();
         this.primaryKey = new AsignacionInsumoPK();
         this.guardarAsignacionInsumo = new ArrayList<>();
         this.cantidad = new Insumos();

@@ -44,7 +44,7 @@ public class MantenimientoServicio {
      *
      * @return parametro tipo lista de citas de mantenimiento.
      */
-    public List<Mantenimiento> obtenerTodasMantenimiento() {
+    public List<Mantenimiento> obtenerTodosMantenimiento() {
         return this.mantenimientoDAO.findAll();
     }
 

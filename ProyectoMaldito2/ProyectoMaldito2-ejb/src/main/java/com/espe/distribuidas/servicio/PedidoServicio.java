@@ -42,7 +42,7 @@ public class PedidoServicio {
      *
      * @return parametro tipo lista de citas de mantenimiento.
      */
-    public List<Pedido> obtenerTodasPedidos() {
+    public List<Pedido> obtenerTodosPedidos() {
         return this.pedido.findAll();
     }
     
