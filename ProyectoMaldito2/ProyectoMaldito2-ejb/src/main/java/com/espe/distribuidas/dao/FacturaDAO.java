@@ -20,7 +20,7 @@ import javax.ejb.Stateless;
  */
 @LocalBean
 @Stateless 
-public class FacturaDAO extends DefaultGenericDAOImple<Factura, String> {
+public class FacturaDAO extends DefaultGenericDAOImple<Factura, Integer> {
      public FacturaDAO() {
         super(Factura.class);
     }

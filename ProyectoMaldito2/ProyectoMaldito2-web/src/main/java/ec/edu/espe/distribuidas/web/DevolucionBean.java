@@ -103,7 +103,7 @@ public class DevolucionBean extends BaseBean implements Serializable {
     /**
      * variable tipo devolucion.
      */
-    private List<Devoluciones> devolucionSelected;
+    private Devoluciones devolucionSelected;
 
     /**
      * variable tipo lista de detalles devoluciones para setear a una tabla del
@@ -219,7 +219,7 @@ public class DevolucionBean extends BaseBean implements Serializable {
     }
 
     public void onRowSelectInsumo(SelectEvent evt) {
-        this.insumodetalle = new Insumos();
+         this.insumodetalle = new Insumos();
         insumoDetalle.add(this.insumoSelected);
 
         this.detalledevolucion = new DetalleDevolucion();
@@ -231,6 +231,7 @@ public class DevolucionBean extends BaseBean implements Serializable {
         this.setInsumo(null);
         super.quitarSeleccion();
     }
+ 
 
     /**
      * metodo que controla el boton aceptar del formulario. se comporta de 2
@@ -253,7 +254,6 @@ public class DevolucionBean extends BaseBean implements Serializable {
                     this.detalleDevolucionServicio.ingresarDetalleDevolucion(detalleDevolucione);
                 }
                 this.devoluciones=devolucionServicio.obtenerTodasDevoluciones();
-                //this.devoluciones.add(0, this.devolucion);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la devolucion: "
                         + this.devolucion.getIdDevoluciones() + " del proveedor: " + this.devolucion.getDevolucionProveedor().getIdProveedor(), null));
             } catch (Exception e) {
@@ -444,11 +444,11 @@ public class DevolucionBean extends BaseBean implements Serializable {
         this.devolucion = devolucion;
     }
 
-    public List<Devoluciones> getDevolucionSelected() {
+    public Devoluciones getDevolucionSelected() {
         return devolucionSelected;
     }
 
-    public void setDevolucionSelected(List<Devoluciones> devolucionSelected) {
+    public void setDevolucionSelected(Devoluciones devolucionSelected) {
         this.devolucionSelected = devolucionSelected;
     }
 

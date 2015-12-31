@@ -1,16 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/plantillas/template2.xhtml">
+            <ui:define name="lista">
+                <p:outputLabel><h3>Pedidos</h3></p:outputLabel>
+                <p:dataTable id="singleDevoluciones" var="devolucion" value="#{devolucionBean.devoluciones}"  paginator="true" rows="10" paginatorPosition="bottom"  scrollable="true" scrollHeight="150"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{devolucionBean.devolucionSelected}" rowKey="#{devolucion.idDevoluciones}" 
+                             emptyMessage="No hay registros ingresados">
+
+                    <p:column headerText="ID Devolución" filterBy="#{devoluciones.idDevoluciones}" filterMatchMode="contains">
+                        <h:outputText value="#{devolucion.idDevoluciones}" />
+                    </p:column>
+
+                    <p:column headerText="Id Proveedor" filterBy="#{devolucion.devolucionProveedor.idProveedor}" filterMatchMode="contains">
+                        <h:outputText value="#{devolucion.devolucionProveedor.idProveedor}" />
+                    </p:column>
+
+                    <p:column headerText="Proveedor" filterBy="#{devolucion.devolucionProveedor.nombreEmpresa}" filterMatchMode="contains">
+                        <h:outputText value="#{devolucion.devolucionProveedor.nombreEmpresa}" />
+                    </p:column>
+                    <p:column headerText="Fecha" filterBy="#{devolucion.fecha}" filterMatchMode="contains">
+                        <h:outputText value="#{devolucion.fecha}" >
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+                    </p:column>
+                    <p:ajax event="rowSelect" update="@form" listener="#{devolucionBean.onRowSelect}" />
+                    <f:facet name="footer">
+                        <p:commandButton value="Nuevo" actionListener="#{devolucionBean.nuevo()}" immediate="true" update="@form" disabled="#{devolucionBean.devolucionSelected ne null}" styleClass=""/>
+                        <p:commandButton value="Modificar" actionListener="#{devolucionBean.modificar()}" immediate="true" update="@form" disabled="#{devolucionBean.devolucionSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{devolucionBean.eliminar()}" immediate="true" update="@form" disabled="#{devolucionBean.devolucionSelected eq null}"/>
+                    </f:facet>
+                </p:dataTable>
+
+                <p:panel id="dialog" widgetVar="seleccionarProveedorDialog" header="Seleccionar Proveedor" rendered="#{devolucionBean.enSeleccionar}">
+                    <p:dataTable id="singleProveedor" var="proveedor" value="#{devolucionBean.proveedores}" scrollable="true" scrollHeight="150"
+                                 style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{devolucionBean.proveedorSelected}" rowKey="#{proveedor.idProveedor}" >
+                        <p:column headerText="ID Proveedor" filterBy="#{proveedor.idProveedor}" filterMatchMode="contains">
+                            <h:outputText value="#{proveedor.idProveedor}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre" filterBy="#{proveedor.nombreEmpresa}" filterMatchMode="contains">
+                            <h:outputText value="#{proveedor.nombreEmpresa}" />
+                        </p:column>
+
+                        <p:column headerText="Telefono" filterBy="#{proveedor.telefono}" filterMatchMode="contains">
+                            <h:outputText value="#{proveedor.telefono}" />
+                        </p:column>
+
+                        <p:ajax event="rowSelect" update="@form" listener="#{devolucionBean.onRowSelectPopUp}" />
+
+                    </p:dataTable>
+                    <p:commandButton value="Aceptar" actionListener="#{devolucionBean.aceptarPopUp()}" disabled="#{devolucionBean.disableAceptar}" update="@form" />
+                    <p:commandButton value="Cancelar" actionListener="#{devolucionBean.cancelarPopUp()}" immediate="true" update="@form"/>
+
+                </p:panel>
+                <p:panel header="#{devolucionBean.title}" style="width: 100%" rendered="#{devolucionBean.enNuevo or devolucionBean.enModificar}">
+                    <h:panelGrid columns="2" style="margin: 0 auto;" width="100%">
+                        <p:dataTable id="singleInsumo" var="insumo" value="#{devolucionBean.insumos}" scrollable="true" scrollHeight="150"
+                                     style="width: 400px;" styleClass="textlb" selectionMode="single" selection="#{devolucionBean.insumoSelected}" rowKey="#{insumo.idInsumo}" >
+                            <p:column headerText="Id Insumos" filterBy="#{insumo.idInsumo}" filterMatchMode="contains">
+                                <h:outputText value="#{insumo.idInsumo}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre" filterBy="#{insumo.nombre}" filterMatchMode="contains">
+                                <h:outputText value="#{insumo.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="Cantidad" >
+                                <h:inputText value="#{insumo.cantidad}" style="width: 20px;"/>
+                            </p:column>
+
+                            <p:ajax event="rowSelect" listener="#{devolucionBean.onRowSelectInsumo}" update="@form" />
+
+                        </p:dataTable>
+                        <h:panelGrid columns="2" width="300" style="margin-top: -60px; height: 40px;">
+                            <p:outputLabel for="txtCedula" value="Código: "/>
+                            <p:outputLabel id="txtCedula" value="#{devolucionBean.proveedorSelected.idProveedor}" />
+                            <p:outputLabel for="txtProveedor" value="Proveedor: "/>
+                            <p:outputLabel id="txtProveedor" value="#{devolucionBean.proveedorSelected.nombreEmpresa}" />
+                            <p:outputLabel for="txtTelefono" value="Telefono: "/>
+                            <p:outputLabel id="txtTelefono" value="#{devolucionBean.proveedorSelected.telefono}" />
+                            <p:outputLabel for="txtCorreo" value="Correo: "/>
+                            <p:outputLabel id="txtCorreo" value="#{devolucionBean.proveedorSelected.correoElectronico}" />
+                            <p:outputLabel for="txtfecha" value="Fecha:  "/>
+                            <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" value="#{devolucionBean.devolucion.fecha}" required="true" requiredMessage="Campo Requerido"/>
+                        </h:panelGrid>
+                        <p:column></p:column>
+                        <p:dataTable style="width: 400px;" var="insumo" value="#{devolucionBean.insumoDetalle}" scrollable="true" scrollHeight="150"
+                                     styleClass="textlb" selectionMode="single" selection="#{devolucionBean.insumo}" rowKey="#{insumo.idInsumo}" editable="true">
+                            <p:column headerText="Id Insumos">
+                                <h:outputText value="#{insumo.idInsumo}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre" >
+                                <h:outputText value="#{insumo.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="Cantidad" >
+                                <h:outputText value="#{insumo.cantidad}" />
+                            </p:column>
+                        </p:dataTable>
+
+                        <f:facet name="footer" class="center-block">
+                            <p:commandButton value="Aceptar" actionListener="#{devolucionBean.aceptar()}"  update="@form"/>
+                            <p:commandButton value="Cancelar" actionListener="#{devolucionBean.cancelar()}" immediate="true"  update="@form"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>

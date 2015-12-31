@@ -73,15 +73,13 @@
                             </p:column>
 
                             <p:column headerText="Cantidad" >
-                                <h:outputText value="#{insumo.cantidad}" />
+                                <h:inputText value="#{insumo.cantidad}" style="width: 20px;"/>
                             </p:column>
 
                             <p:ajax event="rowSelect" listener="#{devolucionBean.onRowSelectInsumo}" update="@form" />
 
                         </p:dataTable>
                         <h:panelGrid columns="2" width="300" style="margin-top: -60px; height: 40px;">
-                            <p:outputLabel for="txtId" value="Número: "/>
-                            <p:outputLabel id="txtId" value="#{devolucionBean.devolucion.idDevoluciones}" />
                             <p:outputLabel for="txtCedula" value="Código: "/>
                             <p:outputLabel id="txtCedula" value="#{devolucionBean.proveedorSelected.idProveedor}" />
                             <p:outputLabel for="txtProveedor" value="Proveedor: "/>
@@ -93,20 +91,7 @@
                             <p:outputLabel for="txtfecha" value="Fecha:  "/>
                             <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" value="#{devolucionBean.devolucion.fecha}" required="true" requiredMessage="Campo Requerido"/>
                         </h:panelGrid>
-                        <p:dataTable style="width: 400px;" var="detalledevolucion" value="#{devolucionBean.detalleDevoluciones}" scrollable="true" scrollHeight="150"
-                                     styleClass="textlb" selectionMode="single" selection="#{devolucionBean.detalledevolucion}" rowKey="#{detalledevolucion.idInsumo}" editable="true">
-                            <p:column headerText="Id Insumos">
-                                <h:outputText value="#{detalledevolucion.idInsumo}" />
-                            </p:column>
-
-                            <p:column headerText="Nombre" >
-                                <h:outputText value="#{detalledevolucion.idDevolucion}" />
-                            </p:column>
-
-                            <p:column headerText="Cantidad" >
-                                <h:outputText value="#{detalledevolucion.cantidad}" />
-                            </p:column>
-                        </p:dataTable>
+                        <p:column></p:column>
                         <p:dataTable style="width: 400px;" var="insumo" value="#{devolucionBean.insumoDetalle}" scrollable="true" scrollHeight="150"
                                      styleClass="textlb" selectionMode="single" selection="#{devolucionBean.insumo}" rowKey="#{insumo.idInsumo}" editable="true">
                             <p:column headerText="Id Insumos">

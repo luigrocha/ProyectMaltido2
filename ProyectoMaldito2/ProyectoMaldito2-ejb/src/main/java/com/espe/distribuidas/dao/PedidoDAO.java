@@ -20,7 +20,7 @@ import javax.ejb.Stateless;
  */
 @LocalBean
 @Stateless
-public class PedidoDAO extends DefaultGenericDAOImple<Pedido, String> {
+public class PedidoDAO extends DefaultGenericDAOImple<Pedido, Integer> {
      public PedidoDAO() {
         super(Pedido.class);
     }

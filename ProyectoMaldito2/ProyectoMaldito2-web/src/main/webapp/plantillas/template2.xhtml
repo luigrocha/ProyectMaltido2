@@ -32,7 +32,7 @@
                             <span class="menu"> <img src="images/icon.png" alt=""/></span>
                             <nav>
                                 <ul>
-                                    <li><a href="#{facesContext.externalContext.requestContextPath}/faces/index.xhtml">Inicio</a></li> 
+                                    <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/dashboard.xhtml">Inicio</a></li> 
                                     <li  class="sub"><a>Configuraciones</a>
                                         <ul>
                                             <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/listarEmpleados.xhtml">Empleados</a></li>
@@ -52,6 +52,7 @@
                                     <li  class="sub"><a>Schedule</a>
                                         <ul>
                                             <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/scheCalendarioOcupaciones.xhtml">Calendario Ocupación</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/scheAsignacionInsumos.xhtml">Asignación Insumos</a></li>
                                             <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/scheLiquidacionInsumos.xhtml">Liquidación Insumos</a></li>
                                             <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionFacturacion.xhtml">Facturacion</a></li>
                                         </ul>
@@ -84,18 +85,18 @@
         </div>
         <!--banner end here-->
         <!--about start here-->
-        <div class="container">
+        <div class=" container fondo" >
             <h:form>
                 <p:growl id="growl"  autoUpdate="true" severity="info,fatal" showDetail="true" life="3000"  />    
                 <ui:insert name="lista">
                 </ui:insert>
             </h:form>
-            <div class="clearfix"> </div>
+            
         </div>
         <!--footer1 start here-->
-        <div class="footer1">
+        <div class="footer">
             <div class="container">
-                <div class="footer1-main">
+                <div class="footer-main">
                     <div class="col-md-4 ftr-gd">
                         <h3>Siguenos</h3>
                         <ul>

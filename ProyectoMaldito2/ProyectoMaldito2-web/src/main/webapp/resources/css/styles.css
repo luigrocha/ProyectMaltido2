@@ -13,6 +13,9 @@ html, body{
     font-size: 100%;
     background:#fff; 
 }
+.fondo{
+     height: 850px;  position: relative;
+}
 a {
     text-decoration: none;
 }
@@ -526,9 +529,9 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
 /*--footer start here--*/
 .footer1 {
     background: #000;
-    padding: 1em 0em 1em 0em;
+    position: absolute;
     width: 100%;
-    top:5px;
+    
 }
 .ftr-gd h3 {
     font-size: 1.2em;
