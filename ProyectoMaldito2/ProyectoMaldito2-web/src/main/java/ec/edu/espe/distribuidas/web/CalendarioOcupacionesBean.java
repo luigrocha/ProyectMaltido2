@@ -31,17 +31,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.commons.beanutils.BeanUtils;
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
@@ -105,14 +100,11 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
      * seleccion de cliente.
      */
     private boolean diableAceptar = true;
-    
-    
-    
-    
+
     private ScheduleModel eventModel;
-     
+
     private ScheduleModel lazyEventModel;
- 
+
     private ScheduleEvent event = new DefaultScheduleEvent();
 
     /**
@@ -123,34 +115,29 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
     public void inicializar() {
         super.nuevo();
         this.empleados = this.empleadoServicio.buscasPorTecnico();
-        
+
     }
 
-  
-
     @Override
-    public void seleccionar()
-    {
+    public void seleccionar() {
         super.quitarNuevo();
         try {
             super.seleccionar();
-            this.empleado=new Empleado();
+            this.empleado = new Empleado();
             BeanUtils.copyProperties(this.empleado, this.empleadoSelected);
-            this.mantenimientos=this.mantenimientoServicio.obtenerMantenimientoPorEmpleado(this.empleado);
+            this.mantenimientos = this.mantenimientoServicio.obtenerMantenimientoPorEmpleado(this.empleado);
             this.setearShedule(this.mantenimientos);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(CalendarioOcupacionesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }
-    
-    
-    public void setearShedule(List<Mantenimiento> listMantenimiento){
+
+    public void setearShedule(List<Mantenimiento> listMantenimiento) {
         eventModel = new DefaultScheduleModel();
-        for(int i=0;i<listMantenimiento.size();i++)
-        {
-        eventModel.addEvent(new DefaultScheduleEvent(listMantenimiento.get(i).getCitaMantenimiento().getDescripcion(),this.getDate(listMantenimiento.get(i).getFechaInicio()),this.getDate(listMantenimiento.get(i).getFechaFin())));
-        
+        for (int i = 0; i < listMantenimiento.size(); i++) {
+            eventModel.addEvent(new DefaultScheduleEvent(i + "-" + listMantenimiento.get(i).getCitaMantenimiento().getDescripcion(), this.getDate(listMantenimiento.get(i).getFechaInicio()), this.getDate(listMantenimiento.get(i).getFechaFin())));
+
         }
     }
 
@@ -161,14 +148,16 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
     @Override
     public void cancelar() {
         super.cancelar();
-       this.setEmpleadoSelected(null);
-      
+        this.setEmpleadoSelected(null);
+        this.empleados = empleadoServicio.buscasPorTecnico();
+
     }
-    public void regresar(){
-    super.reset();
-    super.nuevo();
-    this.setEmpleadoSelected(null);
-    
+
+    public void regresar() {
+        super.reset();
+        super.nuevo();
+        this.setEmpleadoSelected(null);
+
     }
 
     /**
@@ -183,32 +172,32 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
     }
 
     public void onRowSelectMantenimiento(SelectEvent event) {
-        
-    }
 
-  
+    }
 
     public void habilitarSeleccionCliente() {
         super.seleccionar();
     }
 
-  
-     public Date getDate(Date date) {
-        Date aux=null;
-         try {
-            SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            String fecha=formato.format(date);
-            aux=formato.parse(fecha);
-            
+    public Date getDate(Date date) {
+        Date aux = null;
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String fecha = formato.format(date);
+            aux = formato.parse(fecha);
+
         } catch (ParseException ex) {
             Logger.getLogger(CalendarioOcupacionesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return aux ;
+        return aux;
     }
-    
-    
-    
-    
+
+    public void onEventSelect(SelectEvent selectEvent) {
+        event = (ScheduleEvent) selectEvent.getObject();
+        String[] index = event.getTitle().split("-");
+        this.mantenimiento = this.mantenimientos.get(Integer.valueOf(index[0]));
+    }
+
     /**
      * metodo get de titulo.
      *
@@ -293,7 +282,6 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
         this.empleadoSelected = empleadoSelected;
     }
 
-  
     public boolean isDiableAceptar() {
         return diableAceptar;
     }

@@ -32,8 +32,8 @@
                         <p:ajax event="rowSelect" update="@form" listener="#{calendarioOcupacionesBean.onRowSelect}" />
 
                         <f:facet name="footer">
-                            <p:commandButton value="Modificar" actionListener="#{calendarioOcupacionesBean.seleccionar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
-                            <p:commandButton value="Borrar" actionListener="#{calendarioOcupacionesBean.cancelar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
+                            <p:commandButton value="Consultar" actionListener="#{calendarioOcupacionesBean.seleccionar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
+                            <p:commandButton value="Cancelar" actionListener="#{calendarioOcupacionesBean.cancelar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -67,19 +67,50 @@
                 </p:panel>
 
 
-                <p:panel header="#{calendarioOcupacionesBean.title}" style="width: 80%;margin: 0 auto;" rendered="#{calendarioOcupacionesBean.enSeleccionar}">
+                <p:panel header="Calendario del empleado #{calendarioOcupacionesBean.empleadoSelected.nombre} #{calendarioOcupacionesBean.empleadoSelected.apellido} CI: #{calendarioOcupacionesBean.empleadoSelected.idEmpleado}" style="width: 80%;margin: 0 auto;" rendered="#{calendarioOcupacionesBean.enSeleccionar}">
 
-                    <h2 style="margin: 0 auto;">Calendario del empleado #{calendarioOcupacionesBean.empleadoSelected.nombre} #{calendarioOcupacionesBean.empleadoSelected.apellido} CI: #{calendarioOcupacionesBean.empleadoSelected.idEmpleado}</h2>
-                    <p:schedule id="schedule" style="margin: 0 auto;" value="#{calendarioOcupacionesBean.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
+                    <p:schedule id="schedule" style="margin: 0 auto;" value="#{calendarioOcupacionesBean.eventModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es">
 
-`                   
+                        `                   
+                        <p:ajax event="eventSelect" listener="#{calendarioOcupacionesBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
 
                     </p:schedule>
-                <br/>
+                    <br/>
                     <p:commandButton value="Regresar" style="margin: 0 auto;" actionListener="#{calendarioOcupacionesBean.regresar()}" onclick="singleEmpleado.unselectAllRows()" immediate="true" update="@form" />
 
 
                 </p:panel>
+                <p:dialog widgetVar="eventDialog" header="Detalle Mantenimiento" showEffect="clip" hideEffect="clip" resizable="false">
+                    <p:outputPanel id="panelPopUp" style="text-align: center;"> 
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <h:outputText value="C.I:" />
+                            <h:outputText value="#{calendarioOcupacionesBean.mantenimiento.citaMantenimiento.idCliente}" />
+
+                            <h:outputText value="Cliente:" />
+                            <h:outputText  value="#{calendarioOcupacionesBean.mantenimiento.citaMantenimiento.clienteCita.nombre} #{calendarioOcupacionesBean.mantenimiento.citaMantenimiento.clienteCita.apellido}" />
+
+                            <h:outputText value="Direccion :" />
+                            <h:outputText value="#{calendarioOcupacionesBean.mantenimiento.citaMantenimiento.clienteCita.direccion}" />
+
+                            <h:outputText value="Teléfono :" />
+                            <h:outputText value="#{calendarioOcupacionesBean.mantenimiento.citaMantenimiento.clienteCita.telefono}" />
+
+                            <h:outputText value="Detalle :" />
+                            <h:outputText value="#{calendarioOcupacionesBean.mantenimiento.citaMantenimiento.descripcion}" />
+
+                            <h:outputText value="Inicia a las :" />
+                            <h:outputText  value="#{calendarioOcupacionesBean.mantenimiento.fechaInicio}"  >
+                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                            </h:outputText>
+
+                            <h:outputText value="Termina a las :" />
+                            <h:outputText  value="#{calendarioOcupacionesBean.mantenimiento.fechaFin}" >
+                              <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                            </h:outputText>
+
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
 
             </ui:define>
         </ui:composition>
