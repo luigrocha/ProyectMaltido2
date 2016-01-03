@@ -9,33 +9,35 @@
     <h:body>
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
-                <p:dataTable id="singleCita" var="empleado" value="#{calendarioOcupacionesBean.empleados}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{calendarioOcupacionesBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" 
-                             emptyMessage="No hay registros ingresados">
-                    <p:column headerText="ID" filterBy="#{empleado.idEmpleado}" filterMatchMode="contains">
-                        <h:outputText value="#{empleado.idEmpleado}" />
-                    </p:column>
+                <p:panel id="panelIngreso" rendered="#{calendarioOcupacionesBean.enNuevo}">
+                    <p:dataTable id="singleEmpleado" widgetVar="singleEmpleado" var="empleado" value="#{calendarioOcupacionesBean.empleados}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{calendarioOcupacionesBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" 
+                                 emptyMessage="No hay registros ingresados">
+                        <p:column headerText="ID" filterBy="#{empleado.idEmpleado}" filterMatchMode="contains">
+                            <h:outputText value="#{empleado.idEmpleado}" />
+                        </p:column>
 
-                    <p:column headerText="Nombre" filterBy="#{empleado.nombre}" filterMatchMode="contains">
-                        <h:outputText value="#{empleado.nombre}" />
-                    </p:column>
+                        <p:column headerText="Nombre" filterBy="#{empleado.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{empleado.nombre}" />
+                        </p:column>
 
-                    <p:column headerText="Apellido" filterBy="#{empleado.apellido}" filterMatchMode="contains" >
-                        <h:outputText value="#{empleado.apellido}" />
-                    </p:column>
+                        <p:column headerText="Apellido" filterBy="#{empleado.apellido}" filterMatchMode="contains" >
+                            <h:outputText value="#{empleado.apellido}" />
+                        </p:column>
 
 
-                    <p:column headerText="Telefono" >
-                        <h:outputText value="#{empleado.telefono}" />
-                    </p:column>
-                    <p:ajax event="rowSelect" update="@form" listener="#{calendarioOcupacionesBean.onRowSelect}" />
+                        <p:column headerText="Telefono" >
+                            <h:outputText value="#{empleado.telefono}" />
+                        </p:column>
+                        <p:ajax event="rowSelect" update="@form" listener="#{calendarioOcupacionesBean.onRowSelect}" />
 
-                    <f:facet name="footer">
-                        <p:commandButton value="Modificar" actionListener="#{calendarioOcupacionesBean.seleccionar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{calendarioOcupacionesBean.cancelar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
-                    </f:facet>
-                </p:dataTable>
-                <p:panel id="dialog" widgetVar="seleccionarClienteDialog" header="Mantenimientos" rendered="#{calendarioOcupacionesBean.enSeleccionar}">
+                        <f:facet name="footer">
+                            <p:commandButton value="Modificar" actionListener="#{calendarioOcupacionesBean.seleccionar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
+                            <p:commandButton value="Borrar" actionListener="#{calendarioOcupacionesBean.cancelar()}" immediate="true" update="@form" disabled="#{calendarioOcupacionesBean.empleadoSelected eq null}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+                <p:panel id="dialog" widgetVar="seleccionarClienteDialog" header="Mantenimientos" rendered="#{calendarioOcupacionesBean.enModificar}">
 
                     <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{calendarioOcupacionesBean.mantenimientos}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                                  style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{calendarioOcupacionesBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" 
@@ -58,14 +60,23 @@
                         </p:column>
                         <p:ajax event="rowSelect" update="@form" listener="#{calendarioOcupacionesBean.onRowSelectMantenimiento}" />
 
-                       
+
                     </p:dataTable>
 
 
                 </p:panel>
 
 
-                <p:panel header="#{calendarioOcupacionesBean.title}" style="width: 100%" rendered="#{calendarioOcupacionesBean.enNuevo or calendarioOcupacionesBean.enModificar}">
+                <p:panel header="#{calendarioOcupacionesBean.title}" style="width: 80%;margin: 0 auto;" rendered="#{calendarioOcupacionesBean.enSeleccionar}">
+
+                    <h2 style="margin: 0 auto;">Calendario del empleado #{calendarioOcupacionesBean.empleadoSelected.nombre} #{calendarioOcupacionesBean.empleadoSelected.apellido} CI: #{calendarioOcupacionesBean.empleadoSelected.idEmpleado}</h2>
+                    <p:schedule id="schedule" style="margin: 0 auto;" value="#{calendarioOcupacionesBean.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
+
+`                   
+
+                    </p:schedule>
+                <br/>
+                    <p:commandButton value="Regresar" style="margin: 0 auto;" actionListener="#{calendarioOcupacionesBean.regresar()}" onclick="singleEmpleado.unselectAllRows()" immediate="true" update="@form" />
 
 
                 </p:panel>

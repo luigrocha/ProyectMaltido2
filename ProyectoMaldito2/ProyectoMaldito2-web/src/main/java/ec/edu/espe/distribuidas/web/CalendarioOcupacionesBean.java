@@ -22,6 +22,8 @@ import com.espe.distribuidas.servicio.MantenimientoServicio;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -103,6 +105,15 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
      * seleccion de cliente.
      */
     private boolean diableAceptar = true;
+    
+    
+    
+    
+    private ScheduleModel eventModel;
+     
+    private ScheduleModel lazyEventModel;
+ 
+    private ScheduleEvent event = new DefaultScheduleEvent();
 
     /**
      * metodo que se inicializa despues de cargar el formulario contiene la
@@ -110,6 +121,7 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
      */
     @PostConstruct
     public void inicializar() {
+        super.nuevo();
         this.empleados = this.empleadoServicio.buscasPorTecnico();
         
     }
@@ -119,33 +131,28 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
     @Override
     public void seleccionar()
     {
+        super.quitarNuevo();
         try {
             super.seleccionar();
             this.empleado=new Empleado();
             BeanUtils.copyProperties(this.empleado, this.empleadoSelected);
             this.mantenimientos=this.mantenimientoServicio.obtenerMantenimientoPorEmpleado(this.empleado);
+            this.setearShedule(this.mantenimientos);
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(CalendarioOcupacionesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }
-    /**
-     * metodo sobreescrito de la clase basebean que denota la operacion
-     * modificar habilita el formulario en la misma operacion.
-     */
-    @Override
-    public void modificar() {
-        super.modificar();
-/*        this.cita = new CitaMantenimiento();
-        this.setTitle("Modificar Cita de Mantenimiento");
-        try {
-            BeanUtils.copyProperties(this.cita, this.citaSelected);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
-        }*/
+    
+    
+    public void setearShedule(List<Mantenimiento> listMantenimiento){
+        eventModel = new DefaultScheduleModel();
+        for(int i=0;i<listMantenimiento.size();i++)
+        {
+        eventModel.addEvent(new DefaultScheduleEvent(listMantenimiento.get(i).getCitaMantenimiento().getDescripcion(),this.getDate(listMantenimiento.get(i).getFechaInicio()),this.getDate(listMantenimiento.get(i).getFechaFin())));
+        
+        }
     }
-
 
     /**
      * metodo sobreescrito de la clase base permite setear en blanco y por
@@ -156,6 +163,12 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
         super.cancelar();
        this.setEmpleadoSelected(null);
       
+    }
+    public void regresar(){
+    super.reset();
+    super.nuevo();
+    this.setEmpleadoSelected(null);
+    
     }
 
     /**
@@ -180,6 +193,21 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
     }
 
   
+     public Date getDate(Date date) {
+        Date aux=null;
+         try {
+            SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String fecha=formato.format(date);
+            aux=formato.parse(fecha);
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(CalendarioOcupacionesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return aux ;
+    }
+    
+    
+    
     
     /**
      * metodo get de titulo.
@@ -272,6 +300,30 @@ public class CalendarioOcupacionesBean extends BaseBean implements Serializable 
 
     public void setDiableAceptar(boolean diableAceptar) {
         this.diableAceptar = diableAceptar;
+    }
+
+    public ScheduleModel getEventModel() {
+        return eventModel;
+    }
+
+    public void setEventModel(ScheduleModel eventModel) {
+        this.eventModel = eventModel;
+    }
+
+    public ScheduleModel getLazyEventModel() {
+        return lazyEventModel;
+    }
+
+    public void setLazyEventModel(ScheduleModel lazyEventModel) {
+        this.lazyEventModel = lazyEventModel;
+    }
+
+    public ScheduleEvent getEvent() {
+        return event;
+    }
+
+    public void setEvent(ScheduleEvent event) {
+        this.event = event;
     }
 
 }

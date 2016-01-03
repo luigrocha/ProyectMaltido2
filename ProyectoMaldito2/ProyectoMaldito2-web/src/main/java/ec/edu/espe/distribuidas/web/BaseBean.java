@@ -100,6 +100,9 @@ public class BaseBean implements Serializable {
 
     }
 
+    public void quitarNuevo(){
+    this.enNuevo=false;
+    }
     public boolean isEnSeleccionar() {
         return enSeleccionar;
     }
