@@ -12,6 +12,7 @@
 package com.espe.distribuidas.servicio;
 
 import com.espe.distribuidas.dao.MantenimientoDAO;
+import com.espe.distribuidas.model.Empleado;
 import com.espe.distribuidas.model.Mantenimiento;
 import com.espe.distribuidas.model.MantenimientoPK;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
@@ -58,6 +59,16 @@ public class MantenimientoServicio {
      */
     public Mantenimiento obtenerMantenimientoPorID(MantenimientoPK codigoMantenimiento) {
         return this.mantenimientoDAO.findById(codigoMantenimiento, false);
+    }
+     /**
+     * Metodo que busca los mantenimientos de un empleado.
+     * @param empleado tipo empleado.
+     * @return lista de mantenimientos de un empleado.
+     */
+    public List<Mantenimiento> obtenerMantenimientoPorEmpleado(Empleado empleado){
+        Mantenimiento mantenimientotmp=new Mantenimiento();
+      mantenimientotmp.setEmpleadoMantenimiento(empleado);
+        return this.mantenimientoDAO.find(mantenimientotmp);
     }
 
     /**
