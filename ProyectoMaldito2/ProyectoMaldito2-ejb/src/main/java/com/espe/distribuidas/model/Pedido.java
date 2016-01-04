@@ -31,7 +31,7 @@ import javax.persistence.TemporalType;
  * @author R&R S.A.
  */
 @Entity
-@Table(name = "PEDIDO_001")
+@Table(name = "PEDIDOS_001")
 public class Pedido implements Serializable {
 
     @Id
@@ -52,7 +52,7 @@ public class Pedido implements Serializable {
     @Column(name = "TOTAL_PEDIDO", nullable = false)
     private BigDecimal totalPedido;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pedido")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
     List<DetallePedido> detallePedido;
 
     public Pedido() {
@@ -132,6 +132,10 @@ public class Pedido implements Serializable {
     @Override
     public String toString() {
         return "Pedido{" + "idPedido=" + idPedido + ", idProveedor=" + idProveedor + ", fecha=" + fecha + ", totalPedido=" + totalPedido + '}';
+    }
+
+    public void setTotalPedido(Integer total) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

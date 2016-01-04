@@ -9,6 +9,7 @@
     <h:body>
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
+                <p:outputLabel><h1>Calentario de Ocupaciones</h1></p:outputLabel>
                 <p:panel id="panelIngreso" rendered="#{calendarioOcupacionesBean.enNuevo}">
                     <p:dataTable id="singleEmpleado" widgetVar="singleEmpleado" var="empleado" value="#{calendarioOcupacionesBean.empleados}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                                  style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{calendarioOcupacionesBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" 

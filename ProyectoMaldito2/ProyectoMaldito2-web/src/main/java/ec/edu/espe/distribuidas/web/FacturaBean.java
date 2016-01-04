@@ -20,6 +20,7 @@ import com.espe.distribuidas.servicio.MantenimientoServicio;
 import com.espe.distribuidas.servicio.ClienteServicio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -80,7 +81,7 @@ public class FacturaBean extends BaseBean implements Serializable {
     /**
      * lista de clientes para el popup
      */
-    private List<Cliente> clientees;
+    private List<Cliente> clientes;
     /**
      * lista de Mantenimiento para el popup
      */
@@ -140,7 +141,7 @@ public class FacturaBean extends BaseBean implements Serializable {
     public void inicializar() {
 
         this.facturas = this.facturaServicio.obtenerTodasFacturas();
-        this.clientees = this.clienteServicio.obtenerTodosClientes();
+        this.clientes = this.clienteServicio.obtenerTodosClientes();
         this.mantenimientos = this.mantenimientoServicio.obtenerTodosMantenimiento();
         this.mantenimientoDetalle = new ArrayList<>();
         this.detalleFactura = new ArrayList<>();
@@ -219,17 +220,25 @@ public class FacturaBean extends BaseBean implements Serializable {
     }
 
     public void onRowSelectMantenimiento(SelectEvent evt) {
-         this.mantenimientodetalle = new Mantenimiento();
-        mantenimientoDetalle.add(this.mantenimientoSelected);
+        mantenimientodetalle = new Mantenimiento();
+        
+        this.mantenimientoDetalle.add(this.mantenimientoSelected);
 
-        this.detallefactura = new DetalleFactura();
-
+        detallefactura = new DetalleFactura();
+        
+        this.detallefactura.setIdCita(mantenimientoSelected.getPrimaryKey().getIdCita());
+        this.detallefactura.setIdTecnico(mantenimientoSelected.getEmpleadoMantenimiento().getIdEmpleado());
+        this.detallefactura.setCantidad(1);
+        this.detallefactura.setValorUnitario(mantenimientoSelected.getPrecio());
+        
         detalleFactura.add(this.detallefactura);
+        
+        this.factura.setTotal(Total());
+        
         this.setMantenimiento(null);
         super.quitarSeleccion();
     }
  
-
     /**
      * metodo que controla el boton aceptar del formulario. se comporta de 2
      * maneras, para la primera guarda un nuevo registro en la base de datos.
@@ -324,6 +333,24 @@ public class FacturaBean extends BaseBean implements Serializable {
         super.nuevo();
         this.factura = new Factura();
     }
+    
+    /**
+     * metodo que realiza el total del detalle factura
+     *
+     * @return BigDecimal total
+     */
+    public BigDecimal Total() {
+
+        BigDecimal total;
+        total = BigDecimal.valueOf(0);
+        for (DetalleFactura i : this.detalleFactura) {
+            total = i.getValorUnitario();
+            total.add(total);
+        }
+        return total;
+
+    }
+
 
     /**
      * metodo get de titulo.
@@ -394,11 +421,11 @@ public class FacturaBean extends BaseBean implements Serializable {
     }
 
     public List<Cliente> getClientees() {
-        return clientees;
+        return clientes;
     }
 
-    public void setClientees(List<Cliente> clientees) {
-        this.clientees = clientees;
+    public void setClientees(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     public List<Factura> getFactura() {

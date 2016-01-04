@@ -9,7 +9,8 @@
     <h:body>
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
-                <p:dataTable id="singleInsumo" var="insumo" value="#{insumoBean.insumo}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                <p:outputLabel><h1>Insumos</h1></p:outputLabel>
+                <p:dataTable id="singleInsumo" var="insumo" value="#{insumoBean.insumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                              style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{insumoBean.insumoSelected}" rowKey="#{insumo.idInsumo}" >
                     <p:column headerText="Codigo">
                         <h:outputText value="#{insumo.idInsumo}" />

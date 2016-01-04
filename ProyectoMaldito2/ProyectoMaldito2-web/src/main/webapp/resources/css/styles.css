@@ -14,7 +14,8 @@ html, body{
     background:#fff; 
 }
 .fondo{
-     height: 850px;  position: relative;
+     min-height: 850px;  position: static;
+     max-height: 2000px;
 }
 a {
     text-decoration: none;
@@ -37,6 +38,7 @@ a:hover {
 nav {
     background-color: rgba(51, 51, 51, 0);
     color: #fff;
+    font-size: 1.3em;
     display: block;
     margin: 0;
     overflow: hidden;
@@ -54,10 +56,10 @@ nav ul li {
 }
 
 nav > ul > li > a {
-    color: #aaa;
+    color: #fff;
     display: block;
     line-height: 1.8em;
-    padding: 0.5em 1.8em;
+    padding: 0.2em 1em;
     }
 
 nav li > ul{
@@ -156,6 +158,14 @@ nav ul > li.sub li.sub{
     font-size: 3em;
     margin: 0em;
     font-family: 'Squada One', cursive;
+    
+}
+.fondo h1 {
+    font-size: 3em;
+    margin: 0.3em;
+    color:#f6e9da;
+    font-family: 'Squada One', cursive;
+    text-align: center;
 }
 .logo h1 a{
     color:#fff;	
@@ -210,7 +220,7 @@ span.menu {
 }
 .banner-two {
     background: url(../images/1.jpg)no-repeat;
-    min-height:160px;
+    min-height:200px;
     background-size: cover;
 }
 .banner-bottom {
@@ -1656,7 +1666,7 @@ h3.typo1 {
         padding: 2em 0em 3em 0em;
     }
     .banner-two {
-        min-height: 160px;
+        min-height: 200px;
     }
     .services-top h2 {
         font-size: 2.5em;

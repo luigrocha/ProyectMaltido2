@@ -15,10 +15,11 @@ import com.espe.distribuidas.servicio.EmpleadoServicio;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 
 /**
  * Clase LoginBean que maneja index.xhtml.
@@ -85,6 +86,10 @@ public class LoginBean implements Serializable {
      */
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
+    }
+    
+    public void cerrarSession(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
 
     

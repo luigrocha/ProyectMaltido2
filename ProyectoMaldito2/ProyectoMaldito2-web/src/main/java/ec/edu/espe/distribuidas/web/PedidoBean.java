@@ -20,6 +20,7 @@ import com.espe.distribuidas.servicio.InsumoServicio;
 import com.espe.distribuidas.servicio.ProveedorServicio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -90,8 +91,8 @@ public class PedidoBean extends BaseBean implements Serializable {
      */
     private List<Insumos> insumoDetalle;
     /**
-     * variable tipo lista de pedidos de mantenimiento para setar a una
-     * tabla del formulario.
+     * variable tipo lista de pedidos de mantenimiento para setar a una tabla
+     * del formulario.
      */
     private List<Pedido> pedidos;
 
@@ -219,16 +220,24 @@ public class PedidoBean extends BaseBean implements Serializable {
     }
 
     public void onRowSelectInsumo(SelectEvent evt) {
-         this.insumodetalle = new Insumos();
-        insumoDetalle.add(this.insumoSelected);
+        BigDecimal precio ;
+        insumodetalle = new Insumos();
 
-        this.detallepedido = new DetallePedido();
+        this.insumoDetalle.add(insumoSelected);
+
+        detallepedido = new DetallePedido();
+        precio = insumoSelected.getCantidad().multiply(insumoSelected.getPrecioCompra());
+        this.detallepedido.setPrecio(precio);
+        this.detallepedido.setIdInsumo(insumoSelected.getIdInsumo());
+        this.detallepedido.setCantidad(insumoSelected.getCantidad());
 
         detallePedidos.add(this.detallepedido);
+
+        this.pedido.setTotalPedido(Total());
+
         this.setInsumo(null);
         super.quitarSeleccion();
     }
- 
 
     /**
      * metodo que controla el boton aceptar del formulario. se comporta de 2
@@ -242,7 +251,7 @@ public class PedidoBean extends BaseBean implements Serializable {
             try {
                 // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
                 this.pedidoServicio.ingresarPedido(this.pedido);
-               
+
                 pedidostmp = this.pedidoServicio.findLast();
                 insertarIdDevolusion(pedidostmp, detallePedidos);
 
@@ -250,9 +259,10 @@ public class PedidoBean extends BaseBean implements Serializable {
 
                     this.detallePedidoServicio.ingresarDetallePedido(detallePedidoe);
                 }
-                this.pedidos=pedidoServicio.obtenerTodosPedidos();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro la pedido: "
-                        + this.pedido.getIdPedido() + " del proveedor: " + this.pedido.getProveedorPedido().getIdProveedor(), null));
+                
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registro el pedido: "
+                        + this.pedido.getIdPedido() + " al proveedor: " + this.pedido.getProveedorPedido().getIdProveedor(), null));
+                this.pedidos = pedidoServicio.obtenerTodosPedidos();
             } catch (Exception e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -275,14 +285,15 @@ public class PedidoBean extends BaseBean implements Serializable {
     }
 
     /**
-     *inserta en la lista de detalles de pedido el is de la devo;lucion asociada.
+     * inserta en la lista de detalles de pedido el is de la devo;lucion
+     * asociada.
+     *
      * @param pedidosid recive el objeto del id de pedido asociada.
      * @param lista recove la lista a insertar.
      */
-    public void insertarIdDevolusion(Pedido pedidosid,List<DetallePedido> lista) {
-        for(int i=0;i<lista.size();i++)
-        {
-        lista.get(i).setIdPedido(pedidosid.getIdPedido());
+    public void insertarIdDevolusion(Pedido pedidosid, List<DetallePedido> lista) {
+        for (DetallePedido lista1 : lista) {
+            lista1.setIdPedido(pedidosid.getIdPedido());
         }
     }
 
@@ -323,6 +334,23 @@ public class PedidoBean extends BaseBean implements Serializable {
     public void aceptarNuevo() {
         super.nuevo();
         this.pedido = new Pedido();
+    }
+
+    /**
+     * metodo que realiza el total del detalle factura
+     *
+     * @return BigDecimal total
+     */
+    public BigDecimal Total() {
+
+        BigDecimal total;
+        total = BigDecimal.valueOf(0);
+        for (DetallePedido i : detallePedidos) {
+            total = i.getPrecio();
+            total.add(total);
+        }
+        return total;
+
     }
 
     /**

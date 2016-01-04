@@ -9,21 +9,24 @@
     <h:body>
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
-                <p:outputLabel><h3>Pedidos</h3></p:outputLabel>
+                <p:outputLabel><h1>Pedidos</h1></p:outputLabel>
                 <p:dataTable id="singleDevoluciones" var="pedido" value="#{pedidoBean.pedidos}"  paginator="true" rows="10" paginatorPosition="bottom"  scrollable="true" scrollHeight="150"
-                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{pedidoBean.pedidoSelected}" rowKey="#{pedido.idDevoluciones}" 
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{pedidoBean.pedidoSelected}" rowKey="#{pedido.idPedido}" 
                              emptyMessage="No hay registros ingresados">
 
-                    <p:column headerText="ID Devolución" filterBy="#{pedidoes.idDevoluciones}" filterMatchMode="contains">
-                        <h:outputText value="#{pedido.idDevoluciones}" />
+                    <p:column headerText="ID Devolución" filterBy="#{pedido.idPedido}" filterMatchMode="contains">
+                        <h:outputText value="#{pedido.idPedido}" />
                     </p:column>
 
-                    <p:column headerText="Id Proveedor" filterBy="#{pedido.pedidoProveedor.idProveedor}" filterMatchMode="contains">
-                        <h:outputText value="#{pedido.pedidoProveedor.idProveedor}" />
+                    <p:column headerText="Id Proveedor" filterBy="#{pedido.proveedorPedido.idProveedor}" filterMatchMode="contains">
+                        <h:outputText value="#{pedido.proveedorPedido.idProveedor}" />
                     </p:column>
 
-                    <p:column headerText="Proveedor" filterBy="#{pedido.pedidoProveedor.nombreEmpresa}" filterMatchMode="contains">
-                        <h:outputText value="#{pedido.pedidoProveedor.nombreEmpresa}" />
+                    <p:column headerText="Proveedor" filterBy="#{pedido.proveedorPedido.nombreEmpresa}" filterMatchMode="contains">
+                        <h:outputText value="#{pedido.proveedorPedido.nombreEmpresa}" />
+                    </p:column>
+                    <p:column headerText="Total" filterBy="#{pedido.totalPedido}" filterMatchMode="contains">
+                        <h:outputText value="#{pedido.totalPedido}" />
                     </p:column>
                     <p:column headerText="Fecha" filterBy="#{pedido.fecha}" filterMatchMode="contains">
                         <h:outputText value="#{pedido.fecha}" >
@@ -73,7 +76,13 @@
                             </p:column>
 
                             <p:column headerText="Cantidad" >
-                                <h:inputText value="#{insumo.cantidad}" style="width: 20px;"/>
+                                <h:inputText value="#{insumo.cantidad}" style="width: 40px;" >
+                                  
+                                </h:inputText>
+                            </p:column>
+
+                            <p:column headerText="Precio" >
+                                <h:inputText value="#{insumo.precioCompra}" style="width: 40px;"/>
                             </p:column>
 
                             <p:ajax event="rowSelect" listener="#{pedidoBean.onRowSelectInsumo}" update="@form" />
@@ -88,13 +97,14 @@
                             <p:outputLabel id="txtTelefono" value="#{pedidoBean.proveedorSelected.telefono}" />
                             <p:outputLabel for="txtCorreo" value="Correo: "/>
                             <p:outputLabel id="txtCorreo" value="#{pedidoBean.proveedorSelected.correoElectronico}" />
+
                             <p:outputLabel for="txtfecha" value="Fecha:  "/>
                             <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" value="#{pedidoBean.pedido.fecha}" required="true" requiredMessage="Campo Requerido"/>
                         </h:panelGrid>
                         <p:column></p:column>
                         <p:dataTable style="width: 400px;" var="insumo" value="#{pedidoBean.insumoDetalle}" scrollable="true" scrollHeight="150"
                                      styleClass="textlb" selectionMode="single" selection="#{pedidoBean.insumo}" rowKey="#{insumo.idInsumo}" editable="true">
-                            <p:column headerText="Id Insumos">
+                            <p:column headerText="Código">
                                 <h:outputText value="#{insumo.idInsumo}" />
                             </p:column>
 
@@ -105,6 +115,19 @@
                             <p:column headerText="Cantidad" >
                                 <h:outputText value="#{insumo.cantidad}" />
                             </p:column>
+                            <p:column headerText="Precio_U." >
+                                <h:outputText value="#{insumo.precioCompra}" />
+                                <f:facet name="footer">
+                                    <h:outputText value="Total: " />
+                                </f:facet>
+                            </p:column>
+                            <p:column headerText="Total" >
+                                <h:outputText value="#{pedidoBean.detallepedido.precio}" />
+                                <f:facet name="footer">
+                                    <h:outputText value="#{pedidoBean.pedido.totalPedido}" />
+                                </f:facet>
+                            </p:column>
+
                         </p:dataTable>
 
                         <f:facet name="footer" class="center-block">
