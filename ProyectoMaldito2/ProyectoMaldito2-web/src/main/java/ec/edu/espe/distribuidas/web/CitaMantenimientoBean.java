@@ -7,7 +7,8 @@
  *  
  *  
  * Copyright 2015 R&R S.A. Todos los derechos reservados.
- */package ec.edu.espe.distribuidas.web;
+ */
+package ec.edu.espe.distribuidas.web;
 
 import com.espe.distribuidas.model.CitaMantenimiento;
 import com.espe.distribuidas.model.Cliente;

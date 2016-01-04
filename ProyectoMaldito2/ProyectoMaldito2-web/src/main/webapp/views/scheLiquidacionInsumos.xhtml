@@ -1,16 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/plantillas/template2.xhtml">
+            <ui:define name="lista">
+                <p:dataTable id="singleLiquidacion" var="liquidacion" value="#{liquidacionInsumosBean.liquidacionAsignaciones}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{liquidacionInsumosBean.liquidacionAsignacionSelected}" rowKey="#{liquidacion.idLiquidacion}" 
+                             emptyMessage="No hay registros ingresados">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{liquidacion.idLiquidacion}" />
+                    </p:column>
+
+                    <p:column headerText="Empleado Nombre" filterBy="#{liquidacion.insumoliquidado.mantenimientoAsignacionInsumo.empleadoMantenimiento.nombre}" filterMatchMode="contains">
+                        <h:outputText value="#{liquidacion.insumoliquidado.mantenimientoAsignacionInsumo.empleadoMantenimiento.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Empleado Apellido" filterBy="#{liquidacion.insumoliquidado.mantenimientoAsignacionInsumo.empleadoMantenimiento.apellido}" filterMatchMode="contains">
+                        <h:outputText value="#{liquidacion.insumoliquidado.mantenimientoAsignacionInsumo.empleadoMantenimiento.apellido}" />
+                    </p:column>
+
+                    <p:column headerText="ID Insumo" >
+                        <h:outputText value="#{liquidacion.idInsumo}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre Insumo" >
+                        <h:outputText value="#{liquidacion.insumoliquidado.insumo.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha" filterBy="#{liquidacion.fecha}" filterMatchMode="contains">
+                        <h:outputText value="#{liquidacion.fecha}">
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Cantidad" >
+                        <h:outputText value="#{liquidacion.cantidad}" />
+                    </p:column>
+
+                    <p:column headerText="Total Liquidación" >
+                        <h:outputText value="#{liquidacion.totalLiquidacion}" />
+                    </p:column>
+
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Nuevo" actionListener="#{liquidacionInsumosBean.nuevo()}" immediate="true" update="@form" />
+                    </f:facet>
+
+                </p:dataTable>
+
+                <p:panel id="dialog" widgetVar="seleccionarClienteDialog" header="Seleccionar Asignacion" rendered="#{liquidacionInsumosBean.enNuevo}" >
+
+                    <p:dataTable id="singleAsignacion" var="asignacion" value="#{liquidacionInsumosBean.asignacionInsumos}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="150"
+                                 style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{liquidacionInsumosBean.asignacionInsumoSelected}" rowKey="#{asignacion.primaryKey}" >
+                        <p:column headerText="I.D">
+                            <h:outputText value="Cita: #{asignacion.primaryKey.idCita} Empleado: #{asignacion.primaryKey.idEmpleado} Insumo: #{asignacion.primaryKey.idInsumo}" />
+                        </p:column>
+
+                        <p:column headerText="Insumo" >
+                            <h:outputText value="#{asignacion.insumo.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Unidad Medida" >
+                            <h:outputText value="#{asignacion.unidadMedida}" />
+                        </p:column>
+
+                        <p:column headerText="Cantidad" >
+                            <h:outputText value="#{asignacion.cantidad}" />
+                        </p:column>
+
+                        <p:ajax event="rowSelect" update="@form" listener="#{liquidacionInsumosBean.onRowSelectPopUp}" />
+
+                    </p:dataTable>
+                    <p:commandButton value="Aceptar" actionListener="#{liquidacionInsumosBean.aceptarPopUp()}" immediate="true" disabled="#{liquidacionInsumosBean.diableAceptar}" update="@form" />
+
+
+                </p:panel>
+
+
+                <p:panel header="#{liquidacionInsumosBean.title}" style="width: 100%" rendered="#{liquidacionInsumosBean.enSeleccionar}">
+
+                    <h:panelGrid columns="3" style="margin: 0 auto;">
+                        <p:outputLabel for="txtCita" value="Id Cita: "/>
+                        <p:inputText id="txtCita" value="#{liquidacionInsumosBean.liquidacionAsignacion.idCita }" required="true" disabled="true" requiredMessage="Campo Requerido">
+                        </p:inputText> 
+                        <p:message for="txtCita"/>
+
+                        <p:outputLabel for="txtEmpleado" value="Id Empleado: "/>
+                        <p:inputText id="txtEmpleado" value="#{liquidacionInsumosBean.liquidacionAsignacion.idEmpleado }" required="true" disabled="true" requiredMessage="Campo Requerido">
+                        </p:inputText> 
+                        <p:message for="txtEmpleado"/>
+
+                        <p:outputLabel for="txtInsumo" value="Id Insumo: "/>
+                        <p:inputText id="txtInsumo" value="#{liquidacionInsumosBean.liquidacionAsignacion.idInsumo }" required="true" disabled="true" requiredMessage="Campo Requerido">
+                        </p:inputText> 
+                        <p:message for="txtInsumo"/>
+
+                        <p:outputLabel for="txtUnidad" value="Unidad de Medida "/>
+                        <p:inputText id="txtUnidad" value="#{liquidacionInsumosBean.liquidacionAsignacion.unidadMedida }" required="true" disabled="true" requiredMessage="Campo Requerido">
+                        </p:inputText> 
+                        <p:message for="txtUnidad"/>
+
+                        <p:outputLabel for="txtCantidad" value="Cantidad Liquidada: "/>
+                        <p:inputText id="txtCantidad" value="#{liquidacionInsumosBean.liquidacionAsignacion.cantidad }" required="true" requiredMessage="Campo Requerido">
+                        </p:inputText> 
+                        <p:message for="txtCantidad"/>
+
+
+
+                        <p:commandButton value="Aceptar" actionListener="#{liquidacionInsumosBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Cancelar" actionListener="#{liquidacionInsumosBean.cancelar()}" immediate="true"  update="@form"/>
+                    </h:panelGrid>
+                </p:panel>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>
+

@@ -19,7 +19,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 /**
- * Clase de servicio de Insumos
+ * Clase de servicio de Insumos.
  *
  * @author R&R S.A.
  */
@@ -46,7 +46,7 @@ public class InsumoServicio {
      *
      * @param codigoInsumo  parametro tipo String que define el Codigo de
      * insumo buscar.
-     * @return retorna el objeto cliente de la base de datos.
+     * @return retorna el objeto insumo de la base de datos.
      */
     public Insumos obtenerInsumoPorID(String codigoInsumo) {
         return this.insumoDAO.findById(codigoInsumo, false);
