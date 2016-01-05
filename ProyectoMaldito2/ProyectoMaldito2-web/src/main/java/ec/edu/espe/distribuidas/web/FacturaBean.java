@@ -74,11 +74,6 @@ public class FacturaBean extends BaseBean implements Serializable {
     private Mantenimiento mantenimiento;
 
     /**
-     * variable de referencia al objeto mantenimientodetalle
-     */
-    private Mantenimiento mantenimientodetalle;
-
-    /**
      * lista de clientes para el popup
      */
     private List<Cliente> clientes;
@@ -86,10 +81,7 @@ public class FacturaBean extends BaseBean implements Serializable {
      * lista de Mantenimiento para el popup
      */
     private List<Mantenimiento> mantenimientos;
-    /**
-     * lista de Mantenimiento para el popup
-     */
-    private List<Mantenimiento> mantenimientoDetalle;
+    
     /**
      * variable tipo lista de facturas de mantenimiento para setar a una
      * tabla del formulario.
@@ -110,7 +102,7 @@ public class FacturaBean extends BaseBean implements Serializable {
      * variable tipo lista de detalles facturas para setear a una tabla del
      * formulario.
      */
-    private List<DetalleFactura> detalleFactura;
+    private List<DetalleFactura> detalleFacturas;
 
     /**
      * variable tipo factura de mantenimiento para las operaciones del CRUD.
@@ -143,8 +135,8 @@ public class FacturaBean extends BaseBean implements Serializable {
         this.facturas = this.facturaServicio.obtenerTodasFacturas();
         this.clientes = this.clienteServicio.obtenerTodosClientes();
         this.mantenimientos = this.mantenimientoServicio.obtenerTodosMantenimiento();
-        this.mantenimientoDetalle = new ArrayList<>();
-        this.detalleFactura = new ArrayList<>();
+        this.mantenimientos = new ArrayList<>();
+        this.detalleFacturas = new ArrayList<>();
     }
 
     /**
@@ -220,9 +212,9 @@ public class FacturaBean extends BaseBean implements Serializable {
     }
 
     public void onRowSelectMantenimiento(SelectEvent evt) {
-        mantenimientodetalle = new Mantenimiento();
+        mantenimiento = new Mantenimiento();
         
-        this.mantenimientoDetalle.add(this.mantenimientoSelected);
+        mantenimientos.add(this.mantenimientoSelected);
 
         detallefactura = new DetalleFactura();
         
@@ -231,7 +223,7 @@ public class FacturaBean extends BaseBean implements Serializable {
         this.detallefactura.setCantidad(1);
         this.detallefactura.setValorUnitario(mantenimientoSelected.getPrecio());
         
-        detalleFactura.add(this.detallefactura);
+        detalleFacturas.add(this.detallefactura);
         
         this.factura.setTotal(Total());
         
@@ -253,9 +245,9 @@ public class FacturaBean extends BaseBean implements Serializable {
                 this.facturaServicio.ingresarFactura(this.factura);
                
                 facturastmp = this.facturaServicio.findLast();
-                insertarIdDevolusion(facturastmp, detalleFactura);
+                insertarIdFactura(facturastmp, detalleFacturas);
 
-                for (DetalleFactura detalleFacturae : detalleFactura) {
+                for (DetalleFactura detalleFacturae : detalleFacturas) {
 
                     this.detalleFacturaServicio.ingresarDetalleFactura(detalleFacturae);
                 }
@@ -288,7 +280,7 @@ public class FacturaBean extends BaseBean implements Serializable {
      * @param facturasid recive el objeto del id de factura asociada.
      * @param lista recove la lista a insertar.
      */
-    public void insertarIdDevolusion(Factura facturasid,List<DetalleFactura> lista) {
+    public void insertarIdFactura(Factura facturasid,List<DetalleFactura> lista) {
         for(int i=0;i<lista.size();i++)
         {
         lista.get(i).setIdFactura(facturasid.getIdFactura());
@@ -343,7 +335,7 @@ public class FacturaBean extends BaseBean implements Serializable {
 
         BigDecimal total;
         total = BigDecimal.valueOf(0);
-        for (DetalleFactura i : this.detalleFactura) {
+        for (DetalleFactura i : detalleFacturas) {
             total = i.getValorUnitario();
             total.add(total);
         }
@@ -440,19 +432,19 @@ public class FacturaBean extends BaseBean implements Serializable {
         this.detalleFacturaServicio = detalleFacturaServicio;
     }
 
-    public List<DetalleFactura> getDetalleFactura() {
-        return detalleFactura;
+    public List<DetalleFactura> getDetalleFacturas() {
+        return detalleFacturas;
     }
 
-    public void setDetalleFactura(List<DetalleFactura> detalleFactura) {
-        this.detalleFactura = detalleFactura;
+    public void setDetalleFacturas(List<DetalleFactura> detalleFactura) {
+        this.detalleFacturas = detalleFactura;
     }
 
-    public DetalleFactura getDetallefactura() {
+    public DetalleFactura getDetalleFactura() {
         return detallefactura;
     }
 
-    public void setDetallefactura(DetalleFactura detallefactura) {
+    public void setDetalleFactura(DetalleFactura detallefactura) {
         this.detallefactura = detallefactura;
     }
 
@@ -501,11 +493,11 @@ public class FacturaBean extends BaseBean implements Serializable {
     }
 
     public Mantenimiento getMantenimientodetalle() {
-        return mantenimientodetalle;
+        return mantenimiento;
     }
 
     public void setMantenimientodetalle(Mantenimiento mantenimientodetalle) {
-        this.mantenimientodetalle = mantenimientodetalle;
+        this.mantenimiento = mantenimientodetalle;
     }
 
     public List<Mantenimiento> getMantenimientos() {
@@ -517,11 +509,11 @@ public class FacturaBean extends BaseBean implements Serializable {
     }
 
     public List<Mantenimiento> getMantenimientoDetalle() {
-        return mantenimientoDetalle;
+        return mantenimientos;
     }
 
     public void setMantenimientoDetalle(List<Mantenimiento> mantenimientoDetalle) {
-        this.mantenimientoDetalle = mantenimientoDetalle;
+        this.mantenimientos = mantenimientoDetalle;
     }
 
     public boolean isDisableAceptar() {
