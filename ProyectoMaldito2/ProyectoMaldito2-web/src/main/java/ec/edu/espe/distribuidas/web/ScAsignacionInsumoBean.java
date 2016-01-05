@@ -14,14 +14,12 @@ import com.espe.distribuidas.model.AsignacionInsumo;
 import com.espe.distribuidas.model.AsignacionInsumoPK;
 import com.espe.distribuidas.model.Insumos;
 import com.espe.distribuidas.model.Mantenimiento;
-import com.espe.distribuidas.model.MantenimientoPK;
 import com.espe.distribuidas.model.exceptions.ValidacionException;
 import com.espe.distribuidas.servicio.AsignacionInsumoServicio;
 import com.espe.distribuidas.servicio.InsumoServicio;
 import com.espe.distribuidas.servicio.MantenimientoServicio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +41,7 @@ import org.primefaces.event.SelectEvent;
  */
 @ViewScoped
 @ManagedBean
-public class AsignacionInsumoBean extends BaseBean implements Serializable {
+public class ScAsignacionInsumoBean extends BaseBean implements Serializable {
 
     @EJB
     private InsumoServicio insumoServicio;
@@ -451,3 +449,4 @@ public class AsignacionInsumoBean extends BaseBean implements Serializable {
     }
 
 }
+

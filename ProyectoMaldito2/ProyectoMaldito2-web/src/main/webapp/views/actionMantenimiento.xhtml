@@ -10,12 +10,17 @@
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
                 <p:outputLabel><h1>Mantenimientos</h1></p:outputLabel>
-                <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{mantenimientoBean.mantenimientos}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientoBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
+                <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{mantenimientosBean.mantenimientos}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientosBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
 
                     <p:column headerText="Cita">
-                        <h:outputText value="id: #{mantenimiento.primaryKey.idCita} cliente: #{mantenimiento.citaMantenimiento.clienteCita.nombre} #{mantenimiento.citaMantenimiento.clienteCita.apellido}" />
+                        <h:outputText value="id:#{mantenimiento.primaryKey.idCita}" />
                     </p:column>
+
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{mantenimiento.citaMantenimiento.clienteCita.nombre} #{mantenimiento.citaMantenimiento.clienteCita.apellido}" />
+                    </p:column>
+
 
                     <p:column headerText="C.I Empleado">
                         <h:outputText value="#{mantenimiento.primaryKey.idEmpleado}" />
@@ -45,18 +50,18 @@
                     </p:column>
 
 
-                    <p:ajax event="rowSelect" update="@form" listener="#{mantenimientoBean.onRowSelect}"/>
+                    <p:ajax event="rowSelect" update="@form" listener="#{mantenimientosBean.onRowSelect}"/>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Nuevo" actionListener="#{mantenimientoBean.nuevo()}" immediate="true" update="@form" disabled="#{mantenimientoBean.mantenimientoSelected ne null}" styleClass=""/>
-                        <p:commandButton value="Modificar" actionListener="#{mantenimientoBean.modificar()}" immediate="true" update="@form" disabled="#{mantenimientoBean.mantenimientoSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{mantenimientoBean.eliminar()}" immediate="true" update="@form" disabled="#{mantenimientoBean.mantenimientoSelected eq null}"/>
+                        <p:commandButton value="Nuevo" actionListener="#{mantenimientosBean.nuevo()}" immediate="true" update="@form" disabled="#{mantenimientosBean.mantenimientoSelected ne null}" styleClass=""/>
+                        <p:commandButton value="Modificar" actionListener="#{mantenimientosBean.modificar()}" immediate="true" update="@form" disabled="#{mantenimientosBean.mantenimientoSelected eq null}"/>
+                        <p:commandButton value="Borrar" actionListener="#{mantenimientosBean.eliminar()}" immediate="true" update="@form" disabled="#{mantenimientosBean.mantenimientoSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
-                <p:panel id="dialog"  header="Seleccionar Empleado" rendered="#{mantenimientoBean.enNuevo}">
+                <p:panel id="dialog"  header="Seleccionar Empleado" rendered="#{mantenimientosBean.enNuevo}">
 
-                    <p:dataTable id="singleEmpleado" var="empleado" value="#{mantenimientoBean.empleados}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientoBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" >
+                    <p:dataTable id="singleEmpleado" var="empleado" value="#{mantenimientosBean.empleados}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientosBean.empleadoSelected}" rowKey="#{empleado.idEmpleado}" >
                         <p:column headerText="C.I">
                             <h:outputText value="#{empleado.idEmpleado}" />
                         </p:column>
@@ -70,12 +75,12 @@
                         </p:column>
 
 
-                        <p:ajax event="rowSelect" update="@form" listener="#{mantenimientoBean.onRowSelectEmpleado}" />
+                        <p:ajax event="rowSelect" update="@form" listener="#{mantenimientosBean.onRowSelectEmpleado}" />
 
 
                     </p:dataTable>
-                    <p:dataTable id="singleCita" var="cita" value="#{mantenimientoBean.citas}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                                 style="width: 60%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientoBean.citaSelected}" rowKey="#{cita.idCita}" >
+                    <p:dataTable id="singleCita" var="cita" value="#{mantenimientosBean.citas}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 60%;" styleClass="textlb" selectionMode="single" selection="#{mantenimientosBean.citaSelected}" rowKey="#{cita.idCita}" >
                         <p:column headerText="ID Cita">
                             <h:outputText value="#{cita.idCita}" />
                         </p:column>
@@ -99,7 +104,7 @@
                         </p:column>
 
 
-                        <p:ajax event="rowSelect" update="@form" listener="#{mantenimientoBean.onRowSelectCita}" />
+                        <p:ajax event="rowSelect" update="@form" listener="#{mantenimientosBean.onRowSelectCita}" />
 
 
                     </p:dataTable>
@@ -107,35 +112,35 @@
                 </p:panel>
 
 
-                <p:panel header="#{mantenimientoBean.title}" style="width: 100%" rendered="#{mantenimientoBean.enNuevo or mantenimientoBean.enModificar}">
+                <p:panel header="#{mantenimientoBean.title}" style="width: 100%" rendered="#{mantenimientosBean.enNuevo or mantenimientosBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
 
                         <p:outputLabel for="txtCita" value="Cita: "/>
-                        <p:inputText id="txtCita" value="#{mantenimientoBean.mantenimiento.primaryKey.idCita }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        <p:inputText id="txtCita" value="#{mantenimientosBean.mantenimiento.primaryKey.idCita }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                         </p:inputText> 
                         <p:message for="txtCita"/>
 
                         <p:outputLabel for="txtEmpleado" value="Empleado: "/>
-                        <p:inputText id="txtEmpleado" value="#{mantenimientoBean.mantenimiento.primaryKey.idEmpleado }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        <p:inputText id="txtEmpleado" value="#{mantenimientosBean.mantenimiento.primaryKey.idEmpleado }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                         </p:inputText> 
                         <p:message for="txtEmpleado"/>
 
                         <p:outputLabel for="txtfechaInicio" value="Fecha Inicio:  "/>
-                        <p:calendar id="txtfechaInicio" locale="es" pattern="MM/dd/yyyy HH:mm:ss" value="#{mantenimientoBean.mantenimiento.fechaInicio}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:calendar id="txtfechaInicio" locale="es" pattern="MM/dd/yyyy HH:mm:ss" value="#{mantenimientosBean.mantenimiento.fechaInicio}" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtfechaInicio"/>
 
                         <p:outputLabel for="txtfechaFin" value="Fecha Fin:  "/>
-                        <p:calendar id="txtfechaFin" locale="es" pattern="MM/dd/yyyy HH:mm:ss" value="#{mantenimientoBean.mantenimiento.fechaFin}" required="true" requiredMessage="Campo Requerido"/>
+                        <p:calendar id="txtfechaFin" locale="es" pattern="MM/dd/yyyy HH:mm:ss" value="#{mantenimientosBean.mantenimiento.fechaFin}" required="true" requiredMessage="Campo Requerido"/>
                         <p:message for="txtfechaFin"/> 
 
                         <p:outputLabel for="txtPrecio" value="Precio "/>
-                        <p:inputText id="txtPrecio" value="#{mantenimientoBean.mantenimiento.precio}" required="true" requiredMessage="Campo Requerido">
+                        <p:inputText id="txtPrecio" value="#{mantenimientosBean.mantenimiento.precio}" required="true" requiredMessage="Campo Requerido">
                         </p:inputText>
                         <p:message for="txtPrecio"/>
 
-                        <p:commandButton value="Aceptar" actionListener="#{mantenimientoBean.aceptar()}"  update="@form"/>
-                        <p:commandButton value="Cancelar" actionListener="#{mantenimientoBean.cancelar()}" immediate="true"  update="@form"/>
+                        <p:commandButton value="Aceptar" actionListener="#{mantenimientosBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Cancelar" actionListener="#{mantenimientosBean.cancelar()}" immediate="true"  update="@form"/>
                     </h:panelGrid>
                 </p:panel>
 
