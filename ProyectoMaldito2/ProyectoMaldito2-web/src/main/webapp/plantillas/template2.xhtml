@@ -16,6 +16,8 @@
         <link href="//fonts.googleapis.com/css?family=Squada+One" rel="stylesheet"/>
         <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700,900" rel="stylesheet"/>
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/move-top.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/showHidden.js"></script>
+
         <h:outputScript library="js" name="spanishLocale.js"/>
         <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}"/>
     </h:head>
@@ -90,7 +92,7 @@
                 <ui:insert name="lista">
                 </ui:insert>
             </h:form>
-            
+
         </div>
         <!--footer1 start here-->
         <div class="footer">

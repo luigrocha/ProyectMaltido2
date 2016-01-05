@@ -12,15 +12,15 @@
                 <p:outputLabel><h1>Clientes</h1></p:outputLabel>
                 <p:dataTable id="singleEmpleado" var="cliente" value="#{clienteBean.clientes}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                              style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{clienteBean.clienteSelected}" rowKey="#{cliente.idCliente}" >
-                    <p:column headerText="C.I">
+                    <p:column headerText="C.I" filterBy="#{cliente.idCliente}" filterMatchMode="contains">
                         <h:outputText value="#{cliente.idCliente}" />
                     </p:column>
 
-                    <p:column headerText="Cliente" >
+                    <p:column headerText="Cliente" filterBy="#{cliente.nombre}" filterMatchMode="contains" >
                         <h:outputText value="#{cliente.nombre}  " />
                     </p:column>
 
-                    <p:column headerText="Apellido" >
+                    <p:column headerText="Apellido" filterBy="#{cliente.apellido}" filterMatchMode="contains" >
                         <h:outputText value="#{cliente.apellido}" />
                     </p:column>
 
@@ -45,22 +45,22 @@
                 <p:panel header="#{clienteBean.title}" style="width: 100%" rendered="#{clienteBean.enNuevo or clienteBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
-                        <p:outputLabel for="txtCedula" value="Cedula de Identidad: "/>
-                        <p:inputText id="txtCedula" value="#{clienteBean.cliente.idCliente }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        <p:outputLabel for="txtCedula" value="Cedula de Identidad: " rendered="#{clienteBean.disabledModificar}"/>
+                        <p:inputText id="txtCedula" value="#{clienteBean.cliente.idCliente }" required="true" rendered="#{clienteBean.disabledModificar}" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                             <f:validateRegex pattern="^[0-9]+$" />
                             <f:validateLength minimum="3" maximum="15" />
                         </p:inputText> 
                         <p:message for="txtCedula"/>
 
-                        <p:outputLabel for="txtNombre" value="Nombres: "/>
-                        <p:inputText id="txtNombre" value="#{clienteBean.cliente.nombre }" required="true" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
+                        <p:outputLabel for="txtNombre" value="Nombres: " rendered="#{clienteBean.disabledModificar}"/>
+                        <p:inputText id="txtNombre" value="#{clienteBean.cliente.nombre }" required="true" rendered="#{clienteBean.disabledModificar}" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
                             <f:validateRegex pattern="^[a-zA-Z]+$" />
                             <f:validateLength minimum="3" maximum="30" />
                         </p:inputText> 
                         <p:message for="txtNombre"/>
 
-                        <p:outputLabel for="txtApellido" value="Apellidos: "/>
-                        <p:inputText id="txtApellido" value="#{clienteBean.cliente.apellido}" required="true" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
+                        <p:outputLabel for="txtApellido" value="Apellidos: " rendered="#{clienteBean.disabledModificar}"/>
+                        <p:inputText id="txtApellido" value="#{clienteBean.cliente.apellido}" required="true" rendered="#{clienteBean.disabledModificar}" requiredMessage="Campo Requerido" validatorMessage="No se permiten caracteres Especiales">
                             <f:validateRegex pattern="^[a-zA-Z]+$" />
                             <f:validateLength minimum="3" maximum="30" />
                         </p:inputText>

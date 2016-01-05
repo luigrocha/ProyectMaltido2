@@ -64,6 +64,11 @@ public class ClienteBean extends BaseBean implements Serializable {
      * modificacion.
      */
     private String title = "";
+    
+    /**
+     *varianble para desabilitar opciones en la modificacion.
+     */
+    private Boolean disabledModificar = true;
 
     /**
      * metodo que se inicializa despues de cargar el formulario contiene la
@@ -139,6 +144,7 @@ public class ClienteBean extends BaseBean implements Serializable {
      */
     public void onRowSelect(SelectEvent event) {
         this.disabled = false;
+        this.disabledModificar=false;
     }
 
     /**
@@ -183,7 +189,7 @@ public class ClienteBean extends BaseBean implements Serializable {
     }
 
     /**
-     *permite ingresar un cliente en la BDD.
+     * permite ingresar un cliente en la BDD.
      */
     public void registrarCliente() {
         try {
@@ -196,6 +202,7 @@ public class ClienteBean extends BaseBean implements Serializable {
 
     /**
      * metodo get de la lista de clientes.
+     *
      * @return devuelve una lista de clientes.
      */
     public List<Cliente> getClientes() {
@@ -204,6 +211,7 @@ public class ClienteBean extends BaseBean implements Serializable {
 
     /**
      * metodo set de la lista de clientes.
+     *
      * @param clientes permite ingresar una lista de clientes.
      */
     public void setClientes(List<Cliente> clientes) {
@@ -212,6 +220,7 @@ public class ClienteBean extends BaseBean implements Serializable {
 
     /**
      * metodo ger de cliente.
+     *
      * @return retorna un objeto de tipo cliente.
      */
     public Cliente getCliente() {
@@ -220,6 +229,7 @@ public class ClienteBean extends BaseBean implements Serializable {
 
     /**
      * metodo set del cliente.
+     *
      * @param cliente recibe un tipo cliente.
      */
     public void setCliente(Cliente cliente) {
@@ -228,6 +238,7 @@ public class ClienteBean extends BaseBean implements Serializable {
 
     /**
      * metodo get de cliente selected.
+     *
      * @return retorna un cliente.
      */
     public Cliente getClienteSelected() {
@@ -236,6 +247,7 @@ public class ClienteBean extends BaseBean implements Serializable {
 
     /**
      * metodo set de cliente seleccionado.
+     *
      * @param clienteSelected recibe un objeto de tipo cliente.
      */
     public void setClienteSelected(Cliente clienteSelected) {
@@ -276,6 +288,14 @@ public class ClienteBean extends BaseBean implements Serializable {
      */
     public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public Boolean getDisabledModificar() {
+        return disabledModificar;
+    }
+
+    public void setDisabledModificar(Boolean disabledModificar) {
+        this.disabledModificar = disabledModificar;
     }
 
 }

@@ -65,7 +65,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
     /**
      * variable tipo boolean para inhabilitar datos del formulario.
      */
-    private Boolean disabledCampoModificar = true;
+    private Boolean disabledCampoModificar = false;
     
 
     /**
@@ -142,6 +142,7 @@ public class EmpleadoBean extends BaseBean implements Serializable {
      */
     public void onRowSelect(SelectEvent event) {
         this.disabled = false;
+        this.disabledCampoModificar=true;
     }
 
     /**

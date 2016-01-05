@@ -44,11 +44,11 @@
                         <p:commandButton value="Borrar" actionListener="#{empleadoBean.eliminar()}" immediate="true" update="@form" disabled="#{empleadoBean.empleadoSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
-                <p:panel header="#{empleadoBean.title}" style="width: 100%" rendered="#{empleadoBean.enNuevo or empleadoBean.enModificar}">
+                <p:panel header="#{empleadoBean.title}" style="width: 100%" rendered="#{empleadoBean.enNuevo}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
-                        <p:outputLabel for="txtCedula" value="Cedula/RUC: "/>
-                        <p:inputText id="txtCedula" value="#{empleadoBean.empleado.idEmpleado }" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                        <p:outputLabel for="txtCedula" value="Cedula/RUC: " />
+                        <p:inputText id="txtCedula" value="#{empleadoBean.empleado.idEmpleado }"    required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                             <f:validateRegex pattern="^[0-9]+$" />
                             <f:validateLength minimum="3" maximum="15" />
                         </p:inputText> 
@@ -109,6 +109,36 @@
                         <p:outputLabel for="txtPas2" value="Repetir Clave: " />
                         <p:password id="txtPas2" requiredMessage="Campo Requerido"/>
                         <p:message for="txtPas2"/>
+                        <p:commandButton value="Aceptar" actionListener="#{empleadoBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Cancelar" actionListener="#{empleadoBean.cancelar()}" immediate="true"  update="@form"/>
+                    </h:panelGrid>
+
+                </p:panel>
+                <p:panel header="#{empleadoBean.title}" style="width: 100%" rendered="#{ empleadoBean.enModificar}">
+
+                    <h:panelGrid columns="3" style="margin: 0 auto;">
+
+                        <p:outputLabel for="txtTelefonoM" value="Telefono: "/>
+                        <p:inputText id="txtTelefonoM" value="#{empleadoBean.empleado.telefono}" required="true" requiredMessage="Campo Requerido" validatorMessage="Ingrese telefono minimo 8 y maximo de 15 números">
+                            <f:validateLength minimum="8" maximum="15" />
+                        </p:inputText>
+                        <p:message for="txtTelefonoM"/>
+
+                        <p:outputLabel for="txtCargoM" value="Cargo: "/>
+                        <p:selectOneMenu  id="txtCargoM" value="#{empleadoBean.empleado.tipoEmpleado}" required="true" requiredMessage="Campo Requerido">
+                            <f:selectItem itemValue="Secretaria" itemLabel="Secretaria"/>
+                            <f:selectItem itemValue="Tecnico" itemLabel="Tecnico"/>
+                            <f:selectItem itemValue="Gerente" itemLabel="Gerente"/>
+                        </p:selectOneMenu>
+                        <p:message for="txtCargoM"/>
+
+                        <p:outputLabel for="txtEstadoM" value="Estado: "/>
+                        <p:selectOneMenu  id="txtEstadoM" value="#{empleadoBean.empleado.estado}" required="true" requiredMessage="Campo Requerido">
+                            <f:selectItem itemValue="ACT" itemLabel="Activo"/>
+                            <f:selectItem itemValue="DES" itemLabel="Deshabilitado"/>
+                        </p:selectOneMenu>
+                        <p:message for="txtEstadoM"/>
+
                         <p:commandButton value="Aceptar" actionListener="#{empleadoBean.aceptar()}"  update="@form"/>
                         <p:commandButton value="Cancelar" actionListener="#{empleadoBean.cancelar()}" immediate="true"  update="@form"/>
                     </h:panelGrid>
