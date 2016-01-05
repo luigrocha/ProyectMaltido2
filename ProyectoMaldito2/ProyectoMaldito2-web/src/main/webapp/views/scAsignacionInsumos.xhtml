@@ -10,8 +10,8 @@
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
                 <p:outputLabel><h1>Asignación de Insumos</h1></p:outputLabel>
-                <p:dataTable id="singleAsignacionInsumo" var="asignacion" value="#{asignacionInsumoBean.asignacionInsumos}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{asignacionInsumoBean.asignacionInsumoSelected}" rowKey="#{asignacion.primaryKey}" >
+                <p:dataTable id="singleAsignacionInsumo" var="asignacion" value="#{scAsignacionInsumoBean.asignacionInsumos}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                             style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{scAsignacionInsumoBean.asignacionInsumoSelected}" rowKey="#{asignacion.primaryKey}" >
 
                     <p:column headerText="ID Insumo">
                         <h:outputText value="#{asignacion.primaryKey.idInsumo}" />
@@ -54,18 +54,18 @@
                     </p:column>
 
 
-                    <p:ajax event="rowSelect" update="@form" listener="#{asignacionInsumoBean.onRowSelect}"/>
+                    <p:ajax event="rowSelect" update="@form" listener="#{scAsignacionInsumoBean.onRowSelect}"/>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Nuevo" actionListener="#{asignacionInsumoBean.nuevo()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected ne null}" styleClass=""/>
-                        <p:commandButton value="Borrar" actionListener="#{asignacionInsumoBean.eliminar()}" immediate="true" update="@form" disabled="#{asignacionInsumoBean.asignacionInsumoSelected eq null}"/>
+                        <p:commandButton value="Nuevo" actionListener="#{scAsignacionInsumoBean.nuevo()}" immediate="true" update="@form" disabled="#{scAsignacionInsumoBean.asignacionInsumoSelected ne null}" styleClass=""/>
+                        <p:commandButton value="Borrar" actionListener="#{scAsignacionInsumoBean.eliminar()}" immediate="true" update="@form" disabled="#{scAsignacionInsumoBean.asignacionInsumoSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
 
-                <p:panel id="dialog"  header="Seleccionar Mantenimiento" rendered="#{asignacionInsumoBean.enNuevo}">
+                <p:panel id="dialog"  header="Seleccionar Mantenimiento" rendered="#{scAsignacionInsumoBean.enNuevo}">
 
-                    <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{asignacionInsumoBean.mantenimientos}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{asignacionInsumoBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
+                    <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{scAsignacionInsumoBean.mantenimientos}"  paginator="true" rows="3" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{scAsignacionInsumoBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
                         <p:column headerText="Cita">
                             <h:outputText value="id: #{mantenimiento.primaryKey.idCita}, empleado: #{mantenimiento.primaryKey.idEmpleado}" />
                         </p:column>
@@ -88,13 +88,13 @@
                   <!--          <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />-->
                         </p:column>
 
-                        <p:ajax event="rowSelect" update="@form" listener="#{asignacionInsumoBean.onRowSelectMantenimiento}" />
+                        <p:ajax event="rowSelect" update="@form" listener="#{scAsignacionInsumoBean.onRowSelectMantenimiento}" />
 
 
                     </p:dataTable>
 
-                    <p:dataTable id="singleInsumo" var="insumo" widgetVar="tablaInsumo" value="#{asignacionInsumoBean.insumos}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
-                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{asignacionInsumoBean.insumoSelected}" rowKey="#{insumo.idInsumo}" >
+                    <p:dataTable id="singleInsumo" var="insumo" widgetVar="tablaInsumo" value="#{scAsignacionInsumoBean.insumos}"  paginator="true" rows="5" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                                 style="width: 50%;" styleClass="textlb" selectionMode="single" selection="#{scAsignacionInsumoBean.insumoSelected}" rowKey="#{insumo.idInsumo}" >
                         <p:column headerText="ID Insumo">
                             <h:outputText value="#{insumo.idInsumo}" />
                         </p:column>
@@ -112,26 +112,26 @@
                         </p:column>
 
 
-                        <p:ajax event="rowSelect" update="@form" listener="#{asignacionInsumoBean.onRowSelectInsumo}" />
+                        <p:ajax event="rowSelect" update="@form" listener="#{scAsignacionInsumoBean.onRowSelectInsumo}" />
 
 
                     </p:dataTable>
                     <p:outputLabel for="txtCantidad" value="Cantidad: "/>
-                    <p:inputText id="txtCantidad" value="#{asignacionInsumoBean.cantidad.cantidad}" disabled="#{asignacionInsumoBean.diableAceptar}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
+                    <p:inputText id="txtCantidad" value="#{scAsignacionInsumoBean.cantidad.cantidad}" disabled="#{scAsignacionInsumoBean.diableAceptar}" required="true" requiredMessage="Campo Requerido" validatorMessage="Solo Números">
                     </p:inputText> 
                     <p:message for="txtCantidad"/>
-                    <p:commandButton value="Agregar" actionListener="#{asignacionInsumoBean.ingresarInsumo()}"  update="@form" disabled="#{asignacionInsumoBean.diableAceptar}" styleClass=""/>
-                    <p:commandButton value="Cancelar"  immediate="true" update="@form" onclick="tablaInsumo.unselectAllRows()"/>
+                    <p:commandButton value="Agregar" actionListener="#{scAsignacionInsumoBean.ingresarInsumo()}"  update="@form" disabled="#{scAsignacionInsumoBean.diableAceptar}" styleClass=""/>
+                    <p:commandButton value="Cancelar"  immediate="true" update="@form" />
 
 
                 </p:panel>
 
                 <!--formualrio de ingreso-->
-                <p:panel header="#{asignacionInsumoBean.title}" style="width: 100%" rendered="#{asignacionInsumoBean.enNuevo or asignacionInsumoBean.enModificar}">
+                <p:panel header="#{scAsignacionInsumoBean.title}" style="width: 100%" rendered="#{scAsignacionInsumoBean.enNuevo or scAsignacionInsumoBean.enModificar}">
 
                     <h:panelGrid columns="3" style="margin: 0 auto;">
 
-                        <p:dataTable id="guardarAsignacionInfo" var="asignacionInfo" value="#{asignacionInsumoBean.guardarAsignacionInsumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                        <p:dataTable id="guardarAsignacionInfo" var="asignacionInfo" value="#{scAsignacionInsumoBean.guardarAsignacionInsumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                                      style="width: 100%;" styleClass="textlb" selectionMode="single"  rowKey="#{asignacionInfo.primaryKey}" >
 
                             <p:column headerText="Id Cita">
@@ -144,7 +144,7 @@
 
                         </p:dataTable>
 
-                        <p:dataTable id="guardarAsignacionInsumo" var="asignacionI" value="#{asignacionInsumoBean.guardarAsignacionInsumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
+                        <p:dataTable id="guardarAsignacionInsumo" var="asignacionI" value="#{scAsignacionInsumoBean.guardarAsignacionInsumo}"  paginator="true" rows="10" paginatorPosition="bottom" scrollable="true" scrollHeight="250"
                                style="width: 100%;" styleClass="textlb" selectionMode="single"  rowKey="#{asignacionI.primaryKey}" >
 
                             <p:column headerText="Unidad de Medida">
@@ -165,8 +165,8 @@
                         </p:dataTable>
 
 
-                        <p:commandButton value="Aceptar" actionListener="#{asignacionInsumoBean.aceptar()}"  update="@form"/>
-                        <p:commandButton value="Cancelar" actionListener="#{asignacionInsumoBean.cancelar()}" immediate="true"  update="@form"/>
+                        <p:commandButton value="Aceptar" actionListener="#{scAsignacionInsumoBean.aceptar()}"  update="@form"/>
+                        <p:commandButton value="Cancelar" actionListener="#{scAsignacionInsumoBean.cancelar()}" immediate="true"  update="@form"/>
                     </h:panelGrid>
                 </p:panel>
 

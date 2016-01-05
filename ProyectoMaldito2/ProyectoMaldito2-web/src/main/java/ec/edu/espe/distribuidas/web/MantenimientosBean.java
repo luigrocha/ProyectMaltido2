@@ -39,9 +39,7 @@ import org.primefaces.event.SelectEvent;
  */
 @ViewScoped
 @ManagedBean
-
-
-public class MantenimientoBean extends BaseBean implements Serializable {
+public class MantenimientosBean extends BaseBean implements Serializable {
 
     @EJB
     private CitaMantenimientoServicio citaServicio;
@@ -166,12 +164,14 @@ public class MantenimientoBean extends BaseBean implements Serializable {
      */
     public void eliminar() {
         this.cita = new CitaMantenimiento();
+        this.mantenimiento=new Mantenimiento();
         try {
+            
             BeanUtils.copyProperties(this.mantenimiento, this.mantenimientoSelected);
             this.mantenimientoServicio.eliminarMantenimiento(this.mantenimiento);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Eliminado Corectamente"));
-            this.citas.remove(this.cita);
             this.setCitaSelected(null);
+            this.mantenimientos=mantenimientoServicio.obtenerTodosMantenimiento();
         } catch (IllegalAccessException | InvocationTargetException e) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error no controlado", e.getMessage()));
@@ -205,6 +205,7 @@ public class MantenimientoBean extends BaseBean implements Serializable {
 //            BeanUtils.copyProperties(this.empleado, this.empleadoSelected);
             this.primaryKey.setIdEmpleado(this.empleadoSelected.getIdEmpleado());
             this.mantenimiento.setPrimaryKey(primaryKey);
+            this.mantenimiento.setEmpleadoMantenimiento(this.empleadoSelected);
     }
     public void onRowSelectCita(SelectEvent event) {
       
@@ -212,6 +213,7 @@ public class MantenimientoBean extends BaseBean implements Serializable {
             //BeanUtils.copyProperties(this.cita, this.citaSelected);
             this.primaryKey.setIdCita(this.citaSelected.getIdCita());
             this.mantenimiento.setPrimaryKey(primaryKey);
+            this.mantenimiento.setCitaMantenimiento(this.citaSelected);
          
     }
 
@@ -240,6 +242,7 @@ public class MantenimientoBean extends BaseBean implements Serializable {
                 this.mantenimientoServicio.actulizarMantenimiento(this.mantenimiento);
                 BeanUtils.copyProperties(this.mantenimientoSelected, this.mantenimiento);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico el mantenimiento del empleado: " + this.mantenimiento.getPrimaryKey().getIdEmpleado()+ " de la cita: " + this.mantenimiento.getPrimaryKey().getIdCita(), null));
+                this.mantenimientos=this.mantenimientoServicio.obtenerTodosMantenimiento();
             } catch (ValidacionException | IllegalAccessException | InvocationTargetException e) {
 
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -401,3 +404,4 @@ public class MantenimientoBean extends BaseBean implements Serializable {
     }
 
 }
+
