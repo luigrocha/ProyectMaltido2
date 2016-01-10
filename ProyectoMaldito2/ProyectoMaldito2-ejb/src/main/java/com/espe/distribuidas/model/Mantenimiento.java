@@ -64,6 +64,10 @@ public class Mantenimiento implements Serializable {
     public Mantenimiento() {
     }
 
+    public Mantenimiento(CitaMantenimiento citaMantenimiento) {
+        this.citaMantenimiento = citaMantenimiento;
+    }
+
     public List<AsignacionInsumo> getInsumosAsignados() {
         return insumosAsignados;
     }

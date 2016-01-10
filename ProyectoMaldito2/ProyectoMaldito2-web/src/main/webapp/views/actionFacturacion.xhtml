@@ -10,7 +10,7 @@
         <ui:composition template="/plantillas/template2.xhtml">
             <ui:define name="lista">
                 <p:outputLabel><h1>Facturación</h1></p:outputLabel>
-                <p:dataTable id="singleFactura" var="factura" value="#{facturaBean.factura}"  paginator="true" rows="10" paginatorPosition="bottom"  scrollable="true" scrollHeight="150"
+                <p:dataTable id="singleFactura" var="factura" value="#{facturaBean.facturas}"  paginator="true" rows="10" paginatorPosition="bottom"  scrollable="true" scrollHeight="150"
                              style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{facturaBean.facturaSelected}" rowKey="#{factura.idFactura}" 
                              emptyMessage="No hay registros ingresados">
 
@@ -46,7 +46,7 @@
                 </p:dataTable>
 
                 <p:panel id="dialog" widgetVar="seleccionarClienteDialog" header="Seleccionar Cliente" rendered="#{facturaBean.enSeleccionar}">
-                    <p:dataTable id="singleCliente" var="cliente" value="#{facturaBean.clientees}" scrollable="true" scrollHeight="150"
+                    <p:dataTable id="singleCliente" var="cliente" value="#{facturaBean.clientes}" scrollable="true" scrollHeight="150"
                                  style="width: 100%;" styleClass="textlb" selectionMode="single" selection="#{facturaBean.clienteSelected}" rowKey="#{cliente.idCliente}" >
                         <p:column headerText="ID Cliente" filterBy="#{cliente.idCliente}" filterMatchMode="contains">
                             <h:outputText value="#{cliente.idCliente}" />
@@ -72,8 +72,10 @@
                 </p:panel>
                 <p:panel header="#{facturaBean.title}" style="width: 100%" rendered="#{facturaBean.enNuevo or facturaBean.enModificar}">
                     <h:panelGrid columns="2" style="margin: 0 auto;" width="100%">
+                        
                         <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{facturaBean.mantenimientos}" scrollable="true" scrollHeight="150"
                                      style="width: 400px;" styleClass="textlb" selectionMode="single" selection="#{facturaBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
+
                             <p:column headerText="Id Cita" filterBy="#{mantenimiento.primaryKey.idCita}" filterMatchMode="contains">
                                 <h:outputText value="#{mantenimiento.primaryKey.idCita}" />
                             </p:column>
@@ -98,18 +100,17 @@
                             <p:outputLabel id="txtTelefono" value="#{facturaBean.clienteSelected.telefono}" />
                             <p:outputLabel for="txtCorreo" value="Correo: "/>
                             <p:outputLabel id="txtCorreo" value="#{facturaBean.clienteSelected.correoElectronico}" />
-                            <p:outputLabel for="txtfecha" value="Fecha:  "/>
-                            <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" value="#{factura.fecha}" required="true" requiredMessage="Campo Requerido"/>
+                          
                         </h:panelGrid>
                         <p:column></p:column>
-                        <p:dataTable style="width: 400px;" var="mantenimiento" value="#{facturaBean.detalleFactura}" scrollable="true" scrollHeight="150"
-                                     styleClass="textlb" selectionMode="single" selection="#{facturaBean.mantenimiento}" rowKey="#{mantenimiento.idCita}" editable="true">
+                        <p:dataTable style="width: 400px;" var="mantenimientos" value="#{facturaBean.detalleFacturas}" scrollable="true" scrollHeight="150"
+                                     styleClass="textlb" selectionMode="single" selection="#{facturaBean.mantenimiento}" rowKey="#{mantenimientos.idCita}" editable="true">
                             <p:column headerText="Id Cita">
-                                <h:outputText value="#{mantenimiento.idCita}" />
+                                <h:outputText value="#{mantenimientos.idCita}" />
                             </p:column>
 
                             <p:column headerText="Empleado" >
-                                <h:outputText value="#{mantenimiento.idTecnico}" />
+                                <h:outputText value="#{mantenimientos.idTecnico}" />
                             </p:column>
 
                             <p:column headerText="Cantidad" >
@@ -120,10 +121,11 @@
                             </p:column>
 
                             <p:column headerText="Precio" >
-                                <h:outputText value="#{mantenimiento.valorUnitario}" />
+                                <h:outputText value="#{mantenimientos.valorUnitario}" />
+
                                 <f:facet name="footer">
-                                    <h:outputText value="#{facturaBean.fac}" />
-                                </f:facet>
+                                    <p:inputText value="#{facturaBean.factura.total}" />
+                                </f:facet>                            
                             </p:column>
                         </p:dataTable>
 
