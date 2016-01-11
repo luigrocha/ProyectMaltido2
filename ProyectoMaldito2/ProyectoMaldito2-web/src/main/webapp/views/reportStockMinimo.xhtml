@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+<ui:composition template="/plantillas/template2.xhtml">
+
+    <ui:define name="titulo">Reporte 001 - STOCK MINIMO 5</ui:define>
+    <ui:define name="lista">
+        
+        <p:panel id="panel" header="Actualizaci�n de Datos de Clientes" style="width: 600px"> 
+            <p:focus context="panel"/> 
+            <h:panelGrid columns="3" >  
+                
+
+                <h:outputLabel for="formato" value="Formato: *" />  
+                <p:selectOneRadio id="formato" value="#{reportStockBean.formato}" required="true" requiredMessage="Debe seleccionar un formato">
+                    <f:selectItem itemLabel="PDF" itemValue="PDF" />
+                    <f:selectItem itemLabel="MS. Excel" itemValue="XLS" />
+                    <f:selectItem itemLabel="Texto" itemValue="TXT" />
+                </p:selectOneRadio>
+                <p:message for="formato" />  
+
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellspacing="5px">
+                <p:commandButton id="downloadLink" value="Generar" ajax="false" icon="ui-icon-arrowthichk-s" actionListener="#{reportStockBean.generateReport()}">
+                    <p:fileDownload value="#{reportStockBean.file}" />
+                </p:commandButton>
+                <p:commandButton value="Cancelar" action="#{reportStockBean.cancelar}" immediate="true"/>
+            </h:panelGrid>  
+        </p:panel>
+
+    </ui:define>
+</ui:composition>
+        </h:body>
 </html>
