@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Spotlights-Wires</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="icon" type="image/x-icon" href="#{facesContext.externalContext.requestContextPath}/images/favicon.ico"/>
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/styles.css" rel="stylesheet"/>
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.css" rel="stylesheet"/>
+        <link href="//fonts.googleapis.com/css?family=Squada+One" rel="stylesheet"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700,900" rel="stylesheet"/>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/move-top.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/showHidden.js"></script>
+
+        <h:outputScript library="js" name="spanishLocale.js"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}"/>
+    </h:head>
+    <h:body>
+        <!--banner start here-->
+        <div class="banner-two">
+            <div class="header">
+                <div class="container">
+                    <div class="header-main">
+                        <div class="logo">
+                            <h1><a href="dashboard.xhtml">Spotlights-Wires</a></h1>
+                        </div>
+                        <div>
+                            <span class="menu"> <img src="images/icon.png" alt=""/></span>
+                            <nav>
+                                <ul>
+                                    <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/dashboard.xhtml">Inicio</a></li> 
+                                    <li  class="sub"><a>Configuraciones</a>
+                                        <ul>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/listarEmpleados.xhtml">Empleados</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/listarClientes.xhtml">Clientes</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/listarProveedores.xhtml">Proveedores</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/listarInsumos.xhtml">Insumos</a></li>
+                                        </ul>
+                                    </li>
+                                    <li  class="sub"><a>Acciones</a>
+                                        <ul>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionDevoluciones.xhtml">Devoluciones</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionPedidos.xhtml">Pedidos</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionCitaMantenimiento.xhtml">Citas</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionMantenimiento.xhtml">Mantenimiento</a></li>
+                                        </ul>
+                                    </li>
+                                    <li  class="sub"><a>Schedule</a>
+                                        <ul>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/scheCalendarioOcupaciones.xhtml">Calendario Ocupación</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/scAsignacionInsumos.xhtml">Asignación Insumos</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/scheLiquidacionInsumos.xhtml">Liquidación Insumos</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/actionFacturacion.xhtml">Facturacion</a></li>
+                                        </ul>
+                                    </li>
+                                    <li  class="sub" href=""><a>Reportes</a>
+                                        <ul>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/reportCargasDiarias.xhtml">Cargas Diarias</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/reportLiquidaciones.xhtml">Liquidación Empleados</a></li>
+                                            <li><a href="#{facesContext.externalContext.requestContextPath}/faces/views/reportStockMinimo.xhtml">Stock Mínimo</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#{facesContext.externalContext.requestContextPath}/faces/index.xhtml">Cerrar Session</a></li>
+                                </ul>
+                            </nav>
+                            <!-- script-for-menu -->
+                            <script>
+                                $("span.menu").click(function () {
+                                    $("ul.res").slideToggle(300, function () {
+                                        // Animation complete.
+                                    });
+                                });
+                            </script>
+                            <!-- /script-for-menu -->
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--banner end here-->
+        <!--about start here-->
+        <div class=" container fondo" >
+            <h:form>
+                <p:growl id="growl"  autoUpdate="true" severity="info,fatal" showDetail="true" life="3000"  />    
+                <ui:insert name="lista">
+                </ui:insert>
+            </h:form>
+
+        </div>
+        <!--footer1 start here-->
+        <div class="footer">
+            <div class="container">
+                <div class="footer-main">
+                    <div class="col-md-4 ftr-gd">
+                        <h3>Siguenos</h3>
+                        <ul>
+                            <li><a href="#" class="fa"><img src="#{facesContext.externalContext.requestContextPath}/images/log_FB.png" alt="" class="img-responsive"/> </a></li>
+                            <li><a href="#" class="tw"><img src="#{facesContext.externalContext.requestContextPath}/images/log_TW.png" alt="" class="img-responsive"/> </a></li>
+                            <li><a href="#" class="g"><img src="#{facesContext.externalContext.requestContextPath}/images/log_GPLUS.png" alt="" class="img-responsive"/> </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 ftr-gd">
+                        <h3>Suscríbete</h3>
+                        <form>
+                            <input  type="text" value="Ingrese su Email" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                        this.value = 'Enter Your email';
+                                    }"/>
+                            <input type="submit" value="Subscribe"/>
+                        </form>
+                    </div>
+                    <div class="col-md-4 ftr-gd">
+                        <h3>Dirección</h3>
+                        <p>Quito sur</p>
+                        <p></p>
+                        <p>cell :+593 998299109</p>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>© 2015 Proyecto Maldito 2. Todos los derechos reservados | Design by  <a href="" target="_blank">  R-R S.A </a></p>
+                </div>
+                <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+            </div>
+        </div>
+        <!--footer end here-->
+    </h:body>
+</html>
