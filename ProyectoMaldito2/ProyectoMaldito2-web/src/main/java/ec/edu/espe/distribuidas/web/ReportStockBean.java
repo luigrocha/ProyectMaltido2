@@ -20,6 +20,7 @@ public class ReportStockBean  extends AbstractReportBean implements Serializable
 
 
     public void generateReport() {
+        //generar reporte
         super.generateReport("stockMinimo", "stockMinimo");
     }
     
