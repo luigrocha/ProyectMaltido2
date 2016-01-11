@@ -17,6 +17,7 @@ import com.espe.distribuidas.servicio.AsignacionInsumoServicio;
 import com.espe.distribuidas.servicio.InsumoServicio;
 import com.espe.distribuidas.servicio.LiquidacionAsignacionServicio;
 import java.io.Serializable;
+import static java.lang.System.out;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +49,7 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
 
     @EJB
     private AsignacionInsumoServicio asignacionInsumoServicio;
-    
+
     @EJB
     private InsumoServicio insumoServicio;
     /**
@@ -103,7 +104,7 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         this.liquidacionAsignaciones = liquidacionServicio.obtenerTodos();
-        this.asignacionInsumos=asignacionInsumoServicio.obtenerTodasInsumosAsignados();
+        this.asignacionInsumos = asignacionInsumoServicio.obtenerTodasInsumosAsignados();
     }
 
     /**
@@ -159,8 +160,6 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
         } catch (IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(CitaMantenimientoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.setAsignacionInsumoSelected(null);
-        this.setLiquidacionAsignacionSelected(null);
         super.quitarNuevo();
     }
 
@@ -171,15 +170,14 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
      */
     public void aceptar() {
         FacesContext context = FacesContext.getCurrentInstance();
-
         try {
             // Usuario usuario = (Usuario)((HttpServletRequest)context.getExternalContext().getRequest()).getSession().getAttribute("usuario");
             this.liquidacionAsignacion.setTotalLiquidacion(this.liquidacionAsignacion.getTotalLiquidacion().multiply(this.liquidacionAsignacion.getCantidad()));
             this.liquidacionServicio.ingresarInsumo(this.liquidacionAsignacion);
             // this.citas.add(0, this.cita);
-            
-            actualizar(this.asignacionInsumoSelected, this.liquidacionAsignacion);
             this.liquidacionAsignaciones = this.liquidacionServicio.obtenerTodos();
+
+            this.insumoServicio.actualizarInsumo(this.actualizar(this.asignacionInsumoSelected, this.liquidacionAsignacion));
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Liquidación completada Satisfactoriamente", null));
         } catch (Exception e) {
 
@@ -195,20 +193,19 @@ public class LiquidacionInsumosBean extends BaseBean implements Serializable {
         super.seleccionar();
     }
 
-    public void actualizar(AsignacionInsumo asignacion,LiquidacionAsignacion liquidacion){
-    Integer res;
-    
-    res=liquidacion.getCantidad().compareTo(asignacion.getCantidad());
-        if(res==-1)
-    {
-    Insumos insumotmp=asignacion.getInsumo();
-    insumotmp.setCantidad(insumotmp.getCantidad().add(asignacion.getCantidad().subtract(liquidacion.getCantidad())));
-    this.insumoServicio.actualizarInsumo(insumotmp);
+    public Insumos actualizar(AsignacionInsumo asignacion, LiquidacionAsignacion liquidacion) {
+        Integer res;
 
-    
+        res = liquidacion.getCantidad().compareTo(asignacion.getCantidad());
+        Insumos insumotmp = asignacion.getInsumo();
+
+        if (res == -1) {
+            insumotmp.setCantidad(insumotmp.getCantidad().add(asignacion.getCantidad().subtract(liquidacion.getCantidad())));
+
+        }
+        return insumotmp;
     }
-        
-    }
+
     /**
      * metodo get de titulo.
      *

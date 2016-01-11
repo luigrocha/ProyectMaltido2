@@ -65,6 +65,12 @@ public class CitaMantenimiento implements Serializable {
     public CitaMantenimiento() {
     }
 
+    public CitaMantenimiento(Cliente clienteCita) {
+        this.clienteCita = clienteCita;
+    }
+    
+    
+
     public Cliente getClienteCita() {
         return clienteCita;
     }

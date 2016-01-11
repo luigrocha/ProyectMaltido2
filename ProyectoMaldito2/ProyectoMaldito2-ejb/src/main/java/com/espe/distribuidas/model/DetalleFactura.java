@@ -36,7 +36,7 @@ public class DetalleFactura implements Serializable{
     private Integer idFactura;
 
     @Id
-    @Column(name = "ID_TECNICO", nullable = false)
+    @Column(name = "ID_EMPLEADO", nullable = false)
     private String idTecnico;
 
     @Id
