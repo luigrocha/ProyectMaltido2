@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura_detalles" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="160f84bc-6933-4279-9a5c-3158ca1d5477">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     DETALLE_FACTURA_001."ID_CITA" AS ID_CITA,
+     DETALLE_FACTURA_001."ID_EMPLEADO" AS ID_EMPLEADO,
+     DETALLE_FACTURA_001."CANTIDAD" AS CANTIDAD,
+     DETALLE_FACTURA_001."VALOR_UNITARIO" VALOR_UNITARIO
+FROM
+     "FACTURA_001" FACTURA_001 INNER JOIN "DETALLE_FACTURA_001" DETALLE_FACTURA_001 ON FACTURA_001."ID_FACTURA" = DETALLE_FACTURA_001."ID_FACTURA"
+WHERE FACTURA_001."ID_FACTURA" = (SELECT MAX(ID_FACTURA)FROM FACTURA_001)]]>
+	</queryString>
+	<field name="ID_CITA" class="java.math.BigDecimal"/>
+	<field name="ID_EMPLEADO" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="VALOR_UNITARIO" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="15" width="100" height="20" uuid="855b0026-2224-47c2-b9ab-63aac576335e"/>
+				<textFieldExpression><![CDATA[$F{ID_CITA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="15" width="100" height="20" uuid="5bd2b5c8-15a6-4a22-a310-9cdbd19a6c1b"/>
+				<textFieldExpression><![CDATA[$F{ID_EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="294" y="13" width="100" height="20" uuid="71ee6646-26de-4e0c-91c7-3dfd67b8dc91"/>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="13" width="115" height="20" uuid="cc81ad5a-cd44-45d0-93aa-d7735967ffd2"/>
+				<textFieldExpression><![CDATA[$F{VALOR_UNITARIO}+"$"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
