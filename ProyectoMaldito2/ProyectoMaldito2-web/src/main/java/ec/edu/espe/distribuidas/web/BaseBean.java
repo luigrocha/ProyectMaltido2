@@ -121,7 +121,7 @@ public class BaseBean implements Serializable {
         this.enSeleccionar=false;
     }
     /**
-     * desabilita la seleccion de argumentos.
+     * desabilita la seleccion de argumentos, para los atributos.
      */
     public void quitarSeleccion(){
     this.enSeleccionar=false;
