@@ -14,7 +14,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Luig Rocha\\glassfish3.1\\glassfish\\domains\\domain1\\lib\\ext\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["\\reports\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
