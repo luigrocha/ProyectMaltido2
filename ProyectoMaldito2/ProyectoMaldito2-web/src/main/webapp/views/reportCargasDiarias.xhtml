@@ -19,8 +19,8 @@
                 <p:outputLabel for="fechaF" value="Fecha Fin: " />  
                 <p:calendar id="fechaF"  value="#{reportCargasBean.fechaFin}" pattern="dd-MM-yyyy"  showOn="button" required="true"/>                     
                 <p:message for="fechaF" />
-                <h:outputLabel for="zona" value="Zona: " />  
-                <p:selectOneMenu id="zona" value="#{reportCargasBean.empleado}" required="true" >
+                <h:outputLabel for="empleado" value="Empleado: " />  
+                <p:selectOneMenu id="empleado" value="#{reportCargasBean.empleado}" required="true" >
                     <f:selectItem itemLabel="Todas" itemValue="0" />
                     <f:selectItems value="#{reportCargasBean.listadoEmpleados}" var="i" itemValue="#{i.idEmpleado}" itemLabel="#{i.nombre}"/>
                 </p:selectOneMenu>

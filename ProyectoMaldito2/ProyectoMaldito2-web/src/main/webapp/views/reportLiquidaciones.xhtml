@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillas/template2.xhtml">
+
+    <ui:define name="titulo">Reporte 003 - LIQUIDACIONES POR EMPLEADOS</ui:define>
+    <ui:define name="lista">
+        
+        <p:panel id="panel" header="Reporte de Clientes que m�s Repuestos Utilizan " style="width: 500px"> 
+            <p:focus context="panel"/> 
+            <h:panelGrid columns="3" >  
+                <p:outputLabel for="fechaI" value="Fecha Inicio: " />  
+                <p:calendar id="fechaI"  value="#{reportCargasBean.fechaInicio}" pattern="dd-MM-yyyy"  showOn="button" required="true"/>                     
+                <p:message for="fechaI" />
+                <p:outputLabel for="fechaF" value="Fecha Fin: " />  
+                <p:calendar id="fechaF"  value="#{reportCargasBean.fechaFin}" pattern="dd-MM-yyyy"  showOn="button" required="true"/>                     
+                <p:message for="fechaF" />
+                <h:outputLabel for="zona" value="Empleado: " />  
+                <p:selectOneMenu id="zona" value="#{reportCargasBean.empleado}" required="true" >
+                    <f:selectItem itemLabel="Todas" itemValue="0" />
+                    <f:selectItems value="#{reportCargasBean.listadoEmpleados}" var="i" itemValue="#{i.idEmpleado}" itemLabel="#{i.nombre}"/>
+                </p:selectOneMenu>
+                <p:message for="zona" />
+                <h:outputLabel for="formato" value="Formato: *" />  
+                <p:selectOneRadio id="formato" value="#{reportCargasBean.formato}" required="true" requiredMessage="Debe seleccionar un formato">
+                    <f:selectItem itemLabel="PDF" itemValue="PDF" />
+                    <f:selectItem itemLabel="MS. Excel" itemValue="XLS" />
+                    <f:selectItem itemLabel="Texto" itemValue="TXT" />
+                </p:selectOneRadio>
+                <p:message for="formato" />  
+
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellspacing="5px">
+                <p:commandButton id="downloadLink" value="Generar" ajax="false" icon="ui-icon-arrowthichk-s" actionListener="#{reportCargasBean.generateReport()}">
+                    <p:fileDownload value="#{reportCargasBean.file}" />
+                </p:commandButton>
+                <p:commandButton value="Cancelar" action="#{reportCargasBean.cancelar}" immediate="true"/>
+            </h:panelGrid>  
+        </p:panel>
+
+    </ui:define>
+</ui:composition>
+
+

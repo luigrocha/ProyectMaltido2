@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lSemanal" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1334aae6-aedd-4e88-a1fb-e5c163f8bf4a">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     LIQUIDACION_ASIGNACION_001."ID_LIQUIDACION" AS LIQUIDACION_ASIGNACION_001_ID_,
+     LIQUIDACION_ASIGNACION_001."FECHA" AS LIQUIDACION_ASIGNACION_001_FEC,
+     LIQUIDACION_ASIGNACION_001."CANTIDAD" AS LIQUIDACION_ASIGNACION_001_CAN,
+     LIQUIDACION_ASIGNACION_001."UNIDAD_MEDIDA" AS LIQUIDACION_ASIGNACION_001_UNI,
+     LIQUIDACION_ASIGNACION_001."TOTAL_LIQUIDACION" AS LIQUIDACION_ASIGNACION_001_TOT,
+     EMPLEADO_001."NOMBRE" AS EMPLEADO_001_NOMBRE,
+     EMPLEADO_001."APELLIDO" AS EMPLEADO_001_APELLIDO,
+     INSUMOS_001."NOMBRE" AS INSUMOS_001_NOMBRE,
+     INSUMOS_001."CANTIDAD" AS INSUMOS_001_CANTIDAD,
+     INSUMOS_001."TIPO_INSUMO" AS INSUMOS_001_TIPO_INSUMO,
+     INSUMOS_001."UNIDAD_MEDIDA" AS INSUMOS_001_UNIDAD_MEDIDA,
+     MANTENIMIENTO_001."ID_CITA" AS MANTENIMIENTO_001_ID_CITA,
+     MANTENIMIENTO_001."ID_EMPLEADO" AS MANTENIMIENTO_001_ID_EMPLEADO,
+     MANTENIMIENTO_001."FECHA_INICIO" AS MANTENIMIENTO_001_FECHA_INICIO,
+     MANTENIMIENTO_001."FECHA_FIN" AS MANTENIMIENTO_001_FECHA_FIN,
+     MANTENIMIENTO_001."PRECIO" AS MANTENIMIENTO_001_PRECIO
+FROM
+     "PMALDITO2"."LIQUIDACION_ASIGNACION_001" LIQUIDACION_ASIGNACION_001 INNER JOIN "PMALDITO2"."INSUMOS_001" INSUMOS_001 ON LIQUIDACION_ASIGNACION_001."ID_INSUMO" = INSUMOS_001."ID_INSUMO"
+     INNER JOIN "PMALDITO2"."MANTENIMIENTO_001" MANTENIMIENTO_001 ON LIQUIDACION_ASIGNACION_001."ID_CITA" = MANTENIMIENTO_001."ID_CITA"
+     AND LIQUIDACION_ASIGNACION_001."ID_EMPLEADO" = MANTENIMIENTO_001."ID_EMPLEADO"
+     INNER JOIN "PMALDITO2"."EMPLEADO_001" EMPLEADO_001 ON MANTENIMIENTO_001."ID_EMPLEADO" = EMPLEADO_001."ID_EMPLEADO"]]>
+	</queryString>
+	<field name="LIQUIDACION_ASIGNACION_001_ID_" class="java.math.BigDecimal"/>
+	<field name="LIQUIDACION_ASIGNACION_001_FEC" class="oracle.sql.TIMESTAMP"/>
+	<field name="LIQUIDACION_ASIGNACION_001_CAN" class="java.math.BigDecimal"/>
+	<field name="LIQUIDACION_ASIGNACION_001_UNI" class="java.lang.String"/>
+	<field name="LIQUIDACION_ASIGNACION_001_TOT" class="java.math.BigDecimal"/>
+	<field name="EMPLEADO_001_NOMBRE" class="java.lang.String"/>
+	<field name="EMPLEADO_001_APELLIDO" class="java.lang.String"/>
+	<field name="INSUMOS_001_NOMBRE" class="java.lang.String"/>
+	<field name="INSUMOS_001_CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="INSUMOS_001_TIPO_INSUMO" class="java.lang.String"/>
+	<field name="INSUMOS_001_UNIDAD_MEDIDA" class="java.lang.String"/>
+	<field name="MANTENIMIENTO_001_ID_CITA" class="java.math.BigDecimal"/>
+	<field name="MANTENIMIENTO_001_ID_EMPLEADO" class="java.lang.String"/>
+	<field name="MANTENIMIENTO_001_FECHA_INICIO" class="oracle.sql.TIMESTAMP"/>
+	<field name="MANTENIMIENTO_001_FECHA_FIN" class="oracle.sql.TIMESTAMP"/>
+	<field name="MANTENIMIENTO_001_PRECIO" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="129" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="11" width="405" height="62" uuid="117bff9e-988f-4b73-ac93-026a7660df9c"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Spotlights-Wires]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="450" y="62" width="196" height="22" uuid="28b778be-50a7-484f-b364-bc17114b7a3b"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Liquidaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="1" y="96" width="82" height="15" forecolor="#736343" uuid="a6ceb9cf-3515-4744-9801-4d970528a483"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="83" y="96" width="50" height="15" uuid="9675d513-6891-4a03-b1c8-edf1f5ccabf0"/>
+				<textFieldExpression><![CDATA[$F{EMPLEADO_001_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="133" y="96" width="67" height="15" forecolor="#736343" uuid="ab0b701a-a531-4392-94cf-c70388fb9c3e"/>
+				<text><![CDATA[APELLIDO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="200" y="96" width="79" height="15" uuid="58dc898d-1613-45e0-aebd-5311a87fdcd5"/>
+				<textFieldExpression><![CDATA[$F{EMPLEADO_001_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="279" y="96" width="107" height="15" forecolor="#736343" uuid="bb1976ab-ace1-482c-bb12-cb59c30d3fc7"/>
+				<text><![CDATA[ID_EMPLEADO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="386" y="96" width="123" height="15" uuid="244fd92f-1cab-476e-9dde-35e8286d8ed5"/>
+				<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_ID_EMPLEADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="e447906e-02ed-4dd9-ae7b-16e24d3dfa2a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="33" height="15" forecolor="#736343" uuid="b8eb2663-c98b-4681-8701-9d4a2d57ea36"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="33" y="0" width="96" height="15" forecolor="#736343" uuid="92efe4f9-0504-4371-afe2-d4b842a9d13c"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="129" y="0" width="69" height="15" forecolor="#736343" uuid="49641e51-4d08-40a2-ba59-48ee70cb6ebe"/>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="203" y="0" width="50" height="15" forecolor="#736343" uuid="01b37d85-55fe-4473-8473-a2fb57bf014a"/>
+				<text><![CDATA[UNIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="253" y="0" width="66" height="15" forecolor="#736343" uuid="083179bb-1ee0-4806-89ac-130c00857e84"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="319" y="0" width="37" height="15" forecolor="#736343" uuid="755a980a-a159-4d1d-aacd-93cb0328d0d6"/>
+				<text><![CDATA[CANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="356" y="1" width="50" height="15" forecolor="#736343" uuid="6cb589db-8774-472a-b94b-e2dad40ebdee"/>
+				<text><![CDATA[TIPO INSUMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="406" y="1" width="67" height="15" forecolor="#736343" uuid="891d60d7-688d-46e1-b876-1ae29308ebec"/>
+				<text><![CDATA[U. MEDIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="473" y="0" width="50" height="15" forecolor="#736343" uuid="41d38407-65fb-4939-b73f-4e1f532ee9a3"/>
+				<text><![CDATA[ID_CITA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="523" y="0" width="109" height="15" forecolor="#736343" uuid="cd028786-c262-44df-a90e-0dc79cea3b5f"/>
+				<text><![CDATA[FECHA INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="632" y="0" width="68" height="15" forecolor="#736343" uuid="0a2c7368-35d6-4041-b7cf-002d2d182005"/>
+				<text><![CDATA[FECHA FIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="700" y="0" width="50" height="15" forecolor="#736343" uuid="9432c4a5-c004-4f62-9a06-2f47ab2b705c"/>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="750" y="1" width="50" height="15" forecolor="#736343" uuid="1890b9da-edcf-4587-8b98-dbe9191d2589"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="fe6ae5d8-0293-427e-b888-f8d0c33fc97c"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="33" y="0" width="96" height="15" uuid="20a4e8a8-cf96-4151-bf01-d70fee0e9aaf"/>
+					<textFieldExpression><![CDATA[$F{LIQUIDACION_ASIGNACION_001_FEC}.dateValue()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="129" y="0" width="69" height="15" uuid="e4b915aa-59a3-4aa6-a81d-d7f455cc4d2d"/>
+					<textFieldExpression><![CDATA[$F{LIQUIDACION_ASIGNACION_001_CAN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="203" y="0" width="50" height="15" uuid="fcf7862d-c87d-49ab-8dcc-23f1f8b9d276"/>
+					<textFieldExpression><![CDATA[$F{LIQUIDACION_ASIGNACION_001_UNI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="253" y="0" width="66" height="15" uuid="f761553d-3e5c-4608-991d-9f6b94edeeb4"/>
+					<textFieldExpression><![CDATA[$F{INSUMOS_001_NOMBRE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="319" y="0" width="37" height="15" uuid="97ce8ed4-ffee-4ea2-999e-2e5903a87791"/>
+					<textFieldExpression><![CDATA[$F{INSUMOS_001_CANTIDAD}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="356" y="0" width="50" height="15" uuid="2541fb5c-1506-4e98-96c4-d01ca60a8345"/>
+					<textFieldExpression><![CDATA[$F{INSUMOS_001_TIPO_INSUMO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="406" y="0" width="67" height="15" uuid="87d1af80-72bf-4972-b000-f961cfa9d947"/>
+					<textFieldExpression><![CDATA[$F{INSUMOS_001_UNIDAD_MEDIDA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="473" y="0" width="50" height="15" uuid="75860e4c-eb53-4679-a5b9-47b5ac67fd58"/>
+					<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_ID_CITA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="523" y="0" width="109" height="15" uuid="728fcc16-3529-4bd0-92d2-6fb69295466d"/>
+					<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_FECHA_INICIO}.dateValue()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="632" y="0" width="68" height="15" uuid="0b0e6359-5a93-45b3-818f-66de841d2b38"/>
+					<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_FECHA_FIN}.dateValue()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="700" y="0" width="50" height="15" uuid="3f826327-8094-49ca-b82a-4023b1eceda2"/>
+					<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_PRECIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="32" height="15" uuid="f20587cb-d532-4aa7-ba69-32fea36d2df8"/>
+					<textFieldExpression><![CDATA[$F{LIQUIDACION_ASIGNACION_001_ID_}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="750" y="0" width="50" height="15" uuid="be5d3b0c-6288-4112-a9b5-b4ea11bfc2ce"/>
+					<textFieldExpression><![CDATA[$F{LIQUIDACION_ASIGNACION_001_TOT}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="90c6f59a-ebc6-4c5a-b965-a64d719ae881"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="33826fbb-7f8b-42b1-849b-bdd7724adb95"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="5c35760f-eb79-4686-b010-a80fc849c191"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="2051b363-0d6b-4934-aed3-642dab7d7928"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy h.mm a">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="25b4dcc3-d156-4f0b-9b2e-17b791efd999"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
