@@ -11,6 +11,18 @@
 package ec.edu.espe.distribuidas.web;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.HashMap;
+import javax.faces.context.FacesContext;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import org.primefaces.model.StreamedContent;
 
 /**
  * Clase BASEBEAN para la implementacion del CRUD.
@@ -18,6 +30,9 @@ import java.io.Serializable;
  * @author R&R S.A.
  */
 public class BaseBean implements Serializable {
+
+    protected Connection conn;
+    protected String formato;
 
     /**
      * variable que indica el estado del formulario para un nuevo registro.
@@ -100,9 +115,10 @@ public class BaseBean implements Serializable {
 
     }
 
-    public void quitarNuevo(){
-    this.enNuevo=false;
+    public void quitarNuevo() {
+        this.enNuevo = false;
     }
+
     public boolean isEnSeleccionar() {
         return enSeleccionar;
     }
@@ -118,12 +134,40 @@ public class BaseBean implements Serializable {
     public void reset() {
         this.enModificar = false;
         this.enNuevo = false;
-        this.enSeleccionar=false;
+        this.enSeleccionar = false;
     }
+
     /**
      * desabilita la seleccion de argumentos, para los atributos.
      */
-    public void quitarSeleccion(){
-    this.enSeleccionar=false;
+    public void quitarSeleccion() {
+        this.enSeleccionar = false;
+    }
+
+    public void pdf(String name, String jasperName) {
+        JasperReport jasperReport;
+        JasperPrint jasperPrint;
+        this.createConn();
+        try {
+            //se carga el reporte
+            FacesContext ctx = FacesContext.getCurrentInstance();
+
+            String in = ctx.getExternalContext().getRealPath("reports/" + jasperName + ".jasper");
+            jasperReport = (JasperReport) JRLoader.loadObject(in);
+            //se procesa el archivo jasper
+            jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap(), this.conn);
+            //se crea el archivo PDF
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Andres Vr\\Documents\\Git\\ProyectoMaldito7.0\\ProyectMaltido2\\ProyectoMaldito2\\ProyectoMaldito2-web\\src\\main\\webapp\\pdf\\" + name + ".pdf");
+        } catch (JRException ex) {
+            System.err.println("Error iReport: " + ex.getMessage());
+        }
+    }
+
+    protected void createConn() {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "PMALDITO2", "root");
+        } catch (ClassNotFoundException | SQLException e) {
+        }
     }
 }

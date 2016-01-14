@@ -40,8 +40,6 @@
                     <p:ajax event="rowSelect" update="@form" listener="#{facturaBean.onRowSelect}" />
                     <f:facet name="footer">
                         <p:commandButton value="Nuevo" actionListener="#{facturaBean.nuevo()}" immediate="true" update="@form" disabled="#{facturaBean.facturaSelected ne null}" styleClass=""/>
-                        <p:commandButton value="Modificar" actionListener="#{facturaBean.modificar()}" immediate="true" update="@form" disabled="#{facturaBean.facturaSelected eq null}"/>
-                        <p:commandButton value="Borrar" actionListener="#{facturaBean.eliminar()}" immediate="true" update="@form" disabled="#{facturaBean.facturaSelected eq null}"/>
                     </f:facet>
                 </p:dataTable>
 
@@ -72,7 +70,7 @@
                 </p:panel>
                 <p:panel header="#{facturaBean.title}" style="width: 100%" rendered="#{facturaBean.enNuevo or facturaBean.enModificar}">
                     <h:panelGrid columns="2" style="margin: 0 auto;" width="100%">
-                        
+
                         <p:dataTable id="singleMantenimiento" var="mantenimiento" value="#{facturaBean.mantenimientos}" scrollable="true" scrollHeight="150"
                                      style="width: 400px;" styleClass="textlb" selectionMode="single" selection="#{facturaBean.mantenimientoSelected}" rowKey="#{mantenimiento.primaryKey}" >
 
@@ -100,7 +98,7 @@
                             <p:outputLabel id="txtTelefono" value="#{facturaBean.clienteSelected.telefono}" />
                             <p:outputLabel for="txtCorreo" value="Correo: "/>
                             <p:outputLabel id="txtCorreo" value="#{facturaBean.clienteSelected.correoElectronico}" />
-                          
+
                         </h:panelGrid>
                         <p:column></p:column>
                         <p:dataTable style="width: 400px;" var="mantenimientos" value="#{facturaBean.detalleFacturas}" scrollable="true" scrollHeight="150"
@@ -132,6 +130,11 @@
                         <f:facet name="footer" class="center-block">
                             <p:commandButton value="Aceptar" actionListener="#{facturaBean.aceptar()}"  update="@form"/>
                             <p:commandButton value="Cancelar" actionListener="#{facturaBean.cancelar()}" immediate="true"  update="@form"/>
+
+                            <p:commandButton id="downloadLink" value="Enviar Factura" ajax="false" icon="ui-icon-arrowthichk-s" disabled="#{facturaBean.desabilitarEnvio}" actionListener="#{facturaBean.generateReport()}">
+                                <p:fileDownload value="#{facturaBean.file}" />
+                            </p:commandButton>
+
                         </f:facet>
                     </h:panelGrid>
                 </p:panel>

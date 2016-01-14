@@ -15,6 +15,7 @@ package ec.edu.espe.distribuidas.web;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.URL;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +64,45 @@ public class AbstractReportBean {
         }
     }
 
+    protected void generateReportFactura(String name, String jasperName) {
+        try {
+            this.createConn();
+            FacesContext ctx = FacesContext.getCurrentInstance();
+            File reportFile = new File(ctx.getExternalContext().getRealPath("reports/" + jasperName + ".jasper"));
+            JasperReport jr = (JasperReport) JRLoader.loadObject(reportFile);
+                byte[] data = JasperRunManager.runReportToPdf(jr, parameters, conn);
+                this.file = new DefaultStreamedContent(new ByteArrayInputStream(data), "application/pdf", name + ".pdf");
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception ex) {
+                System.out.println("Error al cerrar conex");
+            }
+        }
+    }
+     public void pdf(String name, String jasperName){
+        JasperReport jasperReport;
+        JasperPrint jasperPrint;                
+        this.createConn();
+        try
+        {
+          //se carga el reporte
+                      FacesContext ctx = FacesContext.getCurrentInstance();
+  
+          String  in=ctx.getExternalContext().getRealPath("reports/" + jasperName + ".jasper");
+          jasperReport=(JasperReport)JRLoader.loadObject(in);
+          //se procesa el archivo jasper
+          jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap(), this.conn);
+          //se crea el archivo PDF
+          JasperExportManager.exportReportToPdfFile( jasperPrint, "C:\\Users\\Andres Vr\\Documents\\Git\\ProyectoMaldito7.0\\ProyectMaltido2\\ProyectoMaldito2\\ProyectoMaldito2-web\\src\\main\\webapp\\pdf\\"+name+".pdf");
+        }
+        catch (JRException ex)
+        {
+          System.err.println( "Error iReport: " + ex.getMessage() );
+        }
+  }
     protected void generateReport(String name, String jasperName) {
         try {
             this.createConn();
