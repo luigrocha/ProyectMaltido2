@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cDiarias" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0de14d50-5283-4fdf-a97c-db32a754fe2d">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     EMPLEADO_001."APELLIDO" AS EMPLEADO_001_APELLIDO,
+     EMPLEADO_001."NOMBRE" AS EMPLEADO_001_NOMBRE,
+     EMPLEADO_001."ID_EMPLEADO" AS EMPLEADO_001_ID_EMPLEADO,
+     MANTENIMIENTO_001."FECHA_INICIO" AS MANTENIMIENTO_001_FECHA_INICIO,
+     MANTENIMIENTO_001."FECHA_FIN" AS MANTENIMIENTO_001_FECHA_FIN,
+     MANTENIMIENTO_001."PRECIO" AS MANTENIMIENTO_001_PRECIO,
+     CITA_MANTENIMIENTO_001."TIPO_MANTENIMIENTO" AS CITA_MANTENIMIENTO_001_TIPO_MA,
+     CITA_MANTENIMIENTO_001."DESCRIPCION" AS CITA_MANTENIMIENTO_001_DESCRIP,
+     CITA_MANTENIMIENTO_001."ID_CITA" AS CITA_MANTENIMIENTO_001_ID_CITA,
+     CLIENTE_001."ID_CLIENTE" AS CLIENTE_001_ID_CLIENTE,
+     CLIENTE_001."NOMBRE" AS CLIENTE_001_NOMBRE,
+     CLIENTE_001."APELLIDO" AS CLIENTE_001_APELLIDO,
+     CLIENTE_001."DIRECCION" AS CLIENTE_001_DIRECCION,
+     CLIENTE_001."TELEFONO" AS CLIENTE_001_TELEFONO
+FROM
+     "PMALDITO2"."MANTENIMIENTO_001" MANTENIMIENTO_001 INNER JOIN "PMALDITO2"."EMPLEADO_001" EMPLEADO_001 ON MANTENIMIENTO_001."ID_EMPLEADO" = EMPLEADO_001."ID_EMPLEADO"
+     INNER JOIN "PMALDITO2"."CITA_MANTENIMIENTO_001" CITA_MANTENIMIENTO_001 ON MANTENIMIENTO_001."ID_CITA" = CITA_MANTENIMIENTO_001."ID_CITA"
+     INNER JOIN "PMALDITO2"."CLIENTE_001" CLIENTE_001 ON CITA_MANTENIMIENTO_001."ID_CLIENTE" = CLIENTE_001."ID_CLIENTE"]]>
+	</queryString>
+	<field name="EMPLEADO_001_APELLIDO" class="java.lang.String"/>
+	<field name="EMPLEADO_001_NOMBRE" class="java.lang.String"/>
+	<field name="EMPLEADO_001_ID_EMPLEADO" class="java.lang.String"/>
+	<field name="MANTENIMIENTO_001_FECHA_INICIO" class="oracle.sql.TIMESTAMP"/>
+	<field name="MANTENIMIENTO_001_FECHA_FIN" class="oracle.sql.TIMESTAMP"/>
+	<field name="MANTENIMIENTO_001_PRECIO" class="java.math.BigDecimal"/>
+	<field name="CITA_MANTENIMIENTO_001_TIPO_MA" class="java.lang.String"/>
+	<field name="CITA_MANTENIMIENTO_001_DESCRIP" class="java.lang.String"/>
+	<field name="CITA_MANTENIMIENTO_001_ID_CITA" class="java.math.BigDecimal"/>
+	<field name="CLIENTE_001_ID_CLIENTE" class="java.lang.String"/>
+	<field name="CLIENTE_001_NOMBRE" class="java.lang.String"/>
+	<field name="CLIENTE_001_APELLIDO" class="java.lang.String"/>
+	<field name="CLIENTE_001_DIRECCION" class="java.lang.String"/>
+	<field name="CLIENTE_001_TELEFONO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="70" y="0" width="366" height="62" uuid="c4c39133-34ca-4df0-b04d-e98500dd5e5c"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Spotlights-Wires]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="436" y="40" width="246" height="22" uuid="3d0f9d04-8dbb-4164-a8d9-7d6165dd6b82"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Cargas de empleados por fechas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="70" y="85" width="94" height="15" forecolor="#736343" uuid="dd85682c-362e-46f5-910b-8c6d4abdc803"/>
+				<text><![CDATA[APELLIDO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="164" y="85" width="113" height="15" uuid="7292e2cc-1b48-49ed-9876-0f79e8feba11"/>
+				<textFieldExpression><![CDATA[$F{EMPLEADO_001_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="70" y="111" width="94" height="15" forecolor="#736343" uuid="3264f956-b468-43f2-9718-9bebd723c60c"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="164" y="111" width="113" height="15" uuid="a585a97a-7a5d-499f-b7e8-16e7eabcda22"/>
+				<textFieldExpression><![CDATA[$F{EMPLEADO_001_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="353" y="85" width="97" height="15" forecolor="#736343" uuid="79492ac2-e898-4d10-8ce8-d9696ccfe080"/>
+				<text><![CDATA[ID EMPLEADO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="450" y="85" width="150" height="15" uuid="4ade4297-229b-4be4-8e20-5ae568f253f9"/>
+				<textFieldExpression><![CDATA[$F{EMPLEADO_001_ID_EMPLEADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="857f0b75-7a1b-4d1d-bd9c-5a2c2abd94b2"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="1" width="92" height="15" forecolor="#736343" uuid="eb0937ce-b32d-493b-b4bf-258b82b4c25e"/>
+				<text><![CDATA[FECHA_INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="92" y="0" width="72" height="15" forecolor="#736343" uuid="a9603807-4b85-4f6d-95b3-80ef644fb684"/>
+				<text><![CDATA[FECHA_FIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="164" y="0" width="50" height="15" forecolor="#736343" uuid="4afc28cf-8372-4977-be4c-9a3b90c7c2b1"/>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="214" y="0" width="89" height="15" forecolor="#736343" uuid="32fc81f1-bbd3-4ffe-98b0-4147681d4a19"/>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="353" y="1" width="69" height="15" forecolor="#736343" uuid="136b8eda-b44e-479d-9912-58ce0de30fee"/>
+				<text><![CDATA[ID CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="422" y="1" width="60" height="15" forecolor="#736343" uuid="f6a1b500-e9d9-48f8-807b-473c00f97b6b"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="610" y="0" width="118" height="15" forecolor="#736343" uuid="7d31e1d7-1bb9-4b0b-a703-9a5eba346bc8"/>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="728" y="0" width="74" height="15" forecolor="#736343" uuid="fd59f024-7747-4469-b86b-9a27b01710a2"/>
+				<text><![CDATA[TELEFONO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="303" y="0" width="50" height="15" forecolor="#736343" uuid="730c706c-0617-4602-b2fb-60f1914218ba"/>
+				<text><![CDATA[TIPO ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="560" y="0" width="50" height="15" forecolor="#736343" uuid="8f6e422c-395c-4641-af97-a7f1a28ab91e"/>
+				<text><![CDATA[ID CITA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="482" y="1" width="76" height="15" forecolor="#736343" uuid="b7ebefce-a4b2-42eb-b4f8-04f44f905335"/>
+				<text><![CDATA[APELLIDO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="cc1ed45b-694c-4205-8ba1-d1de5b923324"/>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss">
+					<reportElement style="Detail" x="1" y="0" width="91" height="15" uuid="7f3e7b23-0b37-4700-825f-33fa7fd9786f"/>
+					<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_FECHA_INICIO}.dateValue()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss">
+					<reportElement style="Detail" x="92" y="0" width="72" height="15" uuid="3d93241b-466b-4784-a85e-5dbbee721144"/>
+					<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_FECHA_FIN}.dateValue()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="214" y="0" width="89" height="15" uuid="9583cad8-21f8-4637-8c59-e5667476fff4"/>
+					<textFieldExpression><![CDATA[$F{CITA_MANTENIMIENTO_001_DESCRIP}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="353" y="0" width="69" height="15" uuid="7d0c226e-9a7c-4ba3-b6a2-981f75396cbd"/>
+					<textFieldExpression><![CDATA[$F{CLIENTE_001_ID_CLIENTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="610" y="0" width="118" height="15" uuid="ae97fcec-e9bf-4c3c-8233-19763b97703c"/>
+					<textFieldExpression><![CDATA[$F{CLIENTE_001_DIRECCION}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="728" y="0" width="74" height="15" uuid="3974828d-e18c-4552-9365-25db4d4bffa4"/>
+					<textFieldExpression><![CDATA[$F{CLIENTE_001_TELEFONO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="164" y="0" width="50" height="15" uuid="a496b952-e9d7-4622-a8a4-e028028d4ac9"/>
+					<textFieldExpression><![CDATA[$F{MANTENIMIENTO_001_PRECIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="303" y="0" width="50" height="15" uuid="d1c85544-df86-48be-b514-8db51bdd0806"/>
+					<textFieldExpression><![CDATA[$F{CITA_MANTENIMIENTO_001_TIPO_MA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="422" y="0" width="60" height="15" uuid="5308884e-af77-4ae0-b161-a1fe92a55851"/>
+					<textFieldExpression><![CDATA[$F{CLIENTE_001_NOMBRE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="560" y="0" width="50" height="15" uuid="5eb0f716-4f24-4bb8-bcac-f7f622998c48"/>
+					<textFieldExpression><![CDATA[$F{CITA_MANTENIMIENTO_001_ID_CITA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="482" y="0" width="76" height="15" uuid="59267d63-6e66-4af8-8037-3512cfdb3aaa"/>
+					<textFieldExpression><![CDATA[$F{CLIENTE_001_APELLIDO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="3d8dcfd3-3f1f-48d3-a004-0c3f50b5627c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="89d9eb12-cc5c-4594-afc4-d5aea275e4e1"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="fb97ee55-c05a-4266-bc39-cf47b6d70426"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="251669d9-e462-48a3-9c53-8805bc87a644"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy h.mm a">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="3e004afe-f464-4aac-8606-bcd7286e510a"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Fecha de emision "+new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

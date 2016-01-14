@@ -14,7 +14,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["\\reports\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/reports/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
